@@ -2,7 +2,11 @@ import React from 'react'
 
 function AppFooter() {
   return (
-    <footer>AppFooter</footer>
+    <footer style={{ background: '#ccc', padding: '1rem' }}>
+      <p>
+        &copy; {new Date().getFullYear()}{' '}
+      </p>
+    </footer>
   )
 }
 
