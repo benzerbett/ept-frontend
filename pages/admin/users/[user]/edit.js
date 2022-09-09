@@ -1,8 +1,8 @@
 import React from 'react'
 
-function UserForm() {
+function UserForm({user}) {
   return (
-    <div>UserForm</div>
+    <div>Edit User {user}</div>
   )
 }
 

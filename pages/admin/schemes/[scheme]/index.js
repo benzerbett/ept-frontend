@@ -1,8 +1,8 @@
 import React from 'react'
 
-function ViewScheme() {
+function ViewScheme({scheme}) {
   return (
-    <div>ViewScheme</div>
+    <div>ViewScheme {scheme}</div>
   )
 }
 

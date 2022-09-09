@@ -1,8 +1,8 @@
 import React from 'react'
 
-function ViewReport() {
+function ViewReport({report}) {
   return (
-    <div>ViewReport</div>
+    <div>ViewReport {report}</div>
   )
 }
 

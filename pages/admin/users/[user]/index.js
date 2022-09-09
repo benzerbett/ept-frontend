@@ -1,8 +1,8 @@
 import React from 'react'
 
-function ViewUser() {
+function ViewUser({user}) {
   return (
-    <div>ViewUser</div>
+    <div>ViewUser {user}</div>
   )
 }
 

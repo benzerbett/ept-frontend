@@ -1,8 +1,8 @@
 import React from 'react'
 
-function EvaluationForm() {
+function NewEvaluationForm() {
   return (
-    <div>EvaluationForm</div>
+    <div>New EvaluationForm</div>
   )
 }
 

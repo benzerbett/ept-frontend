@@ -1,8 +1,8 @@
 import React from 'react'
 
-function EditForm() {
+function EditForm({form}) {
   return (
-    <div>EditForm</div>
+    <div>EditForm {form}</div>
   )
 }
 

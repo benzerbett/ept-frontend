@@ -1,8 +1,8 @@
 import React from 'react'
 
-function ViewSurvey() {
+function ViewSurvey({survey}) {
   return (
-    <div>ViewSurvey</div>
+    <div>ViewSurvey {survey}</div>
   )
 }
 

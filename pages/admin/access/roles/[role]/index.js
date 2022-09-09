@@ -1,8 +1,8 @@
 import React from 'react'
 
-function ViewRole() {
+function ViewRole({role}) {
   return (
-    <div>ViewRole</div>
+    <div>ViewRole {role}</div>
   )
 }
 

@@ -1,8 +1,8 @@
 import React from 'react'
 
-function ViewForm() {
+function ViewForm({form}) {
   return (
-    <div>ViewForm</div>
+    <div>ViewForm {form}</div>
   )
 }
 

@@ -1,8 +1,8 @@
 import React from 'react'
 
-function SchemeForm() {
+function SchemeForm({scheme}) {
   return (
-    <div>SchemeForm</div>
+    <div>EditScheme {scheme}</div>
   )
 }
 

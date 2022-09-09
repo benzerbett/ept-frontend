@@ -1,8 +1,8 @@
 import React from 'react'
 
-function RolesForm() {
+function RolesForm({role}) {
   return (
-    <div>RolesForm</div>
+    <div>Edit Role {role}</div>
   )
 }
 
