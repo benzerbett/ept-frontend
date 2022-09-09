@@ -2,7 +2,10 @@ import React from 'react'
 
 function TextInput() {
   return (
-    <textinput>TextInput</textinput>
+    <>
+      <input type="text" />
+      <label>Text</label>
+    </>
   )
 }
 

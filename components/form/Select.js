@@ -2,7 +2,9 @@ import React from 'react'
 
 function Select() {
   return (
-    <select>Select</select>
+    <select>
+      <option>Select</option>
+    </select>
   )
 }
 

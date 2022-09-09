@@ -2,7 +2,10 @@ import React from 'react'
 
 function Date() {
   return (
-    <date>Date</date>
+    <>
+    <input type="date" />
+    <label>Date</label>
+    </>
   )
 }
 

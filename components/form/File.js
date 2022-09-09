@@ -2,7 +2,10 @@ import React from 'react'
 
 function File() {
   return (
-    <file>File</file>
+    <>
+    <input type="file" />
+    <label>File</label>
+    </>
   )
 }
 
