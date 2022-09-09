@@ -1,8 +1,16 @@
+import Head from 'next/head'
 import React from 'react'
 
-function SurveyForm({survey}) {
+function SurveyForm({ survey }) {
   return (
-    <div>Edit SurveyForm {survey}</div>
+    <>
+      <Head>
+        <title>EPT | Edit Survey Form Entry</title>
+        <meta name="description" content="EPT" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <div className='container'>Edit Survey Entry {survey}</div>
+    </>
   )
 }
 

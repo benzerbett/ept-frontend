@@ -1,8 +1,16 @@
+import Head from 'next/head'
 import React from 'react'
 
 function Evaluations() {
   return (
-    <div>Evaluations</div>
+    <>
+      <Head>
+        <title>EPT | Evaluations</title>
+        <meta name="description" content="EPT" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <div className='container'>Evaluations</div>
+    </>
   )
 }
 

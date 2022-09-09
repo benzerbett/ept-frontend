@@ -1,13 +1,18 @@
 import React from 'react'
 
 function AppFooter() {
-  return (
-    <footer style={{ background: '#ccc', padding: '1rem' }}>
-      <p>
-        &copy; {new Date().getFullYear()}{' '}
-      </p>
-    </footer>
-  )
+    return (
+        <footer className="footer mt-auto py-3 bg-light">
+            <div className="container text-end d-flex justify-content-between">
+                <small className="text-muted">
+                    Ministry of Health &middot; Department of Laboratory Services
+                </small>
+                <small className="text-muted">
+                    &copy; {new Date().getFullYear()}{' '}
+                </small>
+            </div>
+        </footer>
+    )
 }
 
 export default AppFooter

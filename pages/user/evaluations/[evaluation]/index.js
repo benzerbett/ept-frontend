@@ -1,8 +1,16 @@
+import Head from 'next/head'
 import React from 'react'
 
-function ViewEvaluation({evaluation}) {
+function ViewEvaluation({ evaluation }) {
   return (
-    <div>ViewEvaluation {evaluation}</div>
+    <>
+      <Head>
+        <title>EPT | ViewEvaluation</title>
+        <meta name="description" content="EPT" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <div className='container'>ViewEvaluation {evaluation}</div>
+    </>
   )
 }
 

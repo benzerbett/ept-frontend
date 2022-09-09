@@ -7,7 +7,7 @@ function AppNavbar() {
     const router = useRouter()
     return (
 
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav className="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
             <div className="container">
                 <a className="navbar-brand" href="#">Navbar</a>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#appNavbarToggler" aria-controls="appNavbarToggler" aria-expanded="false" aria-label="Toggle navigation">
@@ -94,7 +94,7 @@ function AppNavbar() {
                         </li>
                         <li className="nav-item mx-md-2 dropdown d-flex">
                             <div className="btn-group">
-                                <Link href="/admin/forms"><a className={"nav-link " + (router.pathname == '/admin/forms' ? ' active' : '')} aria-current="page">forms</a></Link>
+                                <Link href="/admin/forms"><a className={"nav-link " + (router.pathname == '/admin/forms' ? ' active' : '')} aria-current="page">Forms</a></Link>
                                 <button type="button" className="btn btn-xs btn-transparent text-white dropdown-toggle dropdown-toggle-split p-0 my-0 btn-outline-dark" data-bs-toggle="dropdown" aria-expanded="false">
                                     <span className="visually-hidden">Toggle Dropdown</span>
                                 </button>

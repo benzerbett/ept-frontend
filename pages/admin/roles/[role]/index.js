@@ -1,8 +1,16 @@
+import Head from 'next/head'
 import React from 'react'
 
-function ViewRole({role}) {
+function ViewRole({ role }) {
   return (
-    <div>ViewRole {role}</div>
+    <>
+      <Head>
+        <title>EPT | View Role</title>
+        <meta name="description" content="EPT" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <div className='container'>ViewRole {role}</div>
+    </>
   )
 }
 

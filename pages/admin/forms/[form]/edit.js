@@ -1,8 +1,16 @@
+import Head from 'next/head'
 import React from 'react'
 
-function EditForm({form}) {
+function EditForm({ form }) {
   return (
-    <div>EditForm {form}</div>
+    <>
+      <Head>
+        <title>EPT | Edit Form</title>
+        <meta name="description" content="EPT" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <div className='container'>EditForm {form}</div>
+    </>
   )
 }
 

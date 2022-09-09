@@ -1,8 +1,16 @@
+import Head from 'next/head'
 import React from 'react'
 
 function Reports() {
   return (
-    <div>Reports</div>
+    <>
+      <Head>
+        <title>EPT | Reports</title>
+        <meta name="description" content="EPT" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <div>Reports</div>
+    </>
   )
 }
 

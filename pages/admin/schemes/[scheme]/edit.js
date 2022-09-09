@@ -1,8 +1,16 @@
+import Head from 'next/head'
 import React from 'react'
 
-function SchemeForm({scheme}) {
+function SchemeForm({ scheme }) {
   return (
-    <div>EditScheme {scheme}</div>
+    <>
+      <Head>
+        <title>EPT | Edit Scheme</title>
+        <meta name="description" content="EPT" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <div className='container'>EditScheme {scheme}</div>
+    </>
   )
 }
 

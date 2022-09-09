@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import Head from 'next/head';
 const API_URL = "http://localhost:8000/test_laravel/api/";
 export default function Login() {
     let [username, setUsername] = useState('');
@@ -47,7 +48,12 @@ export default function Login() {
         }
     }
     return (
-        <div>
+        <>
+            <Head>
+                <title>EPT | Login</title>
+                <meta name="description" content="EPT" />
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
             <div>
                 <form onSubmit={(e) => handleSubmit(e)} action="" method="post">
                     <div>
@@ -64,6 +70,6 @@ export default function Login() {
                     </div>
                 </form>
             </div>
-        </div>
+        </>
     )
 }

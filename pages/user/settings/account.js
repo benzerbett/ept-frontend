@@ -1,8 +1,16 @@
+import Head from 'next/head'
 import React from 'react'
 
 function AccountSettings() {
   return (
-    <div>AccountSettings</div>
+    <>
+      <Head>
+        <title>EPT | Account Settings</title>
+        <meta name="description" content="EPT" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <div>AccountSettings</div>
+    </>
   )
 }
 

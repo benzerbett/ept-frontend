@@ -1,8 +1,16 @@
+import Head from 'next/head'
 import React from 'react'
 
-function ViewScheme({scheme}) {
+function ViewScheme({ scheme }) {
   return (
-    <div>ViewScheme {scheme}</div>
+    <>
+      <Head>
+        <title>EPT | View Scheme</title>
+        <meta name="description" content="EPT" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <div className='container'>ViewScheme {scheme}</div>
+    </>
   )
 }
 

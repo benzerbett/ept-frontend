@@ -3,9 +3,9 @@ import AppFooter from '../common/AppFooter'
 
 export default function DefaultAppTheme({ children }) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '97vh' }}>
+    <div className='d-flex' style={{minHeight: '100vh', flexDirection: 'column'}}>
       <AppNavbar />
-      <main style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+      <main className='flex-shrink-0 p-3 mt-5'>
         {children}
       </main>
       <AppFooter />

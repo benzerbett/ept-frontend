@@ -1,8 +1,16 @@
+import Head from 'next/head'
 import React from 'react'
 
-function ViewUser({user}) {
+function ViewUser({ user }) {
   return (
-    <div>ViewUser {user}</div>
+    <>
+      <Head>
+        <title>EPT | View User</title>
+        <meta name="description" content="EPT" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <div className='container'>View User {user}</div>
+    </>
   )
 }
 
