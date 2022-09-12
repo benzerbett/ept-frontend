@@ -17,10 +17,10 @@ function AppNavbar() {
         }
     }, [])
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
+        <nav className="navbar navbar-expand-lg navbar-dark fixed-top bg-success">
             <div className="container">
                 <Link href={homeUrl}>
-                    <a className="navbar-brand">EPT</a>
+                    <a className="navbar-brand">Oncology EPT</a>
                 </Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#appNavbarToggler" aria-controls="appNavbarToggler" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
@@ -31,13 +31,13 @@ function AppNavbar() {
                             <Link href={homeUrl}><a className={"nav-link " + (router.pathname === '/' ? ' active' : '')}>Home</a></Link>
                         </li>
                         <li className="nav-item dropdown">
-                            <a className={"nav-link dropdown-toggle " + (router.pathname.includes('/admin/forms') ? ' active' : '')} href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Forms &amp; Surveys
+                            <a className={"nav-link dropdown-toggle " + (router.pathname.includes('/user/surveys') ? ' active' : '')} href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Surveys
                             </a>
                             <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                                 <li>
-                                    <Link href="/admin/forms"><a className={"dropdown-item " + (router.pathname == '/admin/forms' ? ' active' : '')} aria-current="page">
-                                        Forms
+                                    <Link href="/user/surveys"><a className={"dropdown-item " + (router.pathname == '/user/surveys' ? ' active' : '')} aria-current="page">
+                                        Surveys
                                         <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                             2
                                             <span className="visually-hidden">new survey(s)</span>
@@ -47,12 +47,12 @@ function AppNavbar() {
                             </ul>
                         </li>
                         <li className="nav-item dropdown">
-                            <a className={"nav-link dropdown-toggle " + (router.pathname.includes('/admin/evaluations') ? ' active' : '')} href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a className={"nav-link dropdown-toggle " + (router.pathname.includes('/user/evaluations') ? ' active' : '')} href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Evaluations (PT/QC)
                             </a>
                             <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                                 <li>
-                                    <Link href="/admin/forms"><a className={"dropdown-item " + (router.pathname == '/admin/forms' ? ' active' : '')} aria-current="page">
+                                    <Link href="/user/evaluations"><a className={"dropdown-item " + (router.pathname == '/user/evaluations' ? ' active' : '')} aria-current="page">
                                         Evaluations
                                         <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                             1

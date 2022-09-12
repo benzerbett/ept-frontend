@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import React from 'react'
 
-function SurveyForm({ survey }) {
+function SurveyForm({ survey, submission }) {
   return (
     <>
       <Head>
@@ -9,7 +9,7 @@ function SurveyForm({ survey }) {
         <meta name="description" content="EPT" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className='container'>Edit Survey Entry {survey}</div>
+      <div className='container'>Edit Survey Entry {survey} Submission {submission}</div>
     </>
   )
 }
