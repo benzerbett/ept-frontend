@@ -9,7 +9,7 @@ function AccountSettings() {
         <meta name="description" content="EPT" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div>AccountSettings</div>
+      <div className='container'>Account Settings</div>
     </>
   )
 }

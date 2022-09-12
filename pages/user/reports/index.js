@@ -9,7 +9,7 @@ function Reports() {
         <meta name="description" content="EPT" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div>Reports</div>
+      <div className='container'>Reports</div>
     </>
   )
 }

@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 
 import PublicTheme from '../components/layouts/PublicTheme'
 import AppTheme from '../components/layouts/AppTheme'
+import AdminTheme from '../components/layouts/AdminTheme'
 import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import Script from 'next/script'
@@ -12,8 +13,20 @@ function MyApp({ Component, pageProps }) {
     const [user, setUser] = useState(null)
     useEffect(() => {
         //     import("bootstrap/dist/js/bootstrap.bundle.min");
+        if(window && window.sessionStorage) {
+            const user = window.sessionStorage.getItem('user')
+            if(user) {
+                setUser(JSON.parse(user))
+            }
+            const isLoggedIn = window.sessionStorage.getItem('isLoggedIn')
+            if(isLoggedIn) {
+                setIsLoggedIn(isLoggedIn)
+            }
+        }
     }, [])
-    const Layout = isLoggedIn ? AppTheme : PublicTheme
+    console.log('isLoggedIn', isLoggedIn)
+    console.log('user', user)
+    const Layout = isLoggedIn ? ((user && user?.type == "admin") ? AdminTheme : AppTheme) : PublicTheme
     return (
         <>
             <Head>

@@ -9,7 +9,7 @@ function Settings() {
         <meta name="description" content="EPT" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div>Settings</div>
+      <div className='container'>Settings</div>
     </>
   )
 }

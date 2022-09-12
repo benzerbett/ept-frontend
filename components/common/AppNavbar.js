@@ -1,104 +1,88 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React from 'react'
+import { simulateGetUser, simulateLogout, simulateGetSession } from '../../utilities'
 
 function AppNavbar() {
-
+    const [user, setUser] = React.useState(null)
+    const [isLoggedIn, setIsLoggedIn] = React.useState(false)
+    const [homeUrl, setHomeUrl] = React.useState('/')
     const router = useRouter()
+    React.useEffect(() => {
+        const session = simulateGetSession()
+        if (session) {
+            setUser(session.user)
+            setIsLoggedIn(true)
+            setHomeUrl(session.user.type === 'admin' ? '/admin' : '/user')
+        }
+    }, [])
     return (
-
-        <nav className="navbar navbar-expand-lg navbar-dark fixed-top bg-primary">
+        <nav className="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
             <div className="container">
-                <a className="navbar-brand" href="#">Navbar</a>
+                <Link href={homeUrl}>
+                    <a className="navbar-brand">EPT</a>
+                </Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#appNavbarToggler" aria-controls="appNavbarToggler" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse" id="appNavbarToggler">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item mx-md-2">
-                            <Link href="/"><a className={"nav-link " + (router.pathname === '/' ? ' active' : '')}>Home</a></Link>
+                            <Link href={homeUrl}><a className={"nav-link " + (router.pathname === '/' ? ' active' : '')}>Home</a></Link>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a className={"nav-link dropdown-toggle " + (router.pathname.includes('/admin/users') ? ' active' : '')} href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Users
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                                <li>
-                                    <Link href="/admin/users"><a className={"dropdown-item " + (router.pathname == '/admin/users' ? ' active' : '')}>All users</a></Link>
-                                </li>
-                                <li><hr className="dropdown-divider" /></li>
-                                <li>
-                                    <Link href="/admin/users/new"><a className={"dropdown-item " + (router.pathname == '/admin/users/new' ? ' active' : '')}>Add new user</a></Link>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a className={"nav-link dropdown-toggle " + (router.pathname.includes('/admin/schemes') ? ' active' : '')} href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                PT/QC Schemes
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                                <li>
-                                    <Link href="/admin/schemes"><a className={"dropdown-item " + (router.pathname == '/admin/schemes' ? ' active' : '')} aria-current="page">All schemes</a></Link>
-                                </li>
-                                <li><hr className="dropdown-divider" /></li>
-                                <li>
-                                    <Link href="/admin/schemes/new"><a className={"dropdown-item " + (router.pathname == '/admin/schemes/new' ? ' active' : '')} aria-current="page">Add new scheme</a></Link>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a className={"nav-link dropdown-toggle " + (router.pathname.includes('/admin/dictionary') ? ' active' : '')} href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Dictionary
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                                <li>
-                                    <Link href="/admin/dictionary"><a className={"dropdown-item " + (router.pathname == '/admin/dictionary' ? ' active' : '')} aria-current="page">Dictionary</a></Link>
-                                </li>
-                                <li><hr className="dropdown-divider" /></li>
-                                <li>
-                                    <Link href="/admin/dictionary/new"><a className={"dropdown-item " + (router.pathname == '/admin/dictionary/new' ? ' active' : '')} aria-current="page">Add new entry</a></Link>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a className={"nav-link dropdown-toggle " + (router.pathname.includes('/admin/permissions') || router.pathname.includes('/admin/roles') ? ' active' : '')} href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Access management
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                                <li>
-                                    <Link href="/admin/permissions"><a className={"dropdown-item " + (router.pathname == '/admin/permissions' ? ' active' : '')} aria-current="page">Permissions</a></Link>
-                                </li>
-                                <li>
-                                    <Link href="/admin/permissions/new"><a className={"dropdown-item " + (router.pathname == '/admin/permissions/new' ? ' active' : '')} aria-current="page">Add new permission</a></Link>
-                                </li>
-                                <li><hr className="dropdown-divider" /></li>
-                                <li>
-                                    <Link href="/admin/roles"><a className={"dropdown-item " + (router.pathname == '/admin/roles' ? ' active' : '')} aria-current="page">Roles</a></Link>
-                                </li>
-                                <li>
-                                    <Link href="/admin/roles/new"><a className={"dropdown-item " + (router.pathname == '/admin/roles/new' ? ' active' : '')} aria-current="page">Add new role</a></Link>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
+                        <li className="nav-item dropdown">
                             <a className={"nav-link dropdown-toggle " + (router.pathname.includes('/admin/forms') ? ' active' : '')} href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Forms &amp; Surveys
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                            <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                                 <li>
-                                    <Link href="/admin/forms"><a className={"dropdown-item " + (router.pathname == '/admin/forms' ? ' active' : '')} aria-current="page">Forms</a></Link>
-                                </li>
-                                <li><hr className="dropdown-divider" /></li>
-                                <li>
-                                    <Link href="/admin/forms/new"><a className={"dropdown-item " + (router.pathname == '/admin/forms/new' ? ' active' : '')} aria-current="page">Add new form</a></Link>
+                                    <Link href="/admin/forms"><a className={"dropdown-item " + (router.pathname == '/admin/forms' ? ' active' : '')} aria-current="page">
+                                        Forms
+                                        <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                            2
+                                            <span className="visually-hidden">new survey(s)</span>
+                                        </span>
+                                    </a></Link>
                                 </li>
                             </ul>
                         </li>
+                        <li className="nav-item dropdown">
+                            <a className={"nav-link dropdown-toggle " + (router.pathname.includes('/admin/evaluations') ? ' active' : '')} href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Evaluations (PT/QC)
+                            </a>
+                            <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                                <li>
+                                    <Link href="/admin/forms"><a className={"dropdown-item " + (router.pathname == '/admin/forms' ? ' active' : '')} aria-current="page">
+                                        Evaluations
+                                        <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                            1
+                                            <span className="visually-hidden">new evaluation(s)</span>
+                                        </span>
+                                    </a></Link>
+                                </li>
+                            </ul>
+                        </li>
+                        <li className="nav-item mx-md-2">
+                            <Link href="/user/reports"><a className={"nav-link " + (router.pathname === '/user/reports' ? ' active' : '')}>Reports</a></Link>
+                        </li>
+                        <li className="nav-item mx-md-2">
+                            <Link href="/user/settings"><a className={"nav-link " + (router.pathname === '/user/settings' ? ' active' : '')}>Settings</a></Link>
+                        </li>
+                        <li className="nav-item mx-md-2">
+                            <Link href="/user/settings/account"><a className={"nav-link " + (router.pathname === '/user/settings/account' ? ' active' : '')}>My account</a></Link>
+                        </li>
                     </ul>
-                    <div className="text-end">
-                        <Link href="/auth/login"><a className="btn btn-outline-light me-2">Login</a></Link>
-                        <Link href="/auth/signup"><a className="btn btn-light">Sign-up</a></Link>
-                    </div>
+                    {(isLoggedIn && user) ? <div className="text-end d-flex">
+                        <div className="d-flex flex-wrap align-items-center">
+                            <Link href="/user/settings/account">
+                                <a className="text-light me-2 text-decoration-none fs-6 fw-light">{user.name}</a>
+                            </Link>
+                            <button className="btn btn-sm btn-outline-light" onClick={simulateLogout}>Logout</button>
+                        </div>
+                    </div> : <div className="text-end d-flex">
+                        <Link href="/auth/login"><a style={{ whiteSpace: 'nowrap' }} className="btn btn-outline-light me-2">Login</a></Link>
+                        <Link href="/auth/signup"><a style={{ whiteSpace: 'nowrap' }} className="btn btn-light">Sign-up</a></Link>
+                    </div>}
                 </div>
             </div>
         </nav>

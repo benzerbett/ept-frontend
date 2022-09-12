@@ -9,7 +9,7 @@ function EvaluationForm({evaluation}) {
         <meta name="description" content="EPT" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div>Edit Evaluation {evaluation}</div>
+      <div className='container'>Edit Evaluation {evaluation}</div>
     </>
   )
 }
