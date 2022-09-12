@@ -2,12 +2,12 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React from 'react'
 
-function AppNavbar() {
+function AdminNavbar() {
 
     const router = useRouter()
     return (
 
-        <nav className="navbar navbar-expand-lg navbar-dark fixed-top bg-primary">
+        <nav className="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
             <div className="container">
                 <a className="navbar-brand" href="#">Navbar</a>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#appNavbarToggler" aria-controls="appNavbarToggler" aria-expanded="false" aria-label="Toggle navigation">
@@ -97,7 +97,7 @@ function AppNavbar() {
                     </ul>
                     <div className="text-end">
                         <Link href="/auth/login"><a className="btn btn-outline-light me-2">Login</a></Link>
-                        <Link href="/auth/signup"><a className="btn btn-light">Sign-up</a></Link>
+                        <Link href="/auth/signup"><a className="btn btn-primary">Sign-up</a></Link>
                     </div>
                 </div>
             </div>
@@ -106,4 +106,4 @@ function AppNavbar() {
     )
 }
 
-export default AppNavbar
+export default AdminNavbar

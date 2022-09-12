@@ -5,7 +5,7 @@ function PasswordEmail() {
   return (
     <>
       <Head>
-        <title>EPT | Password Reset Email</title>
+        <title>EPT | Forgot Password</title>
         <meta name="description" content="EPT" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
