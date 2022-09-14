@@ -1,7 +1,10 @@
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import React from 'react'
 
-function ViewPermission({ permission }) {
+function ViewPermission() {
+  const router = useRouter()
+  const {permission} = router.query
   return (
     <>
       <Head>

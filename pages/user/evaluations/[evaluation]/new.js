@@ -288,9 +288,9 @@ function App() {
                       <Link href="/" exact>
                             <Form />
                        </Link>
-                       <Link href="/">
+                       {/* <Link href="/">
                             <Evaluation />
-                       </Link>
+                       </Link> */}
                        {/* <Link href="/">
                             <Home />
                        </Link>

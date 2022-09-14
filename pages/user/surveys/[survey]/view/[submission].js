@@ -1,7 +1,10 @@
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import React from 'react'
 
-function SurveyForm({ survey, submission }) {
+function SurveyForm() {
+  const router = useRouter()
+  const {survey} = router.query
   return (
     <>
       <Head>

@@ -1,7 +1,10 @@
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import React from 'react'
 
-function ViewDictionaryEntry({ entry }) {
+function ViewDictionaryEntry() {
+  const router = useRouter()
+  const {entry} = router.query
   return (
     <>
       <Head>

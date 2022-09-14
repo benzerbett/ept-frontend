@@ -1,7 +1,10 @@
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import React from 'react'
 
-function PermissionsForm({ permission }) {
+function PermissionsForm() {
+  const router = useRouter()
+  const {permission} = router.query
   return (
     <>
       <Head>
