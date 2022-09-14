@@ -7,21 +7,68 @@ function AppNavbar() {
     const [user, setUser] = React.useState(null)
     const [isLoggedIn, setIsLoggedIn] = React.useState(false)
     const [homeUrl, setHomeUrl] = React.useState('/')
+    const [allPrograms, setAllPrograms] = React.useState([])
+    const [activeProgram, setActiveProgram] = React.useState(null)
     const router = useRouter()
+
+    const getProgramConfig = (id) => {
+        return fetch(`/api/configurations/${id}`)
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.code) {
+                    setActiveProgram(data?.code)
+                    if(window && window.sessionStorage) {
+                        window.sessionStorage.setItem('activeProgramCode', data?.code)
+                    }
+                }
+            })
+    }
+
+    const getPrograms = () => {
+        return fetch(`/api/configurations`)
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.length > 0) {
+                    setAllPrograms(data)
+                }
+            })
+    }
     React.useEffect(() => {
-        const session = simulateGetSession()
-        if (session) {
-            setUser(session.user)
-            setIsLoggedIn(true)
-            setHomeUrl(session.user.type === 'admin' ? '/admin' : '/user')
+        let mtd = true
+        if (mtd) {
+            const session = simulateGetSession()
+            if (session) {
+                setUser(session.user)
+                setIsLoggedIn(true)
+                setHomeUrl(session.user.type === 'admin' ? '/admin' : '/user')
+                if (session.activeProgramCode) {
+                    getProgramConfig(session.activeProgramCode)
+                }
+            }
+            getPrograms()
+        }
+        return () => {
+            mtd = false
         }
     }, [])
     return (
         <nav className="navbar navbar-expand-lg navbar-dark fixed-top bg-success">
             <div className="container">
-                <Link href={homeUrl}>
+                {/* <Link href={homeUrl}>
                     <a className="navbar-brand">Oncology EPT</a>
-                </Link>
+                </Link> */}
+                {allPrograms && allPrograms.length > 0 ? <div className="btn-group fw-bold">
+                    <button type="button" className="btn btn-success btn-sm">{allPrograms.find(ap => ap.code == activeProgram)?.name || "Select a Program"}</button>
+                    <button type="button" className="btn btn-success btn-sm dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span className="visually-hidden">Toggle Program Switcher</span>
+                    </button>
+                    <ul className="dropdown-menu">
+                        {allPrograms.map((ap, x) => <li key={ap.code}><a className="dropdown-item" onClick={(ev)=>{
+                            ev.preventDefault()
+                            getProgramConfig(ap.code)
+                        }}>{ap.name}</a></li>)}
+                    </ul>
+                </div> : <h6 className="text-white mb-0">EPT | Loading...</h6>}
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#appNavbarToggler" aria-controls="appNavbarToggler" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>

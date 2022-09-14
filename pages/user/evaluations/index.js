@@ -78,16 +78,18 @@ function Evaluations() {
                                         <td>{new Date(evaluation.due_date).toDateString('en-GB')}</td>
                                         <td>No</td>
                                         <td className="d-flex flex-column flex-md-row gap-2 justify-content-center">
-                                            <Link className='btn btn-primary btn-sm py-0 text-nowrap' href={{
+                                            <Link href={{
                                                   pathname: `/user/evaluations/${evaluation.id}/new`,
                                                   query: {pID:evaluation.code,fID:evaluation.form},
                                                 }}
-                                            > Take Evaluation</Link>
-                                            <Link className='btn btn-primary btn-sm py-0 text-nowrap' href={{
+                                            > 
+                                            <a className='btn btn-primary btn-sm py-0 text-nowrap'>Take Evaluation</a></Link>
+                                            <Link href={{
                                                   pathname: `/user/evaluations/${evaluation.id}/new`,
                                                   query: {pID:evaluation.code,fID:evaluation.form},
                                                 }}
-                                            > Edit Evaluation</Link>
+                                            > 
+                                            <a className='btn btn-dark btn-sm py-0 text-nowrap'>Edit Evaluation</a></Link>
                                             {/* <a className='btn btn-dark btn-sm py-0 text-nowrap' href={`/user/evaluations/${evaluation.id}`}> Preview form</a> */}
                                         </td>
                                     </tr>

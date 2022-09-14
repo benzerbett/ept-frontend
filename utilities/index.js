@@ -7,11 +7,11 @@ export const simulateLogin = (username, password) => {
         if (username === 'admin' && password.length > 0) {
             window.sessionStorage.setItem('isLoggedIn', true)
             window.sessionStorage.setItem('user', JSON.stringify({ type: 'admin', name: 'Mkuu L. Wabara', email: 'mkadmin@email.net' }))
-            window.location.href = '/admin'
+            window.location.href = '/admin/'
         } else if (username.length > 0 && password.length > 0) {
             window.sessionStorage.setItem('isLoggedIn', true)
             window.sessionStorage.setItem('user', JSON.stringify({ type: 'participant', name: 'Mwana Maabara', email: 'participant@mail.ke' }))
-            window.location.href = '/user'
+            window.location.href = '/user/'
         }
     }
 }
@@ -31,10 +31,12 @@ export const simulateGetSession = () => {
     if (window && window.sessionStorage) {
         let user = window.sessionStorage.getItem('user');
         let isLoggedIn = window.sessionStorage.getItem('isLoggedIn');
+        let activeProgramCode = window.sessionStorage.getItem('activeProgramCode');
         if (user && isLoggedIn) {
             return {
                 isLoggedIn: true,
-                user: JSON.parse(user)
+                user: JSON.parse(user),
+                activeProgramCode: activeProgramCode
             }
         }
     }

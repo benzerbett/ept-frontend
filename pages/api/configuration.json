@@ -714,6 +714,7 @@
                 "start": "2020-08-22T11:00:00.000Z",
                 "end": "2020-08-22T11:00:00.000Z",
                 "useChecklist": true,
+                "checklistForm": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form",
                 "form": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form",
                 "schema": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Schema",
                 "active": true,
