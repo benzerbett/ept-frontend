@@ -1,10 +1,13 @@
 import Head from 'next/head'
 import React from 'react'
+import Link from 'next/link'
 
 function Evaluations() {
     const evaluations = [
         {
             id: 1,
+            code: 'SARS-CoV-2-PT',
+            form:'SARS-CoV-2-PT-RA-Aug22',
             title: 'Evaluation 1',
             description: 'Oncology PT Round 9 Readiness Evaluation',
             status: 'open',
@@ -14,6 +17,8 @@ function Evaluations() {
         },
         {
             id: 2,
+            code: 'oncology-PT',
+            form:'Oncology-PT-RA-Aug22',
             title: 'Evaluation 2',
             description: 'Oncology PT Round 9 Readiness Evaluation',
             status: 'open',
@@ -23,6 +28,8 @@ function Evaluations() {
         },
         {
             id: 3,
+            code: 'Microbiology-PT',
+            form:'Microbiology-PT-RA-Aug22',
             title: 'Evaluation 3',
             description: 'Oncology PT Round 9 Readiness Evaluation',
             status: 'open',
@@ -71,8 +78,16 @@ function Evaluations() {
                                         <td>{new Date(evaluation.due_date).toDateString('en-GB')}</td>
                                         <td>No</td>
                                         <td className="d-flex flex-column flex-md-row gap-2 justify-content-center">
-                                            <a className='btn btn-primary btn-sm py-0 text-nowrap' href={`/user/evaluations/${evaluation.id}/new`}> Take Evaluation</a>
-                                            <a className='btn btn-dark btn-sm py-0 text-nowrap' href={`/user/evaluations/${evaluation.id}/edit/${0}`}> Edit submission</a>
+                                            <Link className='btn btn-primary btn-sm py-0 text-nowrap' href={{
+                                                  pathname: `/user/evaluations/${evaluation.id}/new`,
+                                                  query: {pID:evaluation.code,fID:evaluation.form},
+                                                }}
+                                            > Take Evaluation</Link>
+                                            <Link className='btn btn-primary btn-sm py-0 text-nowrap' href={{
+                                                  pathname: `/user/evaluations/${evaluation.id}/new`,
+                                                  query: {pID:evaluation.code,fID:evaluation.form},
+                                                }}
+                                            > Edit Evaluation</Link>
                                             {/* <a className='btn btn-dark btn-sm py-0 text-nowrap' href={`/user/evaluations/${evaluation.id}`}> Preview form</a> */}
                                         </td>
                                     </tr>
