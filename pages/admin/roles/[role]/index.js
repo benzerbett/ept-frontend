@@ -1,7 +1,10 @@
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import React from 'react'
 
-function ViewRole({ role }) {
+function ViewRole() {
+  const router = useRouter()
+  const {role} = router.query
   return (
     <>
       <Head>

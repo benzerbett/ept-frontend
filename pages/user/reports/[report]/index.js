@@ -1,7 +1,10 @@
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import React from 'react'
 
-function ViewReport({report}) {
+function ViewReport() {
+  const router = useRouter()
+  const {report} = router.query
   return (
     <>
       <Head>

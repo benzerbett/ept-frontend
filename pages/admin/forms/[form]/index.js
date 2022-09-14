@@ -1,7 +1,10 @@
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import React from 'react'
 
-function ViewForm({ form }) {
+function ViewForm() {
+  const router = useRouter()
+  const {form} = router.query
   return (
     <>
       <Head>

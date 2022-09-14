@@ -1,7 +1,10 @@
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import React from 'react'
 
-function SchemeForm({ scheme }) {
+function SchemeForm() {
+  const router = useRouter()
+  const {scheme} = router.query
   return (
     <>
       <Head>

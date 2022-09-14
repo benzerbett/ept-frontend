@@ -1,7 +1,10 @@
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import React from 'react'
 
-function ViewUser({ user }) {
+function ViewUser() {
+  const router = useRouter()
+  const {user} = router.query
   return (
     <>
       <Head>

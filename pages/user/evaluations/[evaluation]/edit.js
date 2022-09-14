@@ -1,7 +1,10 @@
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import React from 'react'
 
-function EvaluationForm({evaluation}) {
+function EvaluationForm() {
+  const router = useRouter()
+  const {evaluation} = router.query
   return (
     <>
       <Head>
