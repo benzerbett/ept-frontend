@@ -30,6 +30,9 @@ function AppNavbar() {
             .then((data) => {
                 if (data.length > 0) {
                     setAllPrograms(data)
+                    if(data.length === 1) {
+                        getProgramConfig(data[0]?.code)
+                    }
                 }
             })
     }
