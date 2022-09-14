@@ -17,7 +17,7 @@ function AppNavbar() {
             .then((data) => {
                 if (data.code) {
                     setActiveProgram(data?.code)
-                    if(window && window.sessionStorage) {
+                    if (window && window.sessionStorage) {
                         window.sessionStorage.setItem('activeProgramCode', data?.code)
                     }
                 }
@@ -52,18 +52,17 @@ function AppNavbar() {
         }
     }, [])
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark fixed-top bg-success">
+        <nav className="navbar navbar-expand-lg navbar-dark fixed-top bg-purple">
             <div className="container">
                 {/* <Link href={homeUrl}>
                     <a className="navbar-brand">Oncology EPT</a>
                 </Link> */}
                 {allPrograms && allPrograms.length > 0 ? <div className="btn-group fw-bold">
-                    <button type="button" className="btn btn-success btn-sm">{allPrograms.find(ap => ap.code == activeProgram)?.name || "Select a Program"}</button>
-                    <button type="button" className="btn btn-success btn-sm dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span className="visually-hidden">Toggle Program Switcher</span>
+                    <button className="btn bg-purple-light btn-sm text-white btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {allPrograms.find(ap => ap.code == activeProgram)?.name || "Select a Program"}
                     </button>
                     <ul className="dropdown-menu">
-                        {allPrograms.map((ap, x) => <li key={ap.code}><a className="dropdown-item" onClick={(ev)=>{
+                        {allPrograms.map((ap, x) => <li key={ap.code}><a className="dropdown-item" onClick={(ev) => {
                             ev.preventDefault()
                             getProgramConfig(ap.code)
                         }}>{ap.name}</a></li>)}
@@ -95,7 +94,7 @@ function AppNavbar() {
                         </li>
                         <li className="nav-item dropdown">
                             <a className={"nav-link dropdown-toggle " + (router.pathname.includes('/user/evaluations') ? ' active' : '')} href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Evaluations (PT/QC)
+                                Evaluations
                             </a>
                             <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                                 <li>
@@ -113,19 +112,30 @@ function AppNavbar() {
                             <Link href="/user/reports"><a className={"nav-link " + (router.pathname === '/user/reports' ? ' active' : '')}>Reports</a></Link>
                         </li>
                         <li className="nav-item mx-md-2">
-                            <Link href="/user/settings"><a className={"nav-link " + (router.pathname === '/user/settings' ? ' active' : '')}>Settings</a></Link>
-                        </li>
-                        <li className="nav-item mx-md-2">
-                            <Link href="/user/settings/account"><a className={"nav-link " + (router.pathname === '/user/settings/account' ? ' active' : '')}>My account</a></Link>
+                            <Link href="/"><a className={"nav-link " + (router.pathname === '/user/settings' ? ' active' : '')}>Help Desk</a></Link>
                         </li>
                     </ul>
-                    {(isLoggedIn && user) ? <div className="text-end d-flex">
-                        <div className="d-flex flex-wrap align-items-center">
-                            <Link href="/user/settings/account">
-                                <a className="text-light me-2 text-decoration-none fs-6 fw-light">{user.name}</a>
-                            </Link>
-                            <button className="btn btn-sm btn-outline-light" onClick={simulateLogout}>Logout</button>
-                        </div>
+                    {(isLoggedIn && user) ? <div className="btn-group">
+                        <button className="btn bg-purple-dark text-white btn-sm dropdown-toggle outline-none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {user.name}
+                        </button>
+                        <ul className="dropdown-menu text-center">
+                            <li>
+                                <Link href="/user/settings/account">
+                                    <a className="nav-link">My Account</a>
+                                </Link>
+                            </li>
+                            <li><hr className="dropdown-divider" /></li>
+                            <li>
+                                <Link href="/user/settings">
+                                    <a className="nav-link">Settings</a>
+                                </Link>
+                            </li>
+                            <li><hr className="dropdown-divider" /></li>
+                            <li className='d-flex justify-content-center'>
+                                <button className="btn btn-link nav-link text-center" onClick={simulateLogout}>Logout</button>
+                            </li>
+                        </ul>
                     </div> : <div className="text-end d-flex">
                         <Link href="/auth/login"><a style={{ whiteSpace: 'nowrap' }} className="btn btn-outline-light me-2">Login</a></Link>
                         <Link href="/auth/signup"><a style={{ whiteSpace: 'nowrap' }} className="btn btn-light">Sign-up</a></Link>

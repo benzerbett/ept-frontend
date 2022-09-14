@@ -1,0 +1,16 @@
+/* root colors */
+:root {
+  --color-purple: #5808a3;
+  --color-purple-light: #7d25ce;
+    --color-purple-dark: #3c0073;
+}
+
+.bg-purple{
+    background-color: var(--color-purple);
+}
+.bg-purple-light{
+    background-color: var(--color-purple-light);
+}
+.bg-purple-dark{
+    background-color: var(--color-purple-dark);
+}

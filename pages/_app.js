@@ -1,4 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.css'
+import '../styles/custom.css'
 
 import PublicTheme from '../components/layouts/PublicTheme'
 import AppTheme from '../components/layouts/AppTheme'
