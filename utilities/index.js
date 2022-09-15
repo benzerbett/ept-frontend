@@ -4,13 +4,15 @@ export const simulateLogin = (username, password) => {
         // clear session storage
         window.sessionStorage.removeItem('user');
         window.sessionStorage.removeItem('isLoggedIn');
+        // generate user id
+        const id = Math.floor(Math.random() * 1000000);
         if (username === 'admin' && password.length > 0) {
             window.sessionStorage.setItem('isLoggedIn', true)
-            window.sessionStorage.setItem('user', JSON.stringify({ type: 'admin', name: 'Mkuu L. Wabara', email: 'mkadmin@email.net' }))
+            window.sessionStorage.setItem('user', JSON.stringify({id: id, type: 'admin', name: 'Mkuu L. Wabara', email: 'mkadmin@email.net' }))
             window.location.href = '/admin/'
         } else if (username.length > 0 && password.length > 0) {
             window.sessionStorage.setItem('isLoggedIn', true)
-            window.sessionStorage.setItem('user', JSON.stringify({ type: 'participant', name: 'Mwana Maabara', email: 'participant@mail.ke' }))
+            window.sessionStorage.setItem('user', JSON.stringify({id: id, type: 'participant', name: 'Mwana Maabara', email: 'participant@mail.ke' }))
             window.location.href = '/user'
         }
         window.location.reload()

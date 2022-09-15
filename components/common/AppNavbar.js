@@ -12,7 +12,7 @@ function AppNavbar() {
     const router = useRouter()
 
     const getProgramConfig = (id) => {
-        return fetch(`/api/configurations/${id}`)
+        fetch(`/api/configurations/${id}`)
             .then((res) => res.json())
             .then((data) => {
                 if (data.code) {
@@ -30,7 +30,7 @@ function AppNavbar() {
             .then((data) => {
                 if (data.length > 0) {
                     setAllPrograms(data)
-                    if(data.length === 1) {
+                    if (data.length === 1) {
                         getProgramConfig(data[0]?.code)
                     }
                 }

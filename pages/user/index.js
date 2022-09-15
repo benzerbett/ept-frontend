@@ -20,7 +20,8 @@ function User() {
                     if (window && window.sessionStorage) {
                         window.sessionStorage.setItem('activeProgramCode', data?.code)
                     }
-                    window.location.href = '/user/surveys'
+                    // window.location.href = '/user/surveys'
+                    router.push('/user/surveys')
                 }
             })
     }
@@ -50,7 +51,8 @@ function User() {
                 }
                 // check if an active program is set in session storage
                 if (session.activeProgramCode) {
-                    window.location.href = '/user/surveys'
+                    // window.location.href = '/user/surveys'
+                    router.push('/user/surveys')
                 }
             }
             getPrograms()
