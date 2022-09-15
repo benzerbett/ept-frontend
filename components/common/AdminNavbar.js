@@ -31,7 +31,6 @@ function AdminNavbar() {
                 </div>
             </div>
         </header>
-
     )
 }
 

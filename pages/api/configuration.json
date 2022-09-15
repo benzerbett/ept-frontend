@@ -708,7 +708,7 @@
             {
                 "name": "COV-PT Survey",
                 "code": "SARS-CoV-2-PT-RA-survey",
-                "description": "SARS-CoV-2 PT Readiness Assessment August 2022",
+                "description": "SARS-CoV-2 PT Readiness Assessment - August 2022",
                 "sections": [
                     {
                         "name": "Section 1: Sample Information for survey",

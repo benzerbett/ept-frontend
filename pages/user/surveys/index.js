@@ -1,43 +1,30 @@
 import Head from 'next/head'
 import React from 'react'
 import Link from 'next/link'
+import { simulateGetSession } from '../../../utilities'
 
 function Surveys() {
-    const surveys = [
-        {
-            id: 1,
-            code: 'SARS-CoV-2-PT',
-            form:'SARS-CoV-2-PT-RA-survey',
-            title: 'Covid Survey',
-            description: 'Oncology PT Round 9 Readiness Survey',
-            status: 'open',
-            created_at: '2022-08-01T00:00:00.000Z',
-            updated_at: '2022-08-01T00:00:00.000Z',
-            due_date: '2022-08-01T00:00:00.000Z'
-        },
-        {
-            id: 2,
-            code: 'oncology-PT',
-            form:'Oncology-PT-RA-survey',
-            title: 'Oncology Survey',
-            description: 'Oncology PT Round 9 Readiness Survey',
-            status: 'open',
-            created_at: '2022-08-01T00:00:00.000Z',
-            updated_at: '2022-08-01T00:00:00.000Z',
-            due_date: '2022-08-01T00:00:00.000Z'
-        },
-        {
-            id: 3,
-            code: 'Microbiology-PT',
-            form:'Microbiology-PT-RA-survey',
-            title: 'Microbiology Survey',
-            description: 'Oncology PT Round 9 Readiness Survey',
-            status: 'open',
-            created_at: '2022-08-01T00:00:00.000Z',
-            updated_at: '2022-08-01T00:00:00.000Z',
-            due_date: '2022-08-01T00:00:00.000Z'
+    const [surveys, setSurveys] = React.useState([])
+    const [activeconfig, setActiveConfig] = React.useState(null)
+
+    const getProgramConfig = (id) => {
+        return fetch(`/api/configurations/${id}`)
+            .then((res) => res.json())
+            .then((data) => {
+                return data
+            })
+    }
+
+    React.useEffect(() => {
+        const session = simulateGetSession();
+        if (session) {
+            const ap = getProgramConfig(session.activeProgramCode)
+            ap.then((data) => {
+                setActiveConfig(data)
+                setSurveys(data.surveys)
+            } )
         }
-    ]
+
 
     return (
         <>
