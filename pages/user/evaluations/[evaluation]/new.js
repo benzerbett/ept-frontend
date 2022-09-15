@@ -103,11 +103,9 @@ function Form() {
         });
         return flattened
     }
-    // console.log('kkkk',pID,fID)
     useEffect(() => {
         setForm(configuration.find(item => item.code === pID).forms.find(item => item.code === fID));
     }, []);
-    
     if (!form) {
         return <div>
             <h1>Form not found</h1>

@@ -1,11 +1,14 @@
 import Head from 'next/head'
 import React from 'react'
+import Link from 'next/link'
 
 function Surveys() {
     const surveys = [
         {
             id: 1,
-            title: 'Survey 1',
+            code: 'SARS-CoV-2-PT',
+            form:'SARS-CoV-2-PT-RA-survey',
+            title: 'Covid Survey',
             description: 'Oncology PT Round 9 Readiness Survey',
             status: 'open',
             created_at: '2022-08-01T00:00:00.000Z',
@@ -14,7 +17,9 @@ function Surveys() {
         },
         {
             id: 2,
-            title: 'Survey 2',
+            code: 'oncology-PT',
+            form:'Oncology-PT-RA-Aug22',
+            title: 'Oncology Survey',
             description: 'Oncology PT Round 9 Readiness Survey',
             status: 'open',
             created_at: '2022-08-01T00:00:00.000Z',
@@ -23,7 +28,9 @@ function Surveys() {
         },
         {
             id: 3,
-            title: 'Survey 3',
+            code: 'Microbiology-PT',
+            form:'Microbiology-PT-RA-Aug22',
+            title: 'Microbiology Survey',
             description: 'Oncology PT Round 9 Readiness Survey',
             status: 'open',
             created_at: '2022-08-01T00:00:00.000Z',
@@ -71,10 +78,21 @@ function Surveys() {
                                         <td>{new Date(survey.due_date).toDateString('en-GB')}</td>
                                         <td>No</td>
                                         <td className="d-flex flex-column flex-md-row gap-2 justify-content-center">
-                                            <a className='btn btn-primary btn-sm py-0 text-nowrap' href={`/user/surveys/${survey.id}/new`}> Take Survey</a>
-                                            <a className='btn btn-dark btn-sm py-0 text-nowrap' href={`/user/surveys/${survey.id}/edit/${0}`}> Edit submission</a>
+                                            <Link href={{
+                                                  pathname: `/user/surveys/${survey.id}/new`,
+                                                  query: {pID:survey.code,fID:survey.form},
+                                                }}
+                                            > 
+                                            <a className='btn btn-primary btn-sm py-0 text-nowrap'>Take Survey</a></Link>
+                                            <Link href={{
+                                                  pathname: `/user/surveys/${survey.id}/edit`,
+                                                  query: {pID:survey.code,fID:survey.form},
+                                                }}
+                                            > 
+                                            <a className='btn btn-dark btn-sm py-0 text-nowrap'>Edit Survey</a></Link>
                                             {/* <a className='btn btn-dark btn-sm py-0 text-nowrap' href={`/user/surveys/${survey.id}`}> Preview form</a> */}
                                         </td>
+                                      
                                     </tr>
                                 ))}
                             </tbody>

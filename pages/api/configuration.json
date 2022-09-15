@@ -704,6 +704,707 @@
                     "updated": "2020-01-01",
                     "version": "1.0.0"
                 }
+            },
+            {
+                "name": "COV-PT RA Aug22",
+                "code": "SARS-CoV-2-PT-RA-survey",
+                "description": "SARS-CoV-2 PT Readiness Assessment August 2022",
+                "sections": [
+                    {
+                        "name": "Section 1: Sample Information",
+                        "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-1",
+                        "description": "Section 1: Sample Information",
+                        "fields": [
+                            {
+                                "name": "Title 1",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-1-TITLE",
+                                "description": "Please fill all fields below",
+                                "type": "title",
+                                "style": "h1"
+                            },
+                            {
+                                "name": "Laboratory Name",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-1-Laboratory-Name",
+                                "description": "Name of Laboratory",
+                                "type": "text",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Laboratory Code",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-1-Laboratory-Code",
+                                "description": "Laboratory Code",
+                                "type": "text",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Date of Dispatch",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-1-DOD",
+                                "description": "Sample date of dispatch",
+                                "type": "date",
+                                "format": "YYYY-MM-DD",
+                                "required": true,
+                                "validators": [
+                                    {
+                                        "type": "date",
+                                        "min": "01/01/1900",
+                                        "max": "today"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Date of panel received",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-1-DOP",
+                                "description": "Please enter the date of panel received",
+                                "type": "date",
+                                "format": "YYYY-MM-DD",
+                                "required": true,
+                                "validators": [
+                                    {
+                                        "type": "date",
+                                        "min": "01/01/1900",
+                                        "max": "today"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Deadline for submitting results",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-1-DOS",
+                                "description": "Within 2 weeks after the date of panel reception",
+                                "type": "date",
+                                "format": "YYYY-MM-DD",
+                                "required": true,
+                                "validators": [
+                                    {
+                                        "type": "date",
+                                        "min": "01/01/1900",
+                                        "max": "today"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Results reporting date",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-1-reporting-date",
+                                "description": "Date of results reporting",
+                                "type": "date",
+                                "format": "YYYY-MM-DD",
+                                "required": true,
+                                "validators": [
+                                    {
+                                        "type": "date",
+                                        "min": "01/01/1900",
+                                        "max": "today"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Test performed by",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-1-Tester",
+                                "description": "Test performed by",
+                                "type": "text",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Results reported by",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-1-reporter",
+                                "description": "Results reported by",
+                                "type": "text",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Section 2: Results",
+                        "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-2",
+                        "description": "Section 2: Results",
+                        "fields": [
+                            {
+                                "options": "@ref('dict:Methods')",
+                                "type": "groupstart",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-3-Sample-Loop",
+                                "display": "row"
+                            },
+                            {
+                                "name": "Sample Number",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-2-Sample Number",
+                                "description": "Sample Number",
+                                "type": "groupstart",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Individual RT-PCR Results",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-2-TITLE",
+                                "description": "Please fill in Ct values (for real-time PCR), POS/ NEG (for conventional PCR) or leave blank if not tested",
+                                "type": "title",
+                                "style": "h1"
+                            },
+                            {
+                                "name": "Method",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-2-Method",
+                                "description": "Gene target(s), please select",
+                                "type": "title",
+                                "style": "h1"
+                            },
+                            {
+                                "name": "Gene target 1",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-2-GT1",
+                                "Description": "Gene target 1",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:Gene_option')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Gene target 2",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-2-GT2",
+                                "Description": "Gene target 1",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:Gene_option')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Gene target 3",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-2-GT3",
+                                "Description": "Gene target 1",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:Gene_option')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Overall Result",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-2-Overall Results",
+                                "Description": "Overall Results",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:overall-results-OPTIONS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Remarks",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-2-Remarks",
+                                "description": "Remarks",
+                                "type": "textarea",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "@endforeach",
+                                "type": "groupend",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-3-Sample-Loop"
+                            }
+                        ],
+                        "next": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-2",
+                        "nextCondition": "true",
+                        "disabled": false,
+                        "metadata": {
+                            "type": "section",
+                            "created": "2020-08-22T11:00:00.000Z",
+                            "modified": "2020-08-22T11:00:00.000Z"
+                        }
+                    },
+                    {
+                        "name": "Section 3: Information on the Sample preparation",
+                        "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-3",
+                        "description": " Please select the appropriate options from the list and/or provide method/kit information below:",
+                        "fields": [
+                            {
+                                "name": "Heat Inactivation of samples",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-3 Inactivation of samples",
+                                "type": "radio",
+                                "options": "@ref('dict:YES_NO_OPTIONS')"
+                            },
+                            {
+                                "name": "Temperature",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-3 Temperature",
+                                "type": "number",
+                                "value": ""
+                            },
+                            {
+                                "name": "Duration",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-3 Duration",
+                                "type": "number",
+                                "value": ""
+                            },
+                            {
+                                "name": "Method (Using water bath / dry heat)",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-3 Method (Using water bath / dry heat)",
+                                "type": "select",
+                                "options": "@ref('dict:water-bath-options')"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Section 4: Information on the detection method(s) of SARS-CoV-2 ",
+                        "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-4",
+                        "description": " Please select the appropriate options from the list and/or provide method/kit information below ",
+                        "fields": [
+                            {
+                                "name": "Method",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-4-Method",
+                                "description": "Gene target(s), please select",
+                                "type": "title",
+                                "style": "h1"
+                            },
+                            {
+                                "name": "Gene target 1",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-4-GT1",
+                                "Description": "Gene target 1",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:Gene_option')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Gene target 2",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-4-GT2",
+                                "Description": "Gene target 1",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:Gene_option')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Gene target 3",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-4-GT3",
+                                "Description": "Gene target 1",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:Gene_option')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Conventional/Real-time",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-4-Overall Conventional/Real-time",
+                                "Description": "Conventional/Real-time",
+                                "type": "radio",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:Conventional/Real-time-OPTIONS')",
+                                "actions": {
+                                    "onChange": []
+                                }
+                            },
+                            {
+                                "name": "In-House/ Commercial",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-4-Overall In-House/ Commercial",
+                                "Description": "In-House/ Commercial",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:In-House/ Commercial-OPTIONS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Assay (select when applicable)",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-4-Assay (select when applicable)",
+                                "Description": "Assay (select when applicable)",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:Assay-OPTIONS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Assay (select when applicable)",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-4-Assay (select when applicable)",
+                                "Description": "Assay (select when applicable)",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:Assay-OPTIONS-2')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Algorithm",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-4-Algorithm",
+                                "description": "Algorithm",
+                                "type": "textarea",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Brand/ model name of machine",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-4-machine",
+                                "description": "Brand/ model name of machine",
+                                "type": "textarea",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Remarks",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-4-Remarks",
+                                "description": "Remarks",
+                                "type": "textarea",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Section 5: Short questionnaire on the implementation of molecular detection of SARS-CoV-2",
+                        "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-5",
+                        "description": " (For information purpose) - can select more than 1 option in Q a., b., c., d. and e.",
+                        "fields": [
+                            {
+                                "name": " Short questionnaire on the implementation of molecular detection of SARS-CoV-2?",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-5-concerns",
+                                "description": "(For information purpose) - can select more than 1 option in Q a., b., c., d. and e.",
+                                "type": "title",
+                                "style": "h1"
+                            },
+                            {
+                                "name": "a.  Major concern(s) in launching/ implementing the molecular detection of SARS-CoV-2?",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-5-concerns",
+                                "Description": " Major concern(s) in launching/ implementing the molecular detection of SARS-CoV-2?",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:molecularconcerns-OPTIONS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Additional comments:",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-4-additional-comments-a",
+                                "description": "Additional comments:",
+                                "type": "textarea",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "b. What are the sources of the specimens for testing in your laboratory?",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-5-specimen",
+                                "Description": "What are the sources of the specimens for testing in your laboratory?",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:specimen-OPTIONS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Others, please specify:",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-5-Others",
+                                "description": "Others, please specify:",
+                                "type": "textarea",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Unknown, please explain:",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-5-unknown",
+                                "description": "Unknown, please explain:",
+                                "type": "textarea",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Additional comments:",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-4-additional-comments-b",
+                                "description": "Additional comments:",
+                                "type": "textarea",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "c. Are you testing all specimens coming in?",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-5-specimen-testing",
+                                "Description": "Are you testing all specimens coming in?",
+                                "type": "radio",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:YES_NO_OPTIONS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "If No, what is the criteria of prioritization of specimens for testing, please describe",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-5-criteria-of-prioritization",
+                                "description": "If No, what is the criteria of prioritization of specimens for testing, please describe",
+                                "type": "textarea",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Additional comments:",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-4-additional-comments-c",
+                                "description": "Additional comments:",
+                                "type": "textarea",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "d. What are the common type of specimens accepted for the molecular detection of SARS-CoV-2 in your laboratory?(Daily sample load)",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-5-daily-sample-load",
+                                "Description": "What are the common type of specimens accepted for the molecular detection of SARS-CoV-2 in your laboratory?",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:daily-sample-load-OPTIONS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "d. What are the common type of specimens accepted for the molecular detection of SARS-CoV-2 in your laboratory?(Maximum daily testing capacity)",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-5-daily-sample-load-max",
+                                "Description": "What are the common type of specimens accepted for the molecular detection of SARS-CoV-2 in your laboratory?",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:daily-sample-load-OPTIONS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Additional comments:",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-4-additional-comments-d",
+                                "description": "Additional comments:",
+                                "type": "textarea",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "e.  What is the usual daily sample load/ current maximum daily testing capacity for SARS-CoV-2 in your laboratory?",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-5-common-specimen",
+                                "Description": " What is the usual daily sample load/ current maximum daily testing capacity for SARS-CoV-2 in your laboratory?",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:common-specimen-OPTIONS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Additional comments:",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-4-additional-comments-e",
+                                "description": "Additional comments:",
+                                "type": "textarea",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "f. What is the usual turnaround time for the molecular detection of SARS-CoV-2 in your laboratory?",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-5-tot",
+                                "Description": "What is the usual turnaround time for the molecular detection of SARS-CoV-2 in your laboratory?",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:TOT-OPTIONS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Additional comments:",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-4-additional-comments-f",
+                                "description": "Additional comments:",
+                                "type": "textarea",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "g(1). BSL requirement for PCR if any in your country?",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-5-bsl-pcr",
+                                "Description": "BSL requirement for PCR if any in your country?",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:BSL-PCR-OPTIONS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "g(2). BSL requirement for virus isolation if any in your country?",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-5-bsl-virus-isolation",
+                                "Description": "BSL requirement for virus isolation if any in your country?",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:BSL-PCR-OPTIONS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Additional comments:",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-4-additional-comments-g",
+                                "description": "Additional comments:",
+                                "type": "textarea",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "h. Which type(s) of quality control(s) is/are included in the molecular detection of SARS-CoV-2 in your laboratory?",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-5-molecular-detection",
+                                "Description": "Which type(s) of quality control(s) is/are included in the molecular detection of SARS-CoV-2 in your laboratory?",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:QC-OPTIONS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Additional comments:",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-4-additional-comments-h",
+                                "description": "Additional comments:",
+                                "type": "textarea",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "i.  Has the detection method(s) been validated against other common respiratory pathogens?",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-5-respiratory-pathogens",
+                                "Description": " Has the detection method(s) been validated against other common respiratory pathogens?",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:RESPIRATORY-OPTIONS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Additional comments:",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-4-additional-comments-i",
+                                "description": "Additional comments:",
+                                "type": "textarea",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "metadata": {
+                    "created": "2020-01-01",
+                    "updated": "2020-01-01",
+                    "version": "1.0.0"
+                }
             }
         ],
         "rounds": [
@@ -714,7 +1415,7 @@
                 "start": "2020-08-22T11:00:00.000Z",
                 "end": "2020-08-22T11:00:00.000Z",
                 "useChecklist": true,
-                "checklistForm": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form",
+                "checklistForm": "SARS-CoV-2-PT-RA-survey",
                 "form": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form",
                 "schema": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Schema",
                 "active": true,
