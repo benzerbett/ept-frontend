@@ -18,7 +18,7 @@ function Surveys() {
         {
             id: 2,
             code: 'oncology-PT',
-            form:'Oncology-PT-RA-Aug22',
+            form:'Oncology-PT-RA-survey',
             title: 'Oncology Survey',
             description: 'Oncology PT Round 9 Readiness Survey',
             status: 'open',
@@ -29,7 +29,7 @@ function Surveys() {
         {
             id: 3,
             code: 'Microbiology-PT',
-            form:'Microbiology-PT-RA-Aug22',
+            form:'Microbiology-PT-RA-survey',
             title: 'Microbiology Survey',
             description: 'Oncology PT Round 9 Readiness Survey',
             status: 'open',

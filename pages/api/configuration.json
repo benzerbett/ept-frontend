@@ -2178,6 +2178,172 @@
                         }
                     }
                 ]
+            },
+            {
+                "name": "Ongology-PT RA Survey",
+                "code": "Oncology-PT-RA-survey",
+                "description": "Oncology PT Readiness Survey August 2022",
+                "sections": [
+                    {
+                        "name": "Oncology Proficiency Testing survey",
+                        "code": "Oncology-PT-RA-Aug22-Primary-Entry-Form-Section-1",
+                        "description": "Oncology Proficiency Testing",
+                        "fields": [
+                            {
+                                "name": "Round Name",
+                                "code": "Oncology-PT-RA-Aug22-Primary-Entry-Form-Section-1-Round-Name",
+                                "description": "Round Name",
+                                "type": "text",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Shipment Code",
+                                "code": "Oncology-PT-RA-Aug22-Primary-Entry-Form-Section-1-shipment-Code",
+                                "description": "Shipment Code",
+                                "type": "text",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Result Due Date",
+                                "code": "Oncology-PT-RA-Aug22-Primary-Entry-Form-Section-1-Result-Due-Date",
+                                "description": "Result Due Date",
+                                "type": "date",
+                                "format": "YYYY-MM-DD",
+                                "required": true,
+                                "validators": [
+                                    {
+                                        "type": "date",
+                                        "min": "01/01/1900",
+                                        "max": "today"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Pass mark (%)",
+                                "code": "Oncology-PT-RA-Aug22-Primary-Entry-Form-Section-1-pass-mark",
+                                "description": "Please enter the pass mark(%)",
+                                "type": "number",
+                                "format": "YYYY-MM-DD",
+                                "required": true,
+                                "validators": [
+                                    {
+                                        "type": "date",
+                                        "min": "01/01/1900",
+                                        "max": "today"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Testing Instructions",
+                                "code": "Oncology-PT-RA-Aug22-Primary-Entry-Form-Section-1-testing-instruction",
+                                "description": "Testing Instructions",
+                                "type": "text",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Select Checklist ",
+                                "code": "Oncology-PT-RA-Aug22-Primary-Entry-Form-Section-1-checklist",
+                                "description": "select checklist",
+                                "type": "text",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "options": "@ref('dict:CHECKLIST')"
+
+                            }
+                        ]
+                    },                   
+                    {
+                        "name": "Section 2: Sample log",
+                        "code": "Oncology-PT-RA-Aug22-Primary-Entry-Form-Section-2",
+                        "description": "Section 2: Sample log",
+                        "fields": [
+                            {
+                                "options": "@ref('dict:SAMPLES_ONCOLOGY')",
+                                "type": "groupstart",
+                                "code": "Oncology-PT-RA-Aug22-Primary-Entry-Form-Section-2-Sample-Loop",
+                                "display": "row"
+                            },
+                            {
+                                "name": "Sample",
+                                "code": "Oncology-PT-RA-Aug22-Primary-Entry-Form-Section-2-Sample",
+                                "description": "Sample",
+                                "type": "textarea",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "HR HPV 16",
+                                "code": "Oncology-PT-RA-Aug22-Primary-Entry-Form-Section-2-Hpv16",
+                                "Description": "HR HPV 16",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:HPV')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "HR HPV 18-45",
+                                "code": "Oncology-PT-RA-Aug22-Primary-Entry-Form-Section-2-Hpv18-45",
+                                "Description": "HR HPV 18-45",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:HPV')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Other HR HPV",
+                                "code": "Oncology-PT-RA-Aug22-Primary-Entry-Form-Section-2-Hpvother",
+                                "Description": "Other HR HPV",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:HPV')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "@endforeach",
+                                "type": "groupend",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-3-Sample-Loop"
+                            }
+                        ],
+                        "next": "Oncology-PT-RA-Aug22-Primary-Entry-Form-Section-2",
+                        "nextCondition": "true",
+                        "disabled": false,
+                        "metadata": {
+                            "type": "section",
+                            "created": "2020-08-22T11:00:00.000Z",
+                            "modified": "2020-08-22T11:00:00.000Z"
+                        }
+                    }
+                ]
             }
         ],
         "rounds": [
@@ -2188,6 +2354,7 @@
                 "start": "2020-08-22T11:00:00.000Z",
                 "end": "2020-08-22T11:00:00.000Z",
                 "useChecklist": true,
+                "checklistForm": "Oncology-PT-RA-survey",
                 "form": "Oncology-PT-RA-Aug22-Primary-Entry-Form",
                 "schema": "Oncology-PT-RA-Aug22-Primary-Entry-Form-Schema",
                 "active": true,
@@ -3369,6 +3536,1020 @@
                         }
                     }
                 ]
+            },
+            {
+                "name": "Microbiology-PT RA survey",
+                "code": "Microbiology-PT-RA-survey",
+                "description": "Microbiology PT Readiness Assessment Survey",
+                "sections": [
+                    {
+                        "name": "Microbiology(EQA) Proficiency Testing",
+                        "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section-1",
+                        "description": "Microbiology Proficiency Testing",
+                        "fields": [
+                            {
+                                "name": "Participant Name",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section-1-Participant-name",
+                                "description": "Participant Name",
+                                "type": "text",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Participant Code ",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section-1-Participant-Code ",
+                                "description": "Participant Code",
+                                "type": "text",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Affiliation",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section-1-Affiliation",
+                                "description": "Affiliation",
+                                "type": "text",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Email Address",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section-1-Email-Address",
+                                "description": "Email Address",
+                                "type": "text",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Mobile Number",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section-1-Mobile-Number ",
+                                "description": "Mobile Number ",
+                                "type": "text",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Shipment Date",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section-1-Shipment-Date",
+                                "description": "Shipment Date",
+                                "type": "date",
+                                "format": "YYYY-MM-DD",
+                                "required": true,
+                                "validators": [
+                                    {
+                                        "type": "date",
+                                        "min": "01/01/1900",
+                                        "max": "today"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Result Due Date",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section-1-Result-Due-Date",
+                                "description": "Result Due Date",
+                                "type": "date",
+                                "format": "YYYY-MM-DD",
+                                "required": true,
+                                "validators": [
+                                    {
+                                        "type": "date",
+                                        "min": "01/01/1900",
+                                        "max": "today"
+                                    }
+                                ]
+                            }
+                            
+                        ]
+                    },
+                    {
+                        "name": "Pre-Reporting Questions",
+                        "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-pre-reporting-questions",
+                        "description": "Pre-Reporting Questions",
+                        "fields": [
+                            {
+                                "name": "Answer these questions before reporting on the sample",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "description": "Answer these questions before reporting on the sample",
+                                "type": "title",
+                                "style": "h1"
+                            },                           
+                            {
+                                "name": "Are you able to participate in this challenge?",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section-quiz-1",
+                                "description": "Are you able to participate in this challenge?",
+                                "type": "radio",
+                                "required": "true",
+                                "shown": "@ref(isDisabled)",
+                                "options":"@ref('dict:YES_NO_OPTIONS')"
+                            },
+                            {
+                                "name": "If No, Please Explain",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-quiz-1a",
+                                "description": "If No, Please Explain",
+                                "type": "textarea",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Date your samples were received?",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-1-sample-recieved",
+                                "description": "Date your samples were received?",
+                                "type": "date",
+                                "format": "YYYY-MM-DD",
+                                "required": true,
+                                "validators": [
+                                    {
+                                        "type": "date",
+                                        "min": "01/01/1900",
+                                        "max": "today"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Were your samples received in good condition?",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section-quiz-2",
+                                "description": "Were your samples received in good condition?",
+                                "type": "radio",
+                                "required": "true",
+                                "shown": "@ref(isDisabled)",
+                                "options":"@ref('dict:YES_NO_OPTIONS')"
+                            },
+                            {
+                                "name": "If No, Please Explain",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-quiz-2a",
+                                "description": "If No, Please Explain",
+                                "type": "textarea",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Date you started your sample analysis?",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-1-sample-analysis-start",
+                                "description": "Date you started your sample analysis?",
+                                "type": "date",
+                                "format": "YYYY-MM-DD",
+                                "required": true,
+                                "validators": [
+                                    {
+                                        "type": "date",
+                                        "min": "01/01/1900",
+                                        "max": "today"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Date you finished analysing samples?",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-1-sample-analysis-end",
+                                "description": "Date you finished analysing samples?",
+                                "type": "date",
+                                "format": "YYYY-MM-DD",
+                                "required": true,
+                                "validators": [
+                                    {
+                                        "type": "date",
+                                        "min": "01/01/1900",
+                                        "max": "today"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Antimicrobial result interpretation guidelines used in your laboratory",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-result-interpretation",
+                                "Description": "Antimicrobial result interpretation guidelines used in your laboratory",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:ANTIMICROBIAL_RESULT_OPTIONS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "If Other, Please Explain",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section-quiz-antimicrobial-results",
+                                "description": "If Other, Please Explain.",
+                                "type": "textarea",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            }
+                           
+                        ],
+                        "next": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section-2",
+                        "nextCondition": "true",
+                        "disabled": false,
+                        "metadata": {
+                            "type": "section",
+                            "created": "2020-08-22T11:00:00.000Z",
+                            "modified": "2020-08-22T11:00:00.000Z"
+                        }
+                    },                   
+                    {
+                        "name": "Samples/Result Details",
+                        "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-pre-reporting-questions",
+                        "description": "Pre-Reporting Questions",
+                        "fields": [
+                            {
+                                "options": "@ref('dict:SAMPLES_Microbiology')",
+                                "type": "groupstart",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section-microbiology-Loop",
+                                "display": "row"
+                            },
+                            
+                            {
+                                "name": "Microscopy",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "description": "Select your result from the drop down menu. ",
+                                "type": "title",
+                                "style": "h1"
+                            }, 
+                            {
+                                "name": "Gram Stain Reaction ",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-b",
+                                "Description": "Gram Stain Reaction ",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:GRAM_REACTION_OPTIONS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Unable to report result?",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-c",
+                                "Description": "Unable to report result ?",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:SAMPLE_RESULTS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Gram Stain Morphology",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-d",
+                                "Description": "Please choose Gram Stain Morphology",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:GRAM_MORPHOLOGY_OPTIONS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "If Other, Please Explain",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section2-e",
+                                "description": "If Other, Please Explain.",
+                                "type": "textarea",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Unable to report result?",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-f",
+                                "Description": "Unable to report result ?",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:SAMPLE_RESULTS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "IDENTIFICATION TESTS",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "description": "Select your result from the drop down menu. For Final Identifcation Method, select at least one method. If multiple methods were used, select additional methods.",
+                                "type": "title",
+                                "style": "h1"
+                            },
+                            {
+                                "name": "Basic Biochemical Reaction",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "description": "",
+                                "type": "title",
+                                "style": "h1"
+                            }, 
+                            {
+                                "name": "Oxidase ",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-Oxidase",
+                                "Description": "Oxidase",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:BIOCHEM_REACTION_OPTIONS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Unable to report result?",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-oxidase-unable-to-report",
+                                "Description": "Unable to report result ?",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:SAMPLE_RESULTS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Indole ",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-Indole",
+                                "Description": "Oxidase",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:BIOCHEM_REACTION_OPTIONS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Unable to report result?",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-Indole-unable-to-report",
+                                "Description": "Unable to report result ?",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:SAMPLE_RESULTS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "DNAse ",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-DNAse",
+                                "Description": "Oxidase",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:BIOCHEM_REACTION_OPTIONS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Unable to report result?",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-DNAse-unable-to-report",
+                                "Description": "Unable to report result ?",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:SAMPLE_RESULTS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Coagulase ",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-Coagulase",
+                                "Description": "Oxidase",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:BIOCHEM_REACTION_OPTIONS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Unable to report result?",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-Coagulase-unable-to-report",
+                                "Description": "Unable to report result ?",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:SAMPLE_RESULTS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Catalase ",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-Catalase",
+                                "Description": "Oxidase",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:BIOCHEM_REACTION_OPTIONS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Unable to report result?",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-Catalase-unable-to-report",
+                                "Description": "Unable to report result ?",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:SAMPLE_RESULTS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Haemolysis on Blood Aga ",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-haemolysis",
+                                "Description": "Haemolysis on Blood Aga",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:HAEMOLYSIS_OPTIONS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "If Other, Please Explain",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section2-haemolysis-other",
+                                "description": "If Other, Please Explain.",
+                                "type": "textarea",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Unable to report result?",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-haemolysis-unable-to-report",
+                                "Description": "Unable to report result ?",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:SAMPLE_RESULTS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Final Identification Method",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-final-identification",
+                                "Description": "Final Identification Method",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:FINAL_IDENTIFICATION_OPTION')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "If Other, Please Explain",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section2-final-identification",
+                                "description": "If Other, Please Explain.",
+                                "type": "textarea",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Unable to report result?",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-final-identfication-unable-to-report",
+                                "Description": "Unable to report result ?",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:SAMPLE_RESULTS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Yeast Identification - Conventional methods for yeast identification ",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "description": "Yeast Identification - Conventional methods for yeast identification ",
+                                "type": "title",
+                                "style": "h4"
+                            },
+                            {
+                                "name": "Colonial characteristics",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section2-Colonial-characteristics",
+                                "description": "Colonial characteristics",
+                                "type": "textarea",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Unable to report result?",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-colonial-characteristics-unable-to-report",
+                                "Description": "Unable to report result ?",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:SAMPLE_RESULTS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Germ tube test",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section2-Colonial-characteristics",
+                                "description": "Colonial characteristics",
+                                "type": "select",
+                                "options":"@ref('dict:GERM-TUBE')"                                
+                            
+                                
+                            },
+                            {
+                                "name": "Unable to report result?",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-germ-tube-unable-to-report",
+                                "Description": "Unable to report result ?",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:SAMPLE_RESULTS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Urease production",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section2-urease-production",
+                                "description": "Colonial characteristics",
+                                "type": "select",
+                                "options":"@ref('dict:GERM-TUBE')"                                
+                            
+                                
+                            },
+                            {
+                                "name": "Unable to report result?",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-urease-production-unable-to-report",
+                                "Description": "Unable to report result ?",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:SAMPLE_RESULTS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Serotyping / Serogrouping",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "description": "Select your result from the drop down menu.",
+                                "type": "title",
+                                "style": "h1"
+                            },
+                            {
+                                "name": "Serotyping / Serogrouping ",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-Serotyping/Serogrouping ",
+                                "Description": "Serotyping / Serogrouping",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:SEROTYPING_OPTIONS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "If Other, Please Explain",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section2-Serotyping",
+                                "description": "If Other, Please Explain.",
+                                "type": "textarea",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Unable to report result?",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-Serotyping-unable-to-report",
+                                "Description": "Unable to report result ?",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:SAMPLE_RESULTS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Final Organism Detection",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "description": "Select your result from the drop down menu.",
+                                "type": "title",
+                                "style": "h1"
+                            },
+                            {
+                                "name": "Final Organism Detection",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-final-Organism",
+                                "Description": "Please choose the Final Organism Detection ",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:FINAL_ORGANISM_OPTIONS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "If No, Please Explain",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section2-final-organism",
+                                "description": "If No, Please Explain.",
+                                "type": "textarea",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Unable to report result?",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-final-organism-unable-to-report",
+                                "Description": "Unable to report result ?",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:SAMPLE_RESULTS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Antimicrobial Susceptibility Testing",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "description": "Susceptibility testing method used for this sample",
+                                "type": "title",
+                                "style": "h1"
+                            },
+                            {
+                                "name": "Disk Diffusion Method",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-disk-diffusion",
+                                "Description": "Select",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:DIFFUSION_OPTIONS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Unable to report result?",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-disk-diffusion-unable-to-report",
+                                "Description": "Unable to report result ?",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:SAMPLE_RESULTS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "MIC Method",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-MIC-Method",
+                                "Description": "Please choose the Final Organism Detection ",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:MIC_METHOD_OPTIONS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "If No, Please Explain",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-Section2-MIC-Method",
+                                "description": "If No, Please Explain.",
+                                "type": "textarea",
+                                "required": "!@ref(isDisabled)",
+                                "shown": "@ref(isDisabled)",
+                                "validators": [
+                                    {
+                                        "type": "regex",
+                                        "expression": "^[a-zA-Z ]+$"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "MIC Method Antibiotics",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "description": "",
+                                "type": "title",
+                                "style": "h4"
+                            },
+                            {
+                                "name": "Antibiotic Name",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-antibiotic-name",
+                                "Description": "Please choose the Antibiotic Name",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:ANTIBIOTIC_OPTIONS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "MIC Value",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-MIC-Value",
+                                "Description": "Please input the Mic Value ",
+                                "type": "number",
+                                "multiple": false,
+                                "required": true,
+                                "actions": {}
+                            },
+                            {
+                                "name": "Interpretation",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-interpretation",
+                                "Description": "Please choose the Interpretations",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:ANTIBIOTICS_INTERPRETATIONS_OPTIONS')",
+                                "actions": {}
+                            },
+
+                            {
+                                "name": "Unable to report result?",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-MIC-Method-unable-to-report",
+                                "Description": "Unable to report result ?",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:SAMPLE_RESULTS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Mechanisms of Resistance",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "description": "Select your result from the drop down menu.",
+                                "type": "title",
+                                "style": "h1"
+                            },
+                            {
+                                "name": "Beta-Lactamase Testing (if applicable)",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "description": "",
+                                "type": "title",
+                                "style": "h4"
+                            },
+                            {
+                                "name": "Acidometric",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-Acidometric",
+                                "Description": "Please choose the Acidometric ",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:POS_NEG_UNDE_OPTIONS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Unable to report result?",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-Acidometric",
+                                "Description": "Unable to report result ?",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:SAMPLE_RESULTS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Iodometric",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-Iodometric",
+                                "Description": "Please choose the Iodometric ",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:POS_NEG_UNDE_OPTIONS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Unable to report result?",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-Iodometric",
+                                "Description": "Unable to report result ?",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:SAMPLE_RESULTS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Chomogenic",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-Chomogenic",
+                                "Description": "Please choose the Chomogenic ",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:POS_NEG_UNDE_OPTIONS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Unable to report result?",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-Chomogenic",
+                                "Description": "Unable to report result ?",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:SAMPLE_RESULTS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Inducible Clindamycin Resistance Testing D-test (if applicable)",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "description": "",
+                                "type": "title",
+                                "style": "h4"
+                            },
+                            {
+                                "name": "D-Test",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-D-Test",
+                                "Description": "Please choose the D-Test",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:POS_NEG_UNDE_OPTIONS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Unable to report result?",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-D-Test",
+                                "Description": "Unable to report result ?",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:SAMPLE_RESULTS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Extended Spectrum Beta-Lactamase Testing (if applicable)",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "description": "",
+                                "type": "title",
+                                "style": "h4"
+                            },
+                            {
+                                "name": "Extended Spectrum Beta-Lactamase Testing",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-D-Spectrum",
+                                "Description": "Please choose the Extended Spectrum Beta-Lactamase Testing ",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:POS_NEG_UNDE_OPTIONS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Unable to report result?",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-Spectrum",
+                                "Description": "Unable to report result ?",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:SAMPLE_RESULTS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "High-Level Amonoglycoside Resistance (HLAR) Testing (if applicable)",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "description": "",
+                                "type": "title",
+                                "style": "h4"
+                            },
+                            {
+                                "name": "HLASR gentamicin by disk diffusion",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-D-disk-diffusion",
+                                "Description": "Please choose the HLASR gentamicin by disk diffusion",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:POS_NEG_UNDE_OPTIONS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Unable to report result?",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-disk-diffusion",
+                                "Description": "Unable to report result ?",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:SAMPLE_RESULTS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Screening for Carbapenemase Producing Enterobacterales (CPE)",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "description": "",
+                                "type": "title",
+                                "style": "h4"
+                            },
+                            {
+                                "name": "Modified Hodge",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-D-Modified-Hodge",
+                                "Description": "Please choose the Modified Hodge ",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:POS_NEG_OPTIONS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Unable to report result?",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-modified-hodge",
+                                "Description": "Unable to report result ?",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:SAMPLE_RESULTS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "EDTA-modified carbapenem inactivation method (eCIM)",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-D-eCIM",
+                                "Description": "Please choose the eCIM ",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:POS_NEG_OPTIONS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Unable to report result?",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-eCIM",
+                                "Description": "Unable to report result ?",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:SAMPLE_RESULTS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Carba NP test ",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-D-Modified-Hodge",
+                                "Description": "Please choose the Carba NP test",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:POS_NEG_OPTIONS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Unable to report result?",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-Carba-NP-test",
+                                "Description": "Unable to report result ?",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:SAMPLE_RESULTS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "modified carbapenem inactivation method (mCIM)",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-D-mCIM",
+                                "Description": "Please choose the mCIM",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:POS_NEG_OPTIONS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "Unable to report result?",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section2-mCIM",
+                                "Description": "Unable to report result ?",
+                                "type": "select",
+                                "multiple": false,
+                                "required": true,
+                                "options": "@ref('dict:SAMPLE_RESULTS')",
+                                "actions": {}
+                            },
+                            {
+                                "name": "@endforeach",
+                                "type": "groupend",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section-microbiology-Loop"
+                            }
+                        ],
+                        "next": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section-2",
+                        "nextCondition": "true",
+                        "disabled": false,
+                        "metadata": {
+                            "type": "section",
+                            "created": "2020-08-22T11:00:00.000Z",
+                            "modified": "2020-08-22T11:00:00.000Z"
+                        }
+                    }
+                ]
             }
         ],
         "rounds": [
@@ -3379,7 +4560,8 @@
                 "start": "2020-08-22T11:00:00.000Z",
                 "end": "2020-08-22T11:00:00.000Z",
                 "useChecklist": true,
-                "form": "Microbiology-PT-RA-Aug22-Primary-Entry-Form",
+                "checklistForm": "Microbiology-PT-RA-survey",
+                "form": "Microbiology-PT-RA-Aug22-Survey",
                 "schema": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Schema",
                 "active": true,
                 "metadata": {
