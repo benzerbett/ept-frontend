@@ -11,8 +11,9 @@ export const simulateLogin = (username, password) => {
         } else if (username.length > 0 && password.length > 0) {
             window.sessionStorage.setItem('isLoggedIn', true)
             window.sessionStorage.setItem('user', JSON.stringify({ type: 'participant', name: 'Mwana Maabara', email: 'participant@mail.ke' }))
-            window.location.href = '/user/'
+            window.location.href = '/user'
         }
+        window.location.reload()
     }
 }
 

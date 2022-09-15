@@ -17,12 +17,29 @@ function Surveys() {
 
     React.useEffect(() => {
         const session = simulateGetSession();
-        if (session) {
+        if (session && session.activeProgramCode) {
             const ap = getProgramConfig(session.activeProgramCode)
             ap.then((data) => {
                 setActiveConfig(data)
-                setSurveys(data.surveys)
-            } )
+           
+                let svys = []
+                data.rounds.map(round=>{
+                    if(round.useChecklist){
+                        svys = Array.from([...svys, data.forms.find(f=>f.code==round.checklistForm)], fm=>{
+                            return {
+                                code: fm.code,
+                                name: fm.name,
+                                description: fm.description,
+                                metadata: fm.metadata,
+                            }
+                        })
+                    }
+                })
+                setSurveys(svys)
+            })
+        }else{
+            window.location.href = '/user'
+            window.location.reload()
         }
     }, [])
 
@@ -43,6 +60,7 @@ function Surveys() {
                     </div>
                 </div>
                 <div className="d-flex w-100">
+                    {/* {<pre>{JSON.stringify(surveys,null,2)}</pre>} */}
                     <div className="table-responsive w-100">
                         <table className="table table-striped table-hover table-bordered">
                             <thead>
@@ -56,33 +74,33 @@ function Surveys() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {surveys.map((survey) => (
-                                    <tr key={survey.id}>
+                                {surveys && surveys.length > 0 ? surveys.map((survey) => (
+                                    <tr key={survey.code}>
                                         <td>
-                                            <a href={`/user/surveys/${survey.id}`}>{survey.title}</a>
+                                            <a href={`/user/surveys/${survey.code}`}>{survey.name}</a>
                                         </td>
-                                        <td className='text-capitalize'>{survey.status == 'open' ? <span className='badge bg-success'>Open</span>: survey.status}</td>
-                                        <td>{new Date(survey.created_at).toDateString('en-GB')}</td>
-                                        <td>{new Date(survey.due_date).toDateString('en-GB')}</td>
+                                        <td className='text-capitalize'>{survey.status == 'open' ? <span className='badge bg-success'>Open</span>: (survey.status || "-")}</td>
+                                        <td>{ /*new Date(survey.metadata?.created).toDateString('en-GB')*/ "-" }</td>
+                                        <td>{ /*new Date(survey.due_date).toDateString('en-GB')*/ "-" }</td>
                                         <td>No</td>
                                         <td className="d-flex flex-column flex-md-row gap-2 justify-content-center">
                                             <Link href={{
-                                                  pathname: `/user/surveys/${survey.id}/new`,
+                                                  pathname: `/user/surveys/${survey.code}/new`,
                                                   query: {pID:survey.code,fID:survey.form},
                                                 }}
                                             > 
                                             <a className='btn btn-primary btn-sm py-0 text-nowrap'>Take Survey</a></Link>
                                             <Link href={{
-                                                  pathname: `/user/surveys/${survey.id}/edit`,
+                                                  pathname: `/user/surveys/${survey.code}/edit`,
                                                   query: {pID:survey.code,fID:survey.form},
                                                 }}
                                             > 
                                             <a className='btn btn-dark btn-sm py-0 text-nowrap'>Edit Survey</a></Link>
-                                            {/* <a className='btn btn-dark btn-sm py-0 text-nowrap' href={`/user/surveys/${survey.id}`}> Preview form</a> */}
+                                            {/* <a className='btn btn-dark btn-sm py-0 text-nowrap' href={`/user/surveys/${survey.code}`}> Preview form</a> */}
                                         </td>
                                       
                                     </tr>
-                                ))}
+                                )) : <tr><td colSpan="6" className="text-center">No surveys found</td></tr>}
                             </tbody>
                         </table>
                     </div>
