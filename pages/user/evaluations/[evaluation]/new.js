@@ -1,9 +1,7 @@
 import React, { useEffect, useState} from "react";
-
+import { simulateGetSession } from '../../../../utilities'
 import { useRouter } from 'next/router';
 import Link from 'next/link'
-
-
 import {configuration}  from './config'
 
 function Home() {
@@ -76,18 +74,18 @@ function Evaluation() {
 }
 
 function Form() {
-    const { query:{pID}, query:{fID} } = useRouter();
+    // const { query:{fID} } = useRouter();
+    const [fID, setFID] = useState(null);
     const [form, setForm] = useState(null);
     const [flatFormState, setFlatFormState] = useState([])
+    const routes = useRouter();
     const [formData, setFormData] = useState(
         {
             "formCode": fID,
             "formResponses": []
         }
     ) // TODO: Fetch previous form state for the user and store here
-
-    
-
+    const session = simulateGetSession();
     const flattenFormData = (formData) => {
         let flattened = [];
         formData.formResponses.forEach(response => {
@@ -104,7 +102,7 @@ function Form() {
         return flattened
     }
     useEffect(() => {
-        setForm(configuration.find(item => item.code === pID).forms.find(item => item.code === fID));
+        setForm(configuration.find(item => item.code === session.activeProgramCode).forms.find(item => item.code === routes.query.evaluation))
     }, []);
     if (!form) {
         return <div>

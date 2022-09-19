@@ -48,7 +48,6 @@ function Surveys() {
         }
     }, [])
 
-
     return (
         <>
             <Head>
@@ -85,8 +84,8 @@ function Surveys() {
                                             <a href={`/user/surveys/${survey.code}`}>{survey.name}</a>
                                         </td>
                                         <td className='text-capitalize'>{survey.status == 'open' ? <span className='badge bg-success'>Open</span> : (survey.status || "-")}</td>
-                                        <td>{ /*new Date(survey.metadata?.created).toDateString('en-GB')*/ "-"}</td>
-                                        <td>{ /*new Date(survey.due_date).toDateString('en-GB')*/ "-"}</td>
+                                        <td>{ new Date(survey.metadata.created).toDateString('en-GB') || "-"}</td>
+                                        <td>{ new Date(survey.metadata.due_date).toDateString('en-GB') || "-"}</td>
                                         <td>No</td>
                                         <td className="d-flex flex-column flex-md-row gap-2 justify-content-center">
                                             <Link href={{

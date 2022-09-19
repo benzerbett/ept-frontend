@@ -1,43 +1,51 @@
 import Head from 'next/head'
 import React from 'react'
 import Link from 'next/link'
+import { simulateGetSession } from '../../../utilities'
+import { useRouter } from 'next/router'
 
 function Evaluations() {
-    const evaluations = [
-        {
-            id: 1,
-            code: 'SARS-CoV-2-PT',
-            form:'SARS-CoV-2-PT-RA-Aug22',
-            title: 'Covid Evaluation ',
-            description: 'Oncology PT Round 9 Readiness Evaluation',
-            status: 'open',
-            created_at: '2022-08-01T00:00:00.000Z',
-            updated_at: '2022-08-01T00:00:00.000Z',
-            due_date: '2022-08-01T00:00:00.000Z'
-        },
-        {
-            id: 2,
-            code: 'oncology-PT',
-            form:'Oncology-PT-RA-Aug22',
-            title: 'Oncology Evaluation ',
-            description: 'Oncology PT Round 9 Readiness Evaluation',
-            status: 'open',
-            created_at: '2022-08-01T00:00:00.000Z',
-            updated_at: '2022-08-01T00:00:00.000Z',
-            due_date: '2022-08-01T00:00:00.000Z'
-        },
-        {
-            id: 3,
-            code: 'Microbiology-PT',
-            form:'Microbiology-PT-RA-Aug22',
-            title: 'Microbilogy Evaluation ',
-            description: 'Oncology PT Round 9 Readiness Evaluation',
-            status: 'open',
-            created_at: '2022-08-01T00:00:00.000Z',
-            updated_at: '2022-08-01T00:00:00.000Z',
-            due_date: '2022-08-01T00:00:00.000Z'
+    const [evaluations, setEvaluations] = React.useState([])
+    const [session, setSession] = React.useState([])
+    const [activeconfig, setActiveConfig] = React.useState(null)
+    const router = useRouter()
+
+    const getProgramConfig = (id) => {
+        return fetch(`/api/configurations/${id}`)
+            .then((res) => res.json())
+            .then((data) => {
+                return data
+            })
+    }
+    React.useEffect(() => {
+        const session = simulateGetSession();
+        if (session) {
+            setSession(session)
+            console.log(session)
+            if (session && session.activeProgramCode) {
+                const ap = getProgramConfig(session.activeProgramCode)
+                ap.then((data) => {
+                    setActiveConfig(data)
+                    let svys = []
+                    data.rounds.map(round => {
+                        if (round.active) {
+                            svys = Array.from([...svys, data.forms.find(f => f.code == round.form)], fm => {
+                                return {
+                                    code: fm.code,
+                                    name: fm.name,
+                                    description: fm.description,
+                                    metadata: fm.metadata,
+                                }
+                            })
+                        }
+                    })
+                    setEvaluations(svys)
+                })
+            } else {
+                router.push('/user')
+            }
         }
-    ]
+    }, [])
 
     return (
         <>
@@ -69,24 +77,24 @@ function Evaluations() {
                             </thead>
                             <tbody>
                                 {evaluations.map((evaluation) => (
-                                    <tr key={evaluation.id}>
+                                    
+                                    <tr key={evaluation.code}>
                                         <td>
-                                            <a href={`/user/evaluations/${evaluation.id}`}>{evaluation.title}</a>
+                                            <a href={`/user/evaluations/${evaluation.code}`}>{evaluation.name}</a>
                                         </td>
-                                        <td className='text-capitalize'>{evaluation.status == 'open' ? <span className='badge bg-success'>Open</span>: evaluation.status}</td>
-                                        <td>{new Date(evaluation.created_at).toDateString('en-GB')}</td>
-                                        <td>{new Date(evaluation.due_date).toDateString('en-GB')}</td>
+                                        <td className='text-capitalize'>{evaluation.status == 'open' ? <span className='badge bg-success'>Open</span>: evaluation.status || "-"}</td>
+                                        <td>{new Date(evaluation.metadata.created).toDateString('en-GB') || "-"}</td>
+                                        <td>{new Date(evaluation.metadata.due_date).toDateString('en-GB') || "-"}</td>
                                         <td>No</td>
                                         <td className="d-flex flex-column flex-md-row gap-2 justify-content-center">
                                             <Link href={{
-                                                  pathname: `/user/evaluations/${evaluation.id}/new`,
-                                                  query: {pID:evaluation.code,fID:evaluation.form},
+                                                  pathname: `/user/evaluations/${evaluation.code}/new`,
+                                                  
                                                 }}
                                             > 
                                             <a className='btn btn-primary btn-sm py-0 text-nowrap'>Take Evaluation</a></Link>
                                             <Link href={{
-                                                  pathname: `/user/evaluations/${evaluation.id}/new`,
-                                                  query: {pID:evaluation.code,fID:evaluation.form},
+                                                  pathname: `/user/evaluations/${evaluation.code}/new`,
                                                 }}
                                             > 
                                             <a className='btn btn-dark btn-sm py-0 text-nowrap'>Edit Evaluation</a></Link>

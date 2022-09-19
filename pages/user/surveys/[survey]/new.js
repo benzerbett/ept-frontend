@@ -1,9 +1,7 @@
 import React, { useEffect, useState} from "react";
-
+import { simulateGetSession } from '../../../../utilities'
 import { useRouter } from 'next/router';
-import Link from 'next/link'
-
-
+import Link from 'next/link';
 import {configuration}  from './config'
 
 function Home() {
@@ -16,6 +14,7 @@ function Home() {
         </div>
     </>)
 }
+
 
 //utility to render a form field given a field object
 function renderField(field) {
@@ -44,7 +43,7 @@ function renderField(field) {
                                 "This question could not be loaded")
                         })}
     </>)
-}
+} 
 
 function Survey() {
     const { pID } = useRouter();
@@ -76,18 +75,18 @@ function Survey() {
 }
 
 function Form() {
-    const { query:{pID}, query:{fID} } = useRouter();
+    // const { query:{pID}, query:{fID} } = useRouter();
+    const [fID, setFID] = useState(null);
     const [form, setForm] = useState(null);
     const [flatFormState, setFlatFormState] = useState([])
+    const routes = useRouter();
     const [formData, setFormData] = useState(
         {
             "formCode": fID,
             "formResponses": []
         }
     ) // TODO: Fetch previous form state for the user and store here
-
-    let rounds = configuration.find(item => item.code === pID).rounds.find(item => item.checklistForm === fID);
-
+    const session = simulateGetSession();
     const flattenFormData = (formData) => {
         let flattened = [];
         formData.formResponses.forEach(response => {
@@ -103,10 +102,12 @@ function Form() {
         });
         return flattened
     }
-  useEffect(()=>{      
-      setForm(configuration.find(item => item.code === pID).forms.find(item => item.code === rounds.checklistForm))
+  useEffect(()=>{  
+     setFID(routes.query.survey)    
+      setForm(configuration.find(item => item.code === session.activeProgramCode).forms.find(item => item.code === routes.query.survey))
     },[])
-    if (!form || rounds.useChecklist == false) {
+    
+    if (!form ) {
         return <div>
             <h1>Form not found</h1>
         </div>
