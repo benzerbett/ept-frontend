@@ -80,11 +80,12 @@ function Surveys() {
                                 {surveys && surveys.length > 0 ? surveys.map((survey) => (
                                     <tr key={survey.code}>
                                         <td>
-                                            <a href={`/user/surveys/${survey.code}`}>{survey.name}</a>
+                                            {survey.name}
+                                            {/* <Link href={`/user/surveys/${survey.code}`}><a>{survey.name}</a></Link> */}
                                         </td>
-                                        <td className='text-capitalize'>{survey.status == 'open' ? <span className='badge bg-success'>Open</span> : (survey.status || "-")}</td>
-                                        <td>{ new Date(survey.metadata.created).toDateString('en-GB') || "-"}</td>
-                                        <td>{ new Date(survey.metadata.due_date).toDateString('en-GB') || "-"}</td>
+                                        <td className='text-capitalize'>{(survey.status == 'open' || survey.status == 'active') ? <span className='badge bg-success'>Open</span> : (survey.status || "-")}</td>
+                                        <td>{new Date(survey.metadata.created).toDateString('en-GB') || "-"}</td>
+                                        <td>{new Date(survey.metadata.due_date).toDateString('en-GB') || "-"}</td>
                                         <td>No</td>
                                         <td className="d-flex flex-column flex-md-row gap-2 justify-content-center">
                                             <Link href={{
@@ -92,7 +93,7 @@ function Surveys() {
                                             }}>
                                                 <a className='btn btn-primary btn-sm py-0 text-nowrap'>Take Survey</a>
                                             </Link>
-                                            {/* TODO: or edit */}
+                                            {/* TODO: take or edit */}
                                             {/* <Link href={{
                                                 pathname: `/user/surveys/${survey.code}/edit/${session.user?.id}`,
                                             }}
