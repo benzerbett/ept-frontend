@@ -22,7 +22,6 @@ function Surveys() {
         const session = simulateGetSession();
         if (session) {
             setSession(session)
-            console.log(session)
             if (session && session.activeProgramCode) {
                 const ap = getProgramConfig(session.activeProgramCode)
                 ap.then((data) => {

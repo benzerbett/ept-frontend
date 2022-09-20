@@ -11,7 +11,7 @@ function AppNavbar() {
     const [activeProgram, setActiveProgram] = React.useState(null)
     const router = useRouter()
 
-    const getProgramConfig = (id) => {
+    const getProgramConfig = (id, isItInit) => {
         fetch(`/api/configurations/${id}`)
             .then((res) => res.json())
             .then((data) => {
@@ -20,8 +20,10 @@ function AppNavbar() {
                     if (typeof window !== 'undefined') {
                         window.sessionStorage.setItem('activeProgramCode', data?.code)
                     }
-                    // window.location.href = '/user/surveys'
-                    router.push('/user/surveys', undefined, { unstable_skipClientCache: true })
+                    
+                    if (!isItInit && router.pathname !== '/user') {
+                        router.reload()
+                    }
                 }
             })
     }
@@ -47,7 +49,7 @@ function AppNavbar() {
                 setIsLoggedIn(true)
                 setHomeUrl(session.user.type === 'admin' ? '/admin' : '/user')
                 if (session.activeProgramCode) {
-                    getProgramConfig(session.activeProgramCode)
+                    getProgramConfig(session.activeProgramCode, true)
                 } else {
                     if (router.pathname !== '/user') {
                         router.push('/user', undefined, { unstable_skipClientCache: true })
@@ -75,7 +77,7 @@ function AppNavbar() {
                     <ul className="dropdown-menu">
                         {allPrograms.map((ap, x) => <li key={ap.code}><a className="dropdown-item" onClick={(ev) => {
                             ev.preventDefault()
-                            getProgramConfig(ap.code)
+                            getProgramConfig(ap.code, false)
                         }}>{ap.name}</a></li>)}
                     </ul>
                 </div> : <h6 className="text-white mb-0">EPT | Loading...</h6>}

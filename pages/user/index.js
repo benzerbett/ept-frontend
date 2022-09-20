@@ -11,7 +11,7 @@ function User() {
     const [activeProgram, setActiveProgram] = React.useState(null)
     const router = useRouter()
 
-    const getProgramConfig = (id) => {
+    const getProgramConfig = (id, isItInit) => {
         return fetch(`/api/configurations/${id}`)
             .then((res) => res.json())
             .then((data) => {
@@ -20,8 +20,10 @@ function User() {
                     if (typeof window !== 'undefined') {
                         window.sessionStorage.setItem('activeProgramCode', data?.code)
                     }
-                    // window.location.href = '/user/surveys'
-                    router.push('/user/surveys', undefined, { unstable_skipClientCache: true })
+                    if (!isItInit) {
+                        router.push('/user/surveys', undefined, { unstable_skipClientCache: true })
+                        router.reload()
+                    }
                 }
             })
     }
@@ -47,13 +49,14 @@ function User() {
                 setIsLoggedIn(true)
                 setHomeUrl(session.user.type === 'admin' ? '/admin' : '/user')
                 if (session.activeProgramCode) {
-                    getProgramConfig(session.activeProgramCode)
+                    getProgramConfig(session.activeProgramCode, true)
                 }
                 // check if an active program is set in session storage
-                if (session.activeProgramCode) {
-                    // window.location.href = '/user/surveys'
-                    router.push('/user/surveys', undefined, { unstable_skipClientCache: true })
-                }
+                // if (session.activeProgramCode) {
+                //     if (router.pathname !== '/user') {
+                //         router.push('/user/surveys', undefined, { unstable_skipClientCache: true })
+                //     }
+                // }
             }
             getPrograms()
         }
@@ -83,7 +86,7 @@ function User() {
                                     <ul className="dropdown-menu">
                                         {allPrograms.map((ap, x) => <li key={ap.code}><a className="dropdown-item" onClick={(ev) => {
                                             ev.preventDefault()
-                                            getProgramConfig(ap.code)
+                                            getProgramConfig(ap.code, false)
                                         }}>{ap.name}</a></li>)}
                                     </ul>
                                 </div> : <h6 className="text-white mb-0">Loading programs...</h6>}
