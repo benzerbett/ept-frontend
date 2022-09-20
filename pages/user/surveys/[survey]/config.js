@@ -17,9 +17,9 @@ function loadConfig(json) {
     } else {
         console.log("No dataDictionary found in config");
     }
-    console.log("Loading config");
-    console.log("Dictionary: " + Object.keys(dataDictionary).length);
-    // console.log("Loading config", Object.keys(json), ", Dictionary: ", Object.keys(dataDictionary));
+    ////console.log("Loading config");
+    ////console.log("Dictionary: " + Object.keys(dataDictionary).length);
+    // ////console.log("Loading config", Object.keys(json), ", Dictionary: ", Object.keys(dataDictionary));
     if (json && Object.keys(json).length > 0 && dataDictionary && Object.keys(dataDictionary).length > 0) {
         let json_str = JSON.stringify(json);
         let regexp = /@ref\(([^)]+)\)/gmi
@@ -33,14 +33,14 @@ function loadConfig(json) {
             if (key.startsWith("dict:")) {
                 let value = (dataDictionary[key.replace("dict:", "")]);
                 if (value) {
-                    // console.log("Value for " + key + ": " + JSON.stringify(value));
+                    // ////console.log("Value for " + key + ": " + JSON.stringify(value));
                     if (typeof value == "object") {
                         json_str = json_str.replace('"' + matches[i] + '"', JSON.stringify(value));
                     } else {
                         json_str = json_str.replace('"' + matches[i] + '"', value);
                     }
                 } else {
-                    console.log("No value found for dict:key: ", key);
+                    ////console.log("No value found for dict:key: ", key);
                     json_str = json_str.replace(matches[i], null);
                 }
             }
@@ -53,17 +53,17 @@ function loadConfig(json) {
             if (!key.startsWith("dict:") && !key.startsWith("user:")) {
                 // check for value in context / state
                 let value = null; //window.zustand.getState()[key];
-                console.log("Match: " + matches[i] + " Key: " + key, " Value: ", value);
+                ////console.log("Match: " + matches[i] + " Key: " + key, " Value: ", value);
                 json_str = json_str.replace(matches[i], null); // TODO: replace with value from zustand state
             }
         }
         return JSON.parse(json_str);
     } else {
         if (!json || json.length == 0) {
-            console.log("No config json found");
+            ////console.log("No config json found");
         }
         if (!dataDictionary || Object.keys(dataDictionary).length == 0) {
-            console.log("No data dictionary found");
+            ////console.log("No data dictionary found");
         }
         return [];
     }
@@ -81,14 +81,14 @@ function resolveDynamicValues(json, customDictionary) {
 
         let value = (customDictionary[key]);
         if (value) {
-            // console.log("Value for " + key + ": " + JSON.stringify(value));
+            // ////console.log("Value for " + key + ": " + JSON.stringify(value));
             if (typeof value == "object") {
                 json_str = json_str.replace('"' + matches[i] + '"', JSON.stringify(value));
             } else {
                 json_str = json_str.replace('"' + matches[i] + '"', value);
             }
         } else {
-            console.log("No value found for key: ", key);
+            ////console.log("No value found for key: ", key);
             json_str = json_str.replace(matches[i], null);
         }
     }

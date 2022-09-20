@@ -36,10 +36,11 @@ function renderField(field) {
 
 function Form({ formId }) {
     // const { query:{pID}, query:{fID} } = useRouter();
-    const [fID, setFID] = useState(null);
-    const [form, setForm] = useState(null);
+    const [fID, setFID] = useState(formId);
+    const [form, setForm] = useState({});
     const [flatFormState, setFlatFormState] = useState([])
     const [currentSection, setCurrentSection] = useState(0);
+    const [loading, setLoading] = useState(true);
     const [formData, setFormData] = useState(
         {
             "formCode": fID,
@@ -62,24 +63,49 @@ function Form({ formId }) {
         });
         return flattened
     }
+    const getForm = () => {
+        if (configuration) {
+            let fm = configuration.filter(item => item.code === session.activeProgramCode)
+            if (fm && fm.length > 0) {
+                return fm[0].forms.find(item => item.code === formId)
+            } else {
+                return fm
+            }
+        } else {
+            return { "msg": "No config loaded" }
+        }
+    }
+
     useEffect(() => {
         let mounted = true;
         if (mounted) {
-            setFID(formId)
-            setForm(
-                configuration.find(item => item.code === session.activeProgramCode).forms.find(item => item.code === formId)
-            )
+            if (formId) {
+                setFID(formId)
+                let fm = getForm();
+                setForm(fm)
+                setLoading(false)
+            }
         }
         return () => mounted = false;
     }, [])
 
+    if (loading) return <main style={{ width: '100%', height: '85vh', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <h5 className='mb-0'>Loading...</h5>
+    </main>
+
     if (!form) {
-        return <div>
-            <h1>Form not found</h1>
-        </div>
+        return <main style={{ width: '100%', height: '85vh', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div className="alert alert-warning" role="alert">
+                <h4 className="alert-heading">Form not found</h4>
+                <hr />
+                <p className="mb-0">Form with code <strong>{formId}</strong> not found. Please refresh the page and try again.</p>
+                <p className="mb-0">If the problem persists, please contact the administrator.</p>
+            </div>
+        </main>
     } else {
         return (
             <div>
+                <Link href="/user/surveys"><a className="">&larr; Back</a></Link>
                 <h1 style={{ marginTop: 9 }}>{form.name}</h1>
                 <h6>{form.description} &middot; <span className="text-muted">{form.sections.length || 0} sections</span></h6>
                 <hr />
@@ -272,10 +298,12 @@ function App() {
             <link rel="icon" href="/favicon.ico" />
         </Head>
         <section>
-            <div>
-                <article style={{ padding: '10px 15px' }}>
+            <div className="container">
+                {survey ? <article style={{ padding: '10px 15px' }}>
                     <Form formId={survey} />
-                </article>
+                </article> : <main style={{ width: '100%', height: '85vh', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <h5 className='mb-0'>Loading...</h5>
+                </main>}
             </div>
         </section>
     </>
