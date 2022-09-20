@@ -9,6 +9,7 @@ export default function Login() {
     const router = useRouter()
     let [username, setUsername] = useState('');
     let [password, setPassword] = useState('');
+    let [loading, setLoading] = useState(true);
     let login_token = null;
     const handleSubmit = async (e) => {
         // simulate login
@@ -26,11 +27,16 @@ export default function Login() {
                     router.push('/user/', undefined, { unstable_skipClientCache: true })
                 }
             }
+            setLoading(false)
         }
         return () => {
             mtd = false
         }
     }, [])
+
+    if(loading) return <div style={{width: '100%', height: '85vh', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+        <h5 className='mb-0'>Loading...</h5>
+    </div>
     
     return (
         <>

@@ -7,11 +7,32 @@ function PublicNavbar() {
     const router = useRouter()
     const [user, setUser] = React.useState(null)
     const [isLoggedIn, setIsLoggedIn,] = React.useState(false)
+    // React.useEffect(() => {
+    //     const session = simulateGetSession()
+    //     if(session) {
+    //         setUser(session.user)
+    //         setIsLoggedIn(true)
+    //     }
+    // }, [])
+
     React.useEffect(() => {
-        const session = simulateGetSession()
-        if(session) {
-            setUser(session.user)
-            setIsLoggedIn(true)
+        let mtd = true
+        if (mtd) {
+            const session = simulateGetSession()
+            if (session) {
+                setUser(session.user)
+                setIsLoggedIn(true)
+                if(session.user.type === 'admin'){
+                    router.push('/admin', undefined, { unstable_skipClientCache: true })
+                } else if(session.user.type === 'user'){
+                    router.push('/user', undefined, { unstable_skipClientCache: true })
+                }
+            }else{
+                router.push('/auth/login', undefined, { unstable_skipClientCache: true })
+            }
+        }
+        return () => {
+            mtd = false
         }
     }, [])
     return (

@@ -17,9 +17,11 @@ function AppNavbar() {
             .then((data) => {
                 if (data.code) {
                     setActiveProgram(data?.code)
-                    if (window && window.sessionStorage) {
+                    if (typeof window !== 'undefined') {
                         window.sessionStorage.setItem('activeProgramCode', data?.code)
                     }
+                    // window.location.href = '/user/surveys'
+                    router.push('/user/surveys', undefined, { unstable_skipClientCache: true })
                 }
             })
     }
@@ -46,7 +48,13 @@ function AppNavbar() {
                 setHomeUrl(session.user.type === 'admin' ? '/admin' : '/user')
                 if (session.activeProgramCode) {
                     getProgramConfig(session.activeProgramCode)
+                } else {
+                    if (router.pathname !== '/user') {
+                        router.push('/user', undefined, { unstable_skipClientCache: true })
+                    }
                 }
+            } else {
+                router.push('/auth/login', undefined, { unstable_skipClientCache: true })
             }
             getPrograms()
         }
@@ -136,7 +144,7 @@ function AppNavbar() {
                             </li>
                             <li><hr className="dropdown-divider" /></li>
                             <li className='d-flex justify-content-center'>
-                                <button className="btn btn-link nav-link text-center" onClick={ev=>{simulateLogout(router)}}>Logout</button>
+                                <button className="btn btn-link nav-link text-center" onClick={ev => { simulateLogout(router) }}>Logout</button>
                             </li>
                         </ul>
                     </div> : <div className="text-end d-flex">

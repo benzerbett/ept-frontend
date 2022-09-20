@@ -17,11 +17,11 @@ function User() {
             .then((data) => {
                 if (data.code) {
                     setActiveProgram(data?.code)
-                    if (window && window.sessionStorage) {
+                    if (typeof window !== 'undefined') {
                         window.sessionStorage.setItem('activeProgramCode', data?.code)
                     }
                     // window.location.href = '/user/surveys'
-                    router.push('/user/surveys')
+                    router.push('/user/surveys', undefined, { unstable_skipClientCache: true })
                 }
             })
     }
@@ -52,7 +52,7 @@ function User() {
                 // check if an active program is set in session storage
                 if (session.activeProgramCode) {
                     // window.location.href = '/user/surveys'
-                    router.push('/user/surveys')
+                    router.push('/user/surveys', undefined, { unstable_skipClientCache: true })
                 }
             }
             getPrograms()
@@ -72,7 +72,7 @@ function User() {
             <div className="container my-5">
                 <div className="row justify-content-md-center">
                     <form className="col-sm-8 border border-primary p-5">
-                        <h3 className='text-center'>Pick a program</h3>
+                        <h3 className='text-center'>Please pick a program</h3>
                         <hr />
                         <div className='row text-center'>
                             <div className='col-md-12 mt-3'>

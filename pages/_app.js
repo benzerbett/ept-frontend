@@ -14,6 +14,7 @@ function MyApp({ Component, pageProps }) {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [user, setUser] = useState(null)
     const [session, setSession] = useState(null)
+    const [loading, setLoading] = useState(true)
 
     // auth context
     const AuthContext = createContext({
@@ -24,21 +25,27 @@ function MyApp({ Component, pageProps }) {
         setUser: (user) => setUser(user),
         setSession: (session) => setSession(session),
     })
-    
-    useEffect(() => {
-        //     import("bootstrap/dist/js/bootstrap.bundle.min");
-        const session = simulateGetSession();
-        if (session) {
-            setIsLoggedIn(session.isLoggedIn)
-            setUser(session.user)
-            setSession(session)
 
-            pageProps.session = session
+    useEffect(() => {
+        let mtd = true
+        if (mtd) {
+            // import("bootstrap/dist/js/bootstrap.bundle.min");
+            const session = simulateGetSession();
+            if (session) {
+                setIsLoggedIn(session.isLoggedIn)
+                setUser(session.user)
+                setSession(session)
+                pageProps.session = session
+            }
+            setLoading(false)
+        }
+        return () => {
+            mtd = false
         }
     }, [])
 
     const Layout = isLoggedIn ? ((user && user?.type == "admin") ? AdminTheme : AppTheme) : PublicTheme
-    
+
     return (
         <>
             <Head>

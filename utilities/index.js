@@ -1,6 +1,6 @@
 // simulate login
 export const simulateLogin = (username, password,rtr) => {
-    if (window && window.sessionStorage) {
+    if (typeof window !== 'undefined') {
         // clear session storage
         window.sessionStorage.removeItem('user');
         window.sessionStorage.removeItem('isLoggedIn');
@@ -21,7 +21,7 @@ export const simulateLogin = (username, password,rtr) => {
 
 // simulate logout
 export const simulateLogout = (rtr) => {
-    if (window && window.sessionStorage) {
+    if (typeof window !== 'undefined') {
         window.sessionStorage.removeItem('user');
         window.sessionStorage.removeItem('isLoggedIn');
         rtr.push('/auth/login', undefined, { unstable_skipClientCache: true })
@@ -32,7 +32,7 @@ export const simulateLogout = (rtr) => {
 
 // get user
 export const simulateGetSession = () => {
-    if (window && window.sessionStorage) {
+    if (typeof window !== 'undefined') {
         let user = window.sessionStorage.getItem('user');
         let isLoggedIn = window.sessionStorage.getItem('isLoggedIn');
         let activeProgramCode = window.sessionStorage.getItem('activeProgramCode');
