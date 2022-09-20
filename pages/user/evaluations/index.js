@@ -80,7 +80,8 @@ function Evaluations() {
                                     
                                     <tr key={evaluation.code}>
                                         <td>
-                                            <a href={`/user/evaluations/${evaluation.code}`}>{evaluation.name}</a>
+                                            {evaluation.name}
+                                            {/* <Link href={`/user/evaluations/${evaluation.code}`}><a>{survey.name}</a></Link> */}
                                         </td>
                                         <td className='text-capitalize'>{evaluation.status == 'open' ? <span className='badge bg-success'>Open</span>: evaluation.status || "-"}</td>
                                         <td>{new Date(evaluation.metadata.created).toDateString('en-GB') || "-"}</td>
