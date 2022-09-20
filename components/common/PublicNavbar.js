@@ -32,7 +32,7 @@ function PublicNavbar() {
                     {(isLoggedIn && user) ? <div className="text-end d-flex">
                         <div className="d-flex flex-wrap align-items-center">
                             <small className="text-light me-2">{user.name}</small>
-                            <button className="btn btn-sm btn-outline-light" onClick={simulateLogout}>Logout</button>
+                            <button className="btn btn-sm btn-outline-light" onClick={ev=>{simulateLogout(router)}}>Logout</button>
                         </div>
                     </div> : <div className="text-end d-flex">
                         <Link href="/auth/login"><a style={{ whiteSpace: 'nowrap' }} className="btn btn-outline-light me-2">Login</a></Link>

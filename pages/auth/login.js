@@ -1,37 +1,37 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Head from 'next/head';
 import Link from 'next/link';
-import { simulateLogin } from '../../utilities';
+import { simulateGetSession, simulateLogin } from '../../utilities';
+import { useRouter } from 'next/router';
 const API_URL = "http://localhost:8000/test_laravel/api/";
 export default function Login() {
+    const router = useRouter()
     let [username, setUsername] = useState('');
     let [password, setPassword] = useState('');
     let login_token = null;
     const handleSubmit = async (e) => {
-        // e.preventDefault();
-        // const headers = { "Content-Type": `multipart/form-data` };
-        // let data = new FormData();
-        // data.append('username', username);
-        // data.append('password', password);
-        // let result = await axios({
-        //     method: 'post',
-        //     url: 'login-verify',
-        //     baseURL: API_URL,
-        //     data: data,
-        //     headers: headers,
-        // });
-        // let response = result.data;
-        // if (response['success']) {
-        //     console.log("Login Successful");
-        //     login_token = response['token'];
-        // } else {
-        //     console.log("Failed to Login");
-        // }
-
         // simulate login
-        simulateLogin(username, password)
+        simulateLogin(username, password, router)
     }
+
+    useEffect(() => {
+        let mtd = true
+        if (mtd) {
+            const session = simulateGetSession()
+            if (session) {
+                if(session.user.type === 'admin'){
+                    router.push('/admin/', undefined, { unstable_skipClientCache: true })
+                }else if(session.user.type === 'user'){
+                    router.push('/user/', undefined, { unstable_skipClientCache: true })
+                }
+            }
+        }
+        return () => {
+            mtd = false
+        }
+    }, [])
+    
     return (
         <>
             <Head>

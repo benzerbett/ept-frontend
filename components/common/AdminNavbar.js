@@ -27,7 +27,7 @@ function AdminNavbar() {
             </div>
             <div className="navbar-nav">
                 <div className="nav-item text-nowrap">
-                    <button className="nav-link text-dark px-3" onClick={simulateLogout}>Sign out</button>
+                    <button className="nav-link text-dark px-3" onClick={ev=>{simulateLogout(router)}}>Sign out</button>
                 </div>
             </div>
         </header>

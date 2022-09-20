@@ -136,7 +136,7 @@ function AppNavbar() {
                             </li>
                             <li><hr className="dropdown-divider" /></li>
                             <li className='d-flex justify-content-center'>
-                                <button className="btn btn-link nav-link text-center" onClick={simulateLogout}>Logout</button>
+                                <button className="btn btn-link nav-link text-center" onClick={ev=>{simulateLogout(router)}}>Logout</button>
                             </li>
                         </ul>
                     </div> : <div className="text-end d-flex">
