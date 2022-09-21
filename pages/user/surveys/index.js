@@ -28,15 +28,20 @@ function Surveys() {
                     setActiveConfig(data)
                     let svys = []
                     data.rounds.map(round => {
-                        if (round.useChecklist) {
-                            svys = Array.from([...svys, data.forms.find(f => f.code == round.checklistForm)], fm => {
-                                return {
-                                    code: fm.code,
-                                    name: fm.name,
-                                    description: fm.description,
-                                    metadata: fm.metadata,
-                                }
-                            })
+                        if (round?.active && round.useChecklist) {
+                            let f_m = data.forms.find(f => f.code == round.checklistForm)
+                            if (f_m) {
+                                // svys.push(f_m)
+                                svys = Array.from([...svys, f_m], fm => {
+                                    return {
+                                        round_name: round.name,
+                                        code: fm.code,
+                                        name: fm.name,
+                                        description: fm.description,
+                                        metadata: fm.metadata,
+                                    }
+                                })
+                            }
                         }
                     })
                     setSurveys(svys)
@@ -68,6 +73,7 @@ function Surveys() {
                         <table className="table table-striped table-hover table-bordered">
                             <thead>
                                 <tr>
+                                    <th scope="col">Round</th>
                                     <th scope="col">Title</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Created At</th>
@@ -79,6 +85,10 @@ function Surveys() {
                             <tbody>
                                 {surveys && surveys.length > 0 ? surveys.map((survey) => (
                                     <tr key={survey.code}>
+                                        <td>
+                                            {survey.round_name}
+                                            {/* <Link href={`/user/surveys/${survey.code}`}><a>{survey.name}</a></Link> */}
+                                        </td>
                                         <td>
                                             {survey.name}
                                             {/* <Link href={`/user/surveys/${survey.code}`}><a>{survey.name}</a></Link> */}

@@ -47,7 +47,6 @@ function Form({ formId }) {
             "formResponses": []
         }
     ) // TODO: Fetch previous form state for the user and store here
-    const session = simulateGetSession();
     const flattenFormData = (formData) => {
         let flattened = [];
         formData.formResponses.forEach(response => {
@@ -63,11 +62,11 @@ function Form({ formId }) {
         });
         return flattened
     }
-    const getForm = () => {
-        if (configuration) {
-            let fm = configuration.filter(item => item.code === session.activeProgramCode)
+    const getForm = (sess, config) => {
+        if (config) {
+            let fm = config.filter(prog => prog.code === sess.activeProgramCode)
             if (fm && fm.length > 0) {
-                return fm[0].forms.find(item => item.code === formId)
+                return fm[0].forms.find(frm => frm.code === formId)
             } else {
                 return fm
             }
@@ -79,11 +78,16 @@ function Form({ formId }) {
     useEffect(() => {
         let mounted = true;
         if (mounted) {
-            if (formId) {
-                setFID(formId)
-                let fm = getForm();
-                setForm(fm)
-                setLoading(false)
+            const session = simulateGetSession();
+            if (session) {
+                if (formId) {
+                    setFID(formId)
+                    let fm = getForm(session, configuration);
+                    setForm(fm)
+                    setLoading(false)
+                }
+            } else {
+                setLoading(true)
             }
         }
         return () => mounted = false;
