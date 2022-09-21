@@ -2016,7 +2016,7 @@
         "description": "Oncology Proficiency Testing",
         "forms": [
             {
-                "name": "Ongology-PT RA Aug22",
+                "name": "Ongology-PT Test Reporting Form",
                 "code": "Oncology-PT-RA-Aug22-Primary-Entry-Form",
                 "description": "Oncology PT Readiness Assessment August 2022",
                 "sections": [
@@ -2101,7 +2101,7 @@
                                 "name": "Select Checklist ",
                                 "code": "Oncology-PT-RA-Aug22-Primary-Entry-Form-Section-1-checklist",
                                 "description": "select checklist",
-                                "type": "text",
+                                "type": "select",
                                 "required": "!@ref(isDisabled)",
                                 "shown": "@ref(isDisabled)",
                                 "options": "@ref('dict:CHECKLIST')"
@@ -2268,7 +2268,7 @@
                                 "name": "Select Checklist ",
                                 "code": "Oncology-PT-RA-Aug22-Primary-Entry-Form-Section-1-checklist",
                                 "description": "select checklist",
-                                "type": "text",
+                                "type": "select",
                                 "required": "!@ref(isDisabled)",
                                 "shown": "@ref(isDisabled)",
                                 "options": "@ref('dict:CHECKLIST')"
@@ -2652,7 +2652,7 @@
                         "fields": [
                             {
                                 "name": "Answer these questions before reporting on the sample",
-                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text-4da49e23",
                                 "description": "Answer these questions before reporting on the sample",
                                 "type": "title",
                                 "style": "h1"
@@ -2797,7 +2797,7 @@
                             
                             {
                                 "name": "Microscopy",
-                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text-927ad5b4",
                                 "description": "Select your result from the drop down menu. ",
                                 "type": "title",
                                 "style": "h1"
@@ -2858,14 +2858,14 @@
                             },
                             {
                                 "name": "IDENTIFICATION TESTS",
-                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text-513eb8a2",
                                 "description": "Select your result from the drop down menu. For Final Identifcation Method, select at least one method. If multiple methods were used, select additional methods.",
                                 "type": "title",
                                 "style": "h1"
                             },
                             {
                                 "name": "Basic Biochemical Reaction",
-                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text-9de95f96",
                                 "description": "",
                                 "type": "title",
                                 "style": "h1"
@@ -3040,7 +3040,7 @@
                             },
                             {
                                 "name": "Yeast Identification - Conventional methods for yeast identification ",
-                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text-bd571794",
                                 "description": "Yeast Identification - Conventional methods for yeast identification ",
                                 "type": "title",
                                 "style": "h4"
@@ -3109,7 +3109,7 @@
                             },
                             {
                                 "name": "Serotyping / Serogrouping",
-                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text-9c2ac17f",
                                 "description": "Select your result from the drop down menu.",
                                 "type": "title",
                                 "style": "h1"
@@ -3150,7 +3150,7 @@
                             },
                             {
                                 "name": "Final Organism Detection",
-                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text-67091d0b",
                                 "description": "Select your result from the drop down menu.",
                                 "type": "title",
                                 "style": "h1"
@@ -3191,7 +3191,7 @@
                             },
                             {
                                 "name": "Antimicrobial Susceptibility Testing",
-                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text-4e27a50e",
                                 "description": "Susceptibility testing method used for this sample",
                                 "type": "title",
                                 "style": "h1"
@@ -3242,7 +3242,7 @@
                             },
                             {
                                 "name": "MIC Method Antibiotics",
-                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text-bd0cff60",
                                 "description": "",
                                 "type": "title",
                                 "style": "h4"
@@ -3289,14 +3289,14 @@
                             },
                             {
                                 "name": "Mechanisms of Resistance",
-                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text-3e02da11",
                                 "description": "Select your result from the drop down menu.",
                                 "type": "title",
                                 "style": "h1"
                             },
                             {
                                 "name": "Beta-Lactamase Testing (if applicable)",
-                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text-5d9a5718",
                                 "description": "",
                                 "type": "title",
                                 "style": "h4"
@@ -3363,7 +3363,7 @@
                             },
                             {
                                 "name": "Inducible Clindamycin Resistance Testing D-test (if applicable)",
-                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text-d0e009d2",
                                 "description": "",
                                 "type": "title",
                                 "style": "h4"
@@ -3390,7 +3390,7 @@
                             },
                             {
                                 "name": "Extended Spectrum Beta-Lactamase Testing (if applicable)",
-                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text-e117663b",
                                 "description": "",
                                 "type": "title",
                                 "style": "h4"
@@ -3417,7 +3417,7 @@
                             },
                             {
                                 "name": "High-Level Amonoglycoside Resistance (HLAR) Testing (if applicable)",
-                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text-72c100d3",
                                 "description": "",
                                 "type": "title",
                                 "style": "h4"
@@ -3444,7 +3444,7 @@
                             },
                             {
                                 "name": "Screening for Carbapenemase Producing Enterobacterales (CPE)",
-                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text-28e86c84",
                                 "description": "",
                                 "type": "title",
                                 "style": "h4"
@@ -3817,7 +3817,7 @@
                             
                             {
                                 "name": "Microscopy",
-                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text-4db0c1f0",
                                 "description": "Select your result from the drop down menu. ",
                                 "type": "title",
                                 "style": "h1"
@@ -3878,14 +3878,14 @@
                             },
                             {
                                 "name": "IDENTIFICATION TESTS",
-                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text-4990388a",
                                 "description": "Select your result from the drop down menu. For Final Identifcation Method, select at least one method. If multiple methods were used, select additional methods.",
                                 "type": "title",
                                 "style": "h1"
                             },
                             {
                                 "name": "Basic Biochemical Reaction",
-                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text-749555d9",
                                 "description": "",
                                 "type": "title",
                                 "style": "h1"
@@ -4060,7 +4060,7 @@
                             },
                             {
                                 "name": "Yeast Identification - Conventional methods for yeast identification ",
-                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text-2b175488",
                                 "description": "Yeast Identification - Conventional methods for yeast identification ",
                                 "type": "title",
                                 "style": "h4"
@@ -4129,7 +4129,7 @@
                             },
                             {
                                 "name": "Serotyping / Serogrouping",
-                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text-f86b7cc7",
                                 "description": "Select your result from the drop down menu.",
                                 "type": "title",
                                 "style": "h1"
@@ -4170,7 +4170,7 @@
                             },
                             {
                                 "name": "Final Organism Detection",
-                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text-050f1125",
                                 "description": "Select your result from the drop down menu.",
                                 "type": "title",
                                 "style": "h1"
@@ -4211,7 +4211,7 @@
                             },
                             {
                                 "name": "Antimicrobial Susceptibility Testing",
-                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text-fa4f13c7",
                                 "description": "Susceptibility testing method used for this sample",
                                 "type": "title",
                                 "style": "h1"
@@ -4262,7 +4262,7 @@
                             },
                             {
                                 "name": "MIC Method Antibiotics",
-                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text-e4241134",
                                 "description": "",
                                 "type": "title",
                                 "style": "h4"
@@ -4309,14 +4309,14 @@
                             },
                             {
                                 "name": "Mechanisms of Resistance",
-                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text-76583dd0",
                                 "description": "Select your result from the drop down menu.",
                                 "type": "title",
                                 "style": "h1"
                             },
                             {
                                 "name": "Beta-Lactamase Testing (if applicable)",
-                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text-1d5547ac",
                                 "description": "",
                                 "type": "title",
                                 "style": "h4"
@@ -4383,14 +4383,14 @@
                             },
                             {
                                 "name": "Inducible Clindamycin Resistance Testing D-test (if applicable)",
-                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text-969f9b93",
                                 "description": "",
                                 "type": "title",
                                 "style": "h4"
                             },
                             {
                                 "name": "D-Test",
-                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section3-D-Test",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section3-D-21699ba4-Test",
                                 "Description": "Please choose the D-Test",
                                 "type": "select",
                                 "multiple": false,
@@ -4400,7 +4400,7 @@
                             },
                             {
                                 "name": "Unable to report result?",
-                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section3-D-Test",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section3-D-c51a19d5-Test",
                                 "Description": "Unable to report result ?",
                                 "type": "select",
                                 "multiple": false,
@@ -4410,14 +4410,14 @@
                             },
                             {
                                 "name": "Extended Spectrum Beta-Lactamase Testing (if applicable)",
-                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text-d8e3f219",
                                 "description": "",
                                 "type": "title",
                                 "style": "h4"
                             },
                             {
                                 "name": "Extended Spectrum Beta-Lactamase Testing",
-                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section3-D-Spectrum",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section3-D-5ebfe786-Spectrum",
                                 "Description": "Please choose the Extended Spectrum Beta-Lactamase Testing ",
                                 "type": "select",
                                 "multiple": false,
@@ -4437,14 +4437,14 @@
                             },
                             {
                                 "name": "High-Level Amonoglycoside Resistance (HLAR) Testing (if applicable)",
-                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text-d5c0e999",
                                 "description": "",
                                 "type": "title",
                                 "style": "h4"
                             },
                             {
                                 "name": "HLASR gentamicin by disk diffusion",
-                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section3-D-disk-diffusion",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section3-D-8dfb2226-disk-diffusion",
                                 "Description": "Please choose the HLASR gentamicin by disk diffusion",
                                 "type": "select",
                                 "multiple": false,
@@ -4464,14 +4464,14 @@
                             },
                             {
                                 "name": "Screening for Carbapenemase Producing Enterobacterales (CPE)",
-                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text",
+                                "code": "SARS-CoV-2-PT-RA-Aug22-Primary-Entry-Form-text-19f3754d",
                                 "description": "",
                                 "type": "title",
                                 "style": "h4"
                             },
                             {
                                 "name": "Modified Hodge",
-                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section3-D-Modified-Hodge",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section3-D-c991dbf0-Modified-Hodge",
                                 "Description": "Please choose the Modified Hodge ",
                                 "type": "select",
                                 "multiple": false,
@@ -4491,7 +4491,7 @@
                             },
                             {
                                 "name": "EDTA-modified carbapenem inactivation method (eCIM)",
-                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section3-D-eCIM",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section3-D-ddbc266e-eCIM",
                                 "Description": "Please choose the eCIM ",
                                 "type": "select",
                                 "multiple": false,
@@ -4511,7 +4511,7 @@
                             },
                             {
                                 "name": "Carba NP test ",
-                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section3-D-Modified-Hodge",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section3-D-74fe7603-Modified-Hodge",
                                 "Description": "Please choose the Carba NP test",
                                 "type": "select",
                                 "multiple": false,
@@ -4531,7 +4531,7 @@
                             },
                             {
                                 "name": "modified carbapenem inactivation method (mCIM)",
-                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section3-D-mCIM",
+                                "code": "Microbiology-PT-RA-Aug22-Primary-Entry-Form-Section3-D-5d7ee7a2-mCIM",
                                 "Description": "Please choose the mCIM",
                                 "type": "select",
                                 "multiple": false,

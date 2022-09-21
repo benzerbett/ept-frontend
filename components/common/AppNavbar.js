@@ -20,11 +20,13 @@ function AppNavbar() {
                     if (typeof window !== 'undefined') {
                         window.sessionStorage.setItem('activeProgramCode', data?.code)
                     }
-                    if(router.pathname !== '/user'){
-                        router.push('/user/surveys')
-                    }
-                    if (!isItInit && router.pathname !== '/user') {
+                    
+                    if (!isItInit) {
                         router.reload()
+                    }else{
+                        // if(router.pathname !== '/user'){
+                        //     router.push('/user/surveys')
+                        // }
                     }
                 }
             })

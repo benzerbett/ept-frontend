@@ -36,7 +36,7 @@ function PublicNavbar() {
         }
     }, [])
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark fixed-top bg-primary">
+        <nav className="navbar navbar-expand-lg navbar-light fixed-top bg-light">
             <div className="container">
                 <Link href="/">
                     <a className="navbar-brand">EPT</a>
@@ -56,8 +56,8 @@ function PublicNavbar() {
                             <button className="btn btn-sm btn-outline-light" onClick={ev=>{simulateLogout(router)}}>Logout</button>
                         </div>
                     </div> : <div className="text-end d-flex">
-                        <Link href="/auth/login"><a style={{ whiteSpace: 'nowrap' }} className="btn btn-outline-light me-2">Login</a></Link>
-                        <Link href="/auth/signup"><a style={{ whiteSpace: 'nowrap' }} className="btn btn-light">Sign-up</a></Link>
+                        <Link href="/auth/login"><a style={{ whiteSpace: 'nowrap' }} className="btn btn-outline-primary px-4 me-2">Login</a></Link>
+                        <Link href="/auth/signup"><a style={{ whiteSpace: 'nowrap' }} className="btn btn-primary px-4">Sign-up</a></Link>
                     </div>}
                 </div>
             </div>

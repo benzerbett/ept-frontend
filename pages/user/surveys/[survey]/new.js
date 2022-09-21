@@ -182,7 +182,7 @@ function Form({ formId }) {
 
 
                                 return (
-                                    <div className="alert alert-secondary px-3 d-flex flex-column align-items-start justify-content-start" style={{ height: '100%', maxHeight: '600px', overflow: 'scroll', backgroundColor: '#eef5f9' }} key={section.code + "_" + currentSection}>
+                                    <div className="alert alert-secondary px-3 d-flex flex-column align-items-start justify-content-start" style={{ height: '100%', /*maxHeight: '600px',*/ overflow: 'scroll', backgroundColor: '#eef5f9' }} key={section.code + "_" + currentSection}>
                                         <h4 style={{ marginBottom: 2, color: 'steelblue', textTransform: 'uppercase', textAlign: 'center' }}>{section.name}</h4>
                                         <hr className="border-top border-primary w-100" />
                                         {section.fields && section.fields.length > 0 ? section.fields.map(fld => {
