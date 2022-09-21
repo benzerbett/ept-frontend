@@ -23,10 +23,9 @@ function AppNavbar() {
                     
                     if (!isItInit) {
                         router.reload()
-                    }else{
-                        // if(router.pathname !== '/user'){
-                        //     router.push('/user/surveys')
-                        // }
+                        if(router.pathname !== '/user'){
+                            router.push('/user/surveys')
+                        }
                     }
                 }
             })

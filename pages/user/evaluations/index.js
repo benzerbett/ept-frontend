@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import React from 'react'
 import Link from 'next/link'
-import { simulateGetSession } from '../../../utilities'
+import { simulateGetSession, getProgramConfig } from '../../../utilities'
 import { useRouter } from 'next/router'
 
 function Evaluations() {
@@ -10,13 +10,7 @@ function Evaluations() {
     const [activeconfig, setActiveConfig] = React.useState(null)
     const router = useRouter()
 
-    const getProgramConfig = (id) => {
-        return fetch(`/api/configurations/${id}`)
-            .then((res) => res.json())
-            .then((data) => {
-                return data
-            })
-    }
+    
     React.useEffect(() => {
         const session = simulateGetSession();
         if (session) {
