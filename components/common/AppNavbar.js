@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React from 'react'
-import { simulateGetUser, simulateLogout, simulateGetSession } from '../../utilities'
+import { simulateGetUser, simulateLogout, simulateGetSession, simulateActiveSession } from '../../utilities'
 
 function AppNavbar() {
     const [user, setUser] = React.useState(null)
@@ -12,18 +12,13 @@ function AppNavbar() {
     const router = useRouter()
 
     const getProgramConfig = (id, isItInit) => {
-        fetch(`/api/configurations/${id}`)
-            .then((res) => res.json())
-            .then((data) => {
-                if (data.code) {
-                    setActiveProgram(data?.code)
-                    if (typeof window !== 'undefined') {
-                        window.sessionStorage.setItem('activeProgramCode', data?.code)
-                    }
-                    
+        simulateActiveSession(id)
+            .then((activeP) => {
+                if (activeP) {
+                    setActiveProgram(activeP)
                     if (!isItInit) {
                         router.reload()
-                        if(router.pathname !== '/user'){
+                        if (router.pathname !== '/user') {
                             router.push('/user/surveys')
                         }
                     }
