@@ -1,6 +1,6 @@
 import useSWR from "swr";
 
-const debug = true;
+const debug = false;
 
 // simulate login
 export const simulateLogin = (username, password, rtr) => {
