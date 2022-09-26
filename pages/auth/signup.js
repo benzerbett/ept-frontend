@@ -3,6 +3,26 @@ import Link from 'next/link'
 import React from 'react'
 
 function Signup() {
+    const handleSubmit = async (e) => {
+        doLogin(email, password, router).then((data) => {
+            console.log('doSignup data::', data)
+            if (data.status === true) {
+                // login success
+                setStatus({
+                    type: 'success',
+                    message: "Login successful"
+                })
+            } else {
+                // login failed
+                setStatus({
+                    ...data,
+                    type: 'danger',
+                })
+            }
+        }).catch((error) => {
+            console.log('doLogin error::', error)
+        })
+    }
     return (
         <>
             <Head>
