@@ -81,6 +81,32 @@ export const doLogin = async (email, password, rtr) => {
         })
     }
 }
+export const doSignup = async (name, email, phone, password, rtr) => {
+    if (typeof window !== 'undefined') {
+        // clear session storage
+        window.sessionStorage.removeItem('user');
+        window.sessionStorage.removeItem('isLoggedIn');
+
+        return fetch(api_url+'/auth/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name, email, phone, password })
+        }).then(res => res.json()).then(data => {
+            if(data.status === false) {
+                if (debug) console.log('/auth/register error::', data)
+                return data
+            }else {
+                if (debug) console.log('/auth/register success::', data)
+                return data
+            }
+        }).catch(err => {
+            if (debug) console.error('/auth/register error::', err)
+            return err
+        })
+    }
+}
 
 export const doLogout = async (rtr) => {
     if (typeof window !== 'undefined') {

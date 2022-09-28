@@ -39,14 +39,11 @@ export default function Login() {
         if (mtd) {
             doGetSession().then((session) => {
                 if (session) {
-                    console.log('LOGIN PAGE session::', session)
                     if (session.user.type === 'admin') {
                         router.push('/admin/', undefined, { unstable_skipClientCache: true })
                     } else if (session.user.type === 'user') {
                         router.push('/user/', undefined, { unstable_skipClientCache: true })
                     }
-                }else{
-                    console.log('LOGIN PAGE no session::', session)
                 }
             })
             setLoading(false)
@@ -84,12 +81,12 @@ export default function Login() {
                         <div className="form-group mb-4">
                             <label className='form-label' htmlFor="email">Email</label>
                             <input onInput={(e) => setEmail(e.target.value)} type="text" id="email" value={email} className="form-control" placeholder='email' />
-                            {status && status.errors && status.errors.email && <div className="alert alert-danger border-white my-1 p-0 px-2"><small>{status.errors.email.join(' ')}</small></div>}
+                            {status && status.errors && status.errors.email && <div className="alert alert-danger border-white my-1 p-0 px-2"><small>{status.errors.email.join('; ')}</small></div>}
                         </div>
                         <div className="form-group mb-4">
                             <label className='form-label' htmlFor="password">Password</label>
                             <input onInput={(e) => setPassword(e.target.value)} type="password" id="password" value={password} className="form-control" placeholder='***************' />
-                            {status && status.errors && status.errors.password && <div className="text-danger">{status.errors.password.join(' ')}</div>}
+                            {status && status.errors && status.errors.password && <div className="text-danger"><small>{status.errors.password.join('; ')}</small></div>}
                         </div>
                         <div className="form-group mb-4">
                             <input type="submit" value="Login" className="btn btn-primary w-100 mt-3" />

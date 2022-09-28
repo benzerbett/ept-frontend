@@ -42,6 +42,8 @@ function Surveys() {
                 } else {
                     router.push('/user')
                 }
+            } else {
+                router.push('/auth/login', undefined, { unstable_skipClientCache: true })
             }
         })
     }, [])

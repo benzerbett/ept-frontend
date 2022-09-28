@@ -55,6 +55,8 @@ function User() {
                     //         router.push('/user/surveys', undefined, { unstable_skipClientCache: true })
                     //     }
                     // }
+                } else {
+                    router.push('/auth/login', undefined, { unstable_skipClientCache: true })
                 }
             })
             getPrograms()

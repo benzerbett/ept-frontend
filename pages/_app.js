@@ -36,6 +36,10 @@ function MyApp({ Component, pageProps }) {
                     setUser(session.user)
                     setSession(session)
                     pageProps.session = session
+                } else {
+                    if (typeof window != 'undefined' && window.location.pathname !== '/auth/login' && window.location.pathname !== '/auth/signup') {
+                        window.location.href = '/auth/login'
+                    }
                 }
                 setLoading(false)
             })

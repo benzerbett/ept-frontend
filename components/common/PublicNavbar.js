@@ -29,7 +29,9 @@ function PublicNavbar() {
                         router.push('/user', undefined, { unstable_skipClientCache: true })
                     }
                 } else {
-                    router.push('/auth/login', undefined, { unstable_skipClientCache: true })
+                    if (router.pathname !== '/auth/login' && router.pathname !== '/auth/signup') {
+                        router.push('/auth/login', undefined, { unstable_skipClientCache: true })
+                    }
                 }
             })
         }

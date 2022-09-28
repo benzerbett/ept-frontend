@@ -68,6 +68,8 @@ function Form({ formId, form }) {
                     if (form) {
                         setFID(form?.code)
                     }
+                } else {
+                    router.push('/auth/login', undefined, { unstable_skipClientCache: true })
                 }
             })
         }
