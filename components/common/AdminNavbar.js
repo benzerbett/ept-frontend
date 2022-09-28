@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React from 'react'
-import { simulateLogout, simulateGetSession } from '../../utilities'
+import { doGetSession, doLogout } from '../../utilities'
 
 function AdminNavbar() {
     const router = useRouter()
@@ -9,12 +9,13 @@ function AdminNavbar() {
     const [isLoggedIn, setIsLoggedIn] = React.useState(false)
     const [homeUrl, setHomeUrl] = React.useState('/')
     React.useEffect(() => {
-        const session = simulateGetSession()
-        if (session) {
-            setUser(session.user)
-            setIsLoggedIn(true)
-            setHomeUrl(session.user.type === 'admin' ? '/admin' : '/user')
-        }
+        doGetSession().then(session=>{
+            if (session) {
+                setUser(session.user)
+                setIsLoggedIn(true)
+                setHomeUrl(session.user.type === 'admin' ? '/admin' : '/user')
+            }
+        })
     }, [])
     return (
         <header className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
@@ -27,7 +28,7 @@ function AdminNavbar() {
             </div>
             <div className="navbar-nav">
                 <div className="nav-item text-nowrap">
-                    <button className="nav-link text-dark px-3" onClick={ev=>{simulateLogout(router)}}>Sign out</button>
+                    <button className="nav-link text-dark px-3" onClick={ev=>{doLogout(router)}}>Sign out</button>
                 </div>
             </div>
         </header>

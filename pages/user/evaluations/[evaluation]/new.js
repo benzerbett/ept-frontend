@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { simulateGetSession, getProgramConfig, loadConfig } from '../../../../utilities'
+import { doGetSession, getProgramConfig, loadConfig } from '../../../../utilities'
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 // import { configuration, loadConfig } from '../../../../utilities/config'
@@ -63,12 +63,13 @@ function Form({ formId, form }) {
     useEffect(() => {
         let mounted = true;
         if (mounted) {
-            const session = simulateGetSession();
-            if (session) {
-                if (form) {
-                    setFID(form?.code)
+            doGetSession().then((session) => {
+                if (session) {
+                    if (form) {
+                        setFID(form?.code)
+                    }
                 }
-            }
+            })
         }
         return () => mounted = false;
     }, [])
@@ -292,31 +293,32 @@ function App() {
     useEffect(() => {
         let mounted = true;
         if (mounted) {
-            const session = simulateGetSession();
-            if (session) {
-                const ap = getProgramConfig(session.activeProgramCode)
-                ap.then((configuration) => {
-                    const { evaluation } = router.query
-                    if (evaluation) {
-                        setFormId(evaluation);
-                        getForm(session, configuration, evaluation).then(fm => {
-                            if (fm) {
-                                setForm(fm);
-                                setLoading(false);
-                            } else {
-                                console.log("form not found");
-                            }
-                        })
-                        setLoading(false)
-                    } else {
-                        setFormId(null);
-                        setForm(null);
-                        setLoading(false)
-                    }
-                })
-            } else {
-                setLoading(true)
-            }
+            doGetSession().then(session => {
+                if (session) {
+                    const ap = getProgramConfig(session.activeProgramCode)
+                    ap.then((configuration) => {
+                        const { evaluation } = router.query
+                        if (evaluation) {
+                            setFormId(evaluation);
+                            getForm(session, configuration, evaluation).then(fm => {
+                                if (fm) {
+                                    setForm(fm);
+                                    setLoading(false);
+                                } else {
+                                    console.log("form not found");
+                                }
+                            })
+                            setLoading(false)
+                        } else {
+                            setFormId(null);
+                            setForm(null);
+                            setLoading(false)
+                        }
+                    })
+                } else {
+                    setLoading(true)
+                }
+            })
         }
         return () => mounted = false;
     }, [evaluation])

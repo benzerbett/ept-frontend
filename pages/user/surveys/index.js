@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import React from 'react'
 import Link from 'next/link'
-import { simulateGetSession, getProgramConfig } from '../../../utilities'
+import { doGetSession, getProgramConfig } from '../../../utilities'
 import { useRouter } from 'next/router'
 
 function Surveys() {
@@ -12,37 +12,38 @@ function Surveys() {
 
 
     React.useEffect(() => {
-        const session = simulateGetSession();
-        if (session) {
-            setSession(session)
-            if (session && session.activeProgramCode) {
-                const ap = getProgramConfig(session.activeProgramCode)
-                ap.then((data) => {
-                    setActiveConfig(data)
-                    let svys = []
-                    data.rounds.map(round => {
-                        if (round?.active && round.useChecklist) {
-                            let f_m = data.forms.find(f => f.code == round.checklistForm)
-                            if (f_m) {
-                                // svys.push(f_m)
-                                svys = Array.from([...svys, f_m], fm => {
-                                    return {
-                                        round_name: round.name,
-                                        code: fm.code,
-                                        name: fm.name,
-                                        description: fm.description,
-                                        metadata: fm.metadata,
-                                    }
-                                })
+        doGetSession().then((session) => {
+            if (session) {
+                setSession(session)
+                if (session && session.activeProgramCode) {
+                    const ap = getProgramConfig(session.activeProgramCode)
+                    ap.then((data) => {
+                        setActiveConfig(data)
+                        let svys = []
+                        data.rounds.map(round => {
+                            if (round?.active && round.useChecklist) {
+                                let f_m = data.forms.find(f => f.code == round.checklistForm)
+                                if (f_m) {
+                                    // svys.push(f_m)
+                                    svys = Array.from([...svys, f_m], fm => {
+                                        return {
+                                            round_name: round.name,
+                                            code: fm.code,
+                                            name: fm.name,
+                                            description: fm.description,
+                                            metadata: fm.metadata,
+                                        }
+                                    })
+                                }
                             }
-                        }
+                        })
+                        setSurveys(svys)
                     })
-                    setSurveys(svys)
-                })
-            } else {
-                router.push('/user')
+                } else {
+                    router.push('/user')
+                }
             }
-        }
+        })
     }, [])
 
     return (

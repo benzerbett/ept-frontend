@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import React from 'react'
 import { useRouter } from 'next/router'
-import { simulateGetUser, simulateLogout, simulateGetSession, simulateActiveSession } from '../../utilities'
+import { simulateGetUser, doLogout, doGetSession, simulateActiveSession } from '../../utilities'
 
 function User() {
     const [user, setUser] = React.useState(null)
@@ -41,21 +41,22 @@ function User() {
     React.useEffect(() => {
         let mtd = true
         if (mtd) {
-            const session = simulateGetSession()
-            if (session) {
-                setUser(session.user)
-                setIsLoggedIn(true)
-                setHomeUrl(session.user.type === 'admin' ? '/admin' : '/user')
-                if (session.activeProgramCode) {
-                    getProgramConfig(session.activeProgramCode, true)
+            doGetSession().then((session) => {
+                if (session) {
+                    setUser(session.user)
+                    setIsLoggedIn(true)
+                    setHomeUrl(session.user.type === 'admin' ? '/admin' : '/user')
+                    if (session.activeProgramCode) {
+                        getProgramConfig(session.activeProgramCode, true)
+                    }
+                    // check if an active program is set in session storage
+                    // if (session.activeProgramCode) {
+                    //     if (router.pathname !== '/user') {
+                    //         router.push('/user/surveys', undefined, { unstable_skipClientCache: true })
+                    //     }
+                    // }
                 }
-                // check if an active program is set in session storage
-                // if (session.activeProgramCode) {
-                //     if (router.pathname !== '/user') {
-                //         router.push('/user/surveys', undefined, { unstable_skipClientCache: true })
-                //     }
-                // }
-            }
+            })
             getPrograms()
         }
         return () => {

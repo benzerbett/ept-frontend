@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React from 'react'
-import { simulateGetUser, simulateLogout, simulateGetSession, simulateActiveSession } from '../../utilities'
+import { simulateGetUser, doLogout, doGetSession, simulateActiveSession } from '../../utilities'
 
 function AppNavbar() {
     const [user, setUser] = React.useState(null)
@@ -41,21 +41,22 @@ function AppNavbar() {
     React.useEffect(() => {
         let mtd = true
         if (mtd) {
-            const session = simulateGetSession()
-            if (session) {
-                setUser(session.user)
-                setIsLoggedIn(true)
-                setHomeUrl(session.user.type === 'admin' ? '/admin' : '/user')
-                if (session.activeProgramCode) {
-                    getProgramConfig(session.activeProgramCode, true)
-                } else {
-                    if (router.pathname !== '/user') {
-                        router.push('/user', undefined, { unstable_skipClientCache: true })
+            doGetSession().then(session=>{
+                if (session) {
+                    setUser(session.user)
+                    setIsLoggedIn(true)
+                    setHomeUrl(session.user.type === 'admin' ? '/admin' : '/user')
+                    if (session.activeProgramCode) {
+                        getProgramConfig(session.activeProgramCode, true)
+                    } else {
+                        if (router.pathname !== '/user') {
+                            router.push('/user', undefined, { unstable_skipClientCache: true })
+                        }
                     }
+                } else {
+                    router.push('/auth/login', undefined, { unstable_skipClientCache: true })
                 }
-            } else {
-                router.push('/auth/login', undefined, { unstable_skipClientCache: true })
-            }
+            })
             getPrograms()
         }
         return () => {
@@ -133,18 +134,18 @@ function AppNavbar() {
                         <ul className="dropdown-menu text-center">
                             <li>
                                 <Link href="/user/settings/account">
-                                    <a className="nav-link">My Account</a>
+                                    <a className="nav-link w-100">My Account</a>
                                 </Link>
                             </li>
                             <li><hr className="dropdown-divider" /></li>
                             <li>
                                 <Link href="/user/settings">
-                                    <a className="nav-link">Settings</a>
+                                    <a className="nav-link w-100">Settings</a>
                                 </Link>
                             </li>
                             <li><hr className="dropdown-divider" /></li>
                             <li className='d-flex justify-content-center'>
-                                <button className="btn btn-link nav-link text-center" onClick={ev => { simulateLogout(router) }}>Logout</button>
+                                <button className="btn btn-link nav-link text-center w-100" onClick={ev => { doLogout(router) }}>Logout</button>
                             </li>
                         </ul>
                     </div> : <div className="text-end d-flex">

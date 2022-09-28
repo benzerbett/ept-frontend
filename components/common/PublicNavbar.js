@@ -1,35 +1,37 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React from 'react'
-import { simulateGetSession } from '../../utilities'
+import { doGetSession } from '../../utilities'
 
 function PublicNavbar() {
     const router = useRouter()
     const [user, setUser] = React.useState(null)
     const [isLoggedIn, setIsLoggedIn,] = React.useState(false)
     // React.useEffect(() => {
-    //     const session = simulateGetSession()
-    //     if(session) {
-    //         setUser(session.user)
-    //         setIsLoggedIn(true)
-    //     }
+    //     doGetSession().then((session) => {
+    //         if (session) {
+    //             setUser(session.user)
+    //             setIsLoggedIn(true)
+    //         }
+    //     })
     // }, [])
 
     React.useEffect(() => {
         let mtd = true
         if (mtd) {
-            const session = simulateGetSession()
-            if (session) {
-                setUser(session.user)
-                setIsLoggedIn(true)
-                if(session.user.type === 'admin'){
-                    router.push('/admin', undefined, { unstable_skipClientCache: true })
-                } else if(session.user.type === 'user'){
-                    router.push('/user', undefined, { unstable_skipClientCache: true })
+            doGetSession().then(session => {
+                if (session) {
+                    setUser(session.user)
+                    setIsLoggedIn(true)
+                    if (session.user.type === 'admin') {
+                        router.push('/admin', undefined, { unstable_skipClientCache: true })
+                    } else if (session.user.type === 'user') {
+                        router.push('/user', undefined, { unstable_skipClientCache: true })
+                    }
+                } else {
+                    router.push('/auth/login', undefined, { unstable_skipClientCache: true })
                 }
-            }else{
-                router.push('/auth/login', undefined, { unstable_skipClientCache: true })
-            }
+            })
         }
         return () => {
             mtd = false
@@ -53,7 +55,7 @@ function PublicNavbar() {
                     {(isLoggedIn && user) ? <div className="text-end d-flex">
                         <div className="d-flex flex-wrap align-items-center">
                             <small className="text-light me-2">{user.name}</small>
-                            <button className="btn btn-sm btn-outline-light" onClick={ev=>{simulateLogout(router)}}>Logout</button>
+                            <button className="btn btn-sm btn-outline-light" onClick={ev => { doLogout(router) }}>Logout</button>
                         </div>
                     </div> : <div className="text-end d-flex">
                         <Link href="/auth/login"><a style={{ whiteSpace: 'nowrap' }} className="btn btn-outline-primary px-4 me-2">Login</a></Link>

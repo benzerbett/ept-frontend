@@ -7,7 +7,7 @@ import AdminTheme from '../components/layouts/AdminTheme'
 import { useState, useEffect, createContext } from 'react'
 import Head from 'next/head'
 import Script from 'next/script'
-import { simulateGetSession } from '../utilities'
+import { doGetSession } from '../utilities'
 
 
 function MyApp({ Component, pageProps }) {
@@ -30,14 +30,15 @@ function MyApp({ Component, pageProps }) {
         let mtd = true
         if (mtd) {
             // import("bootstrap/dist/js/bootstrap.bundle.min");
-            const session = simulateGetSession();
-            if (session) {
-                setIsLoggedIn(session.isLoggedIn)
-                setUser(session.user)
-                setSession(session)
-                pageProps.session = session
-            }
-            setLoading(false)
+            doGetSession().then((session) => {
+                if (session) {
+                    setIsLoggedIn(session.isLoggedIn)
+                    setUser(session.user)
+                    setSession(session)
+                    pageProps.session = session
+                }
+                setLoading(false)
+            })
         }
         return () => {
             mtd = false

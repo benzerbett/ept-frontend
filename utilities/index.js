@@ -1,34 +1,35 @@
 import useSWR from "swr";
 
-const debug = false;
+const debug = process.env.APP_ENV || false;
+const api_url = process.env.API_URL || "http://localhost:8000/api";
 
-// simulate login
-export const simulateLogin = (username, password, rtr) => {
-    if (typeof window !== 'undefined') {
-        // clear session storage
-        window.sessionStorage.removeItem('user');
-        window.sessionStorage.removeItem('isLoggedIn');
-        // generate user id
-        const id = Math.floor(Math.random() * 1000000);
-        if (username === 'admin' && password.length > 0) {
-            window.sessionStorage.setItem('isLoggedIn', true)
-            window.sessionStorage.setItem('user', JSON.stringify({ id: id, type: 'admin', name: 'Mkuu L. Wabara', email: 'mkadmin@email.net' }))
-            rtr.push('/admin', undefined, { unstable_skipClientCache: true })
-        } else if (username.length > 0 && password.length > 0) {
-            window.sessionStorage.setItem('isLoggedIn', true)
-            window.sessionStorage.setItem('user', JSON.stringify({ id: id, type: 'participant', name: 'Mwana Maabara', email: 'participant@mail.ke' }))
-            rtr.push('/user', undefined, { unstable_skipClientCache: true })
-        }
-        window.location.reload()
-    }
-}
+// simulate login - tests
+// export const simulateLogin = (username, password, rtr) => {
+//     if (typeof window !== 'undefined') {
+//         // clear session storage
+//         window.sessionStorage.removeItem('user');
+//         window.sessionStorage.removeItem('isLoggedIn');
+//         // generate user id
+//         const id = Math.floor(Math.random() * 1000000);
+//         if (username === 'admin' && password.length > 0) {
+//             window.sessionStorage.setItem('isLoggedIn', true)
+//             window.sessionStorage.setItem('user', JSON.stringify({ id: id, type: 'admin', name: 'Mkuu L. Wabara', email: 'mkadmin@email.net' }))
+//             rtr.push('/admin', undefined, { unstable_skipClientCache: true })
+//         } else if (username.length > 0 && password.length > 0) {
+//             window.sessionStorage.setItem('isLoggedIn', true)
+//             window.sessionStorage.setItem('user', JSON.stringify({ id: id, type: 'participant', name: 'Mwana Maabara', email: 'participant@mail.ke' }))
+//             rtr.push('/user', undefined, { unstable_skipClientCache: true })
+//         }
+//         window.location.reload()
+//     }
+// }
 export const doLogin = async (email, password, rtr) => {
     if (typeof window !== 'undefined') {
         // clear session storage
         window.sessionStorage.removeItem('user');
         window.sessionStorage.removeItem('isLoggedIn');
 
-        return fetch('http://localhost:8000/api/auth/login', {
+        return fetch(api_url+'/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -43,14 +44,14 @@ export const doLogin = async (email, password, rtr) => {
                 window.sessionStorage.setItem('isLoggedIn', true)
                 window.sessionStorage.setItem('token', data.token)
                 // get user details
-                return fetch('http://localhost:8000/api/auth/user', {
+                return fetch(api_url+'/auth/user', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${data.token}`
                     }
                 }).then(res => res.json()).then(data => {
-                    if (debug) console.log('/auth/user data::', data)
+                    if (debug) console.log('/auth/user data (doLogin) ::', data)
                     if (data.status === true) {
                         window.sessionStorage.setItem('user', JSON.stringify({ ...data.user, type: (data.user.role == 1 ? "admin" : "participant") }))
                         // redirect to admin or user dashboard
@@ -62,7 +63,7 @@ export const doLogin = async (email, password, rtr) => {
                         window.location.reload()
                     } else {
                         // show error
-                        if (debug) console.error('/auth/user error::', data)
+                        if (debug) console.error('/auth/user error (doLogin) ::', data)
                         window.sessionStorage.setItem('isLoggedIn', false)
                         window.sessionStorage.removeItem('token')
                         window.sessionStorage.removeItem('user')
@@ -77,6 +78,37 @@ export const doLogin = async (email, password, rtr) => {
         }).catch(err => {
             if (debug) console.error('/auth/login error::', err)
             return err
+        })
+    }
+}
+
+export const doLogout = async (rtr) => {
+    if (typeof window !== 'undefined') {
+        // clear session storage
+        window.sessionStorage.removeItem('user');
+        window.sessionStorage.removeItem('isLoggedIn');
+        window.sessionStorage.removeItem('token');
+        fetch(api_url+'/auth/logout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${window.sessionStorage.getItem('token')}`
+            }
+        }).then(res => res.json()).then(data => {
+            if (debug) console.log('/auth/logout data::', data)
+            if (data.status === true) {
+                window.location.reload()
+            } else {
+                if (debug) console.error('/auth/logout error (doLogout) ::', data)
+            }
+            rtr.push('/auth/login', undefined, { unstable_skipClientCache: true })
+            rtr.reload()
+            // return data
+        }).catch(err => {
+            if (debug) console.error('/auth/logout error (doLogout) ::', err)
+            rtr.push('/auth/login', undefined, { unstable_skipClientCache: true })
+            rtr.reload()
+            // return err
         })
     }
 }
@@ -143,36 +175,36 @@ export const loadConfig = (json, session) => {
 }
 
 // simulate logout
-export const simulateLogout = (rtr) => {
-    if (typeof window !== 'undefined') {
-        window.sessionStorage.removeItem('user');
-        window.sessionStorage.removeItem('isLoggedIn');
-        rtr.push('/auth/login', undefined, { unstable_skipClientCache: true })
-        rtr.reload()
-    }
-}
+// export const simulateLogout = (rtr) => {
+//     if (typeof window !== 'undefined') {
+//         window.sessionStorage.removeItem('user');
+//         window.sessionStorage.removeItem('isLoggedIn');
+//         rtr.push('/auth/login', undefined, { unstable_skipClientCache: true })
+//         rtr.reload()
+//     }
+// }
 
 
 // get user
-export const doGetSession = () => {
+export const doGetSession = async () => {
     if (typeof window !== 'undefined') {
-        fetch('http://localhost:8000/api/auth/user', {
+        return fetch('http://localhost:8000/api/auth/user', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + window.sessionStorage.getItem('token')
             }
         }).then(res => res.json()).then(data => {
-            if (debug) console.log('/auth/user data::', data)
+            if (debug) console.log('/auth/user data (doGetSession) ::', data)
             // if (data) {
-            if (debug) console.log('/auth/user data::', data)
+            if (debug) console.log('/auth/user data (doGetSession) ::', data)
             if (data.status === true) {
                 // return user info
                 let session = {
                     user: { ...data.user, type: (data.user.role == 1 ? "admin" : "participant") },
                     isLoggedIn: true,
                     token: window.sessionStorage.getItem('token'),
-                    activeProgramCode: window.sessionStorage.getItem('activeProgramCode')
+                    activeProgramCode: window.sessionStorage.getItem('activeProgramCode') || null,
                 }
                 return session
             } else {
@@ -181,28 +213,28 @@ export const doGetSession = () => {
             }
             // }
         }).catch(error => {
-            if (debug) console.error('/auth/user error::', error)
+            if (debug) console.error('/auth/user error (doGetSession) ::', error)
         })
     }
     return null;
 }
 
 
-export const simulateGetSession = () => {
-    if (typeof window !== 'undefined') {
-        let user = window.sessionStorage.getItem('user');
-        let isLoggedIn = window.sessionStorage.getItem('isLoggedIn');
-        let activeProgramCode = window.sessionStorage.getItem('activeProgramCode');
-        if (user && isLoggedIn) {
-            return {
-                isLoggedIn: true,
-                user: JSON.parse(user),
-                activeProgramCode: activeProgramCode
-            }
-        }
-    }
-    return null;
-}
+// export const simulateGetSession = () => {
+//     if (typeof window !== 'undefined') {
+//         let user = window.sessionStorage.getItem('user');
+//         let isLoggedIn = window.sessionStorage.getItem('isLoggedIn');
+//         let activeProgramCode = window.sessionStorage.getItem('activeProgramCode');
+//         if (user && isLoggedIn) {
+//             return {
+//                 isLoggedIn: true,
+//                 user: JSON.parse(user),
+//                 activeProgramCode: activeProgramCode
+//             }
+//         }
+//     }
+//     return null;
+// }
 
 
 export const simulateActiveSession = (sessionID) => {

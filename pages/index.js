@@ -2,25 +2,28 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React from 'react'
 
-import { simulateGetSession } from '../utilities';
+import { doGetSession } from '../utilities';
 
 function index() {
     const router = useRouter()
-    const session = simulateGetSession()
-
+    const [session, setSession] = React.useState(null)
+    
     React.useEffect(() => {
         let mtd = true
         if (mtd) {
-            console.log(session)
-            if (session && session.isLoggedIn) {
-                if (session.user.type === 'admin') {
-                    router.push('/admin/', undefined, { unstable_skipClientCache: true })
-                } else if (session.user.type === 'user') {
-                    router.push('/user/', undefined, { unstable_skipClientCache: true })
+            doGetSession().then((sess) => {
+                // console.log(session)
+                setSession(sess)
+                if (sess && sess.isLoggedIn) {
+                    if (sess.user.type === 'admin') {
+                        router.push('/admin/', undefined, { unstable_skipClientCache: true })
+                    } else if (sess.user.type === 'user') {
+                        router.push('/user/', undefined, { unstable_skipClientCache: true })
+                    }
+                } else {
+                    router.push('/auth/login', undefined, { unstable_skipClientCache: true })
                 }
-            } else {
-                router.push('/auth/login', undefined, { unstable_skipClientCache: true })
-            }
+            })
         }
         return () => {
             mtd = false

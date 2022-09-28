@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Head from 'next/head';
 import Link from 'next/link';
-import { simulateGetSession, simulateLogin, doLogin } from '../../utilities';
+import { doGetSession, doLogin } from '../../utilities';
 import { useRouter } from 'next/router';
 const API_URL = "http://localhost:8000/test_laravel/api/";
 export default function Login() {
@@ -16,18 +16,14 @@ export default function Login() {
     });
     let login_token = null;
     const handleSubmit = async (e) => {
-        // simulate login
-        // simulateLogin(email, password, router)
+        // do login
         doLogin(email, password, router).then((data) => {
-            console.log('doLogin data::', data)
             if (data.status === true) {
-                // login success
                 setStatus({
                     type: 'success',
                     message: "Login successful"
                 })
             } else {
-                // login failed
                 setStatus({
                     ...data,
                     type: 'danger',
@@ -41,14 +37,18 @@ export default function Login() {
     useEffect(() => {
         let mtd = true
         if (mtd) {
-            const session = simulateGetSession()
-            if (session) {
-                if (session.user.type === 'admin') {
-                    router.push('/admin/', undefined, { unstable_skipClientCache: true })
-                } else if (session.user.type === 'user') {
-                    router.push('/user/', undefined, { unstable_skipClientCache: true })
+            doGetSession().then((session) => {
+                if (session) {
+                    console.log('LOGIN PAGE session::', session)
+                    if (session.user.type === 'admin') {
+                        router.push('/admin/', undefined, { unstable_skipClientCache: true })
+                    } else if (session.user.type === 'user') {
+                        router.push('/user/', undefined, { unstable_skipClientCache: true })
+                    }
+                }else{
+                    console.log('LOGIN PAGE no session::', session)
                 }
-            }
+            })
             setLoading(false)
         }
         return () => {
