@@ -1,28 +1,9 @@
+import React from "react";
 import useSWR from "swr";
 
 const debug = process.env.APP_ENV || false;
 const api_url = process.env.API_URL || "http://localhost:8000/api";
 
-// simulate login - tests
-// export const simulateLogin = (username, password, rtr) => {
-//     if (typeof window !== 'undefined') {
-//         // clear session storage
-//         window.sessionStorage.removeItem('user');
-//         window.sessionStorage.removeItem('isLoggedIn');
-//         // generate user id
-//         const id = Math.floor(Math.random() * 1000000);
-//         if (username === 'admin' && password.length > 0) {
-//             window.sessionStorage.setItem('isLoggedIn', true)
-//             window.sessionStorage.setItem('user', JSON.stringify({ id: id, type: 'admin', name: 'Mkuu L. Wabara', email: 'mkadmin@email.net' }))
-//             rtr.push('/admin', undefined, { unstable_skipClientCache: true })
-//         } else if (username.length > 0 && password.length > 0) {
-//             window.sessionStorage.setItem('isLoggedIn', true)
-//             window.sessionStorage.setItem('user', JSON.stringify({ id: id, type: 'participant', name: 'Mwana Maabara', email: 'participant@mail.ke' }))
-//             rtr.push('/user', undefined, { unstable_skipClientCache: true })
-//         }
-//         window.location.reload()
-//     }
-// }
 export const doLogin = async (email, password, rtr) => {
     if (typeof window !== 'undefined') {
         // clear session storage
@@ -53,9 +34,10 @@ export const doLogin = async (email, password, rtr) => {
                 }).then(res => res.json()).then(data => {
                     if (debug) console.log('/auth/user data (doLogin) ::', data)
                     if (data.status === true) {
-                        window.sessionStorage.setItem('user', JSON.stringify({ ...data.user, type: (data.user.role == 1 ? "admin" : "participant") }))
+                        // window.sessionStorage.setItem('user', JSON.stringify({ ...data.user, type: (data.user.role == 1 ? "admin" : "participant") }))
+                        window.sessionStorage.setItem('user', JSON.stringify({ ...data.user, type: data.role?.name }))
                         // redirect to admin or user dashboard
-                        if (data.user.role == 1) {
+                        if (data.role?.name == "super_admin" || data.role?.name == "admin") {
                             rtr.push('/admin', undefined, { unstable_skipClientCache: true })
                         } else {
                             rtr.push('/user', undefined, { unstable_skipClientCache: true })
@@ -200,16 +182,34 @@ export const loadConfig = (json, session) => {
     }
 }
 
-// simulate logout
-// export const simulateLogout = (rtr) => {
-//     if (typeof window !== 'undefined') {
-//         window.sessionStorage.removeItem('user');
-//         window.sessionStorage.removeItem('isLoggedIn');
-//         rtr.push('/auth/login', undefined, { unstable_skipClientCache: true })
-//         rtr.reload()
-//     }
-// }
 
+//utility to render a form field given a field object
+export function renderField(field) {
+    return (<>
+        {field.type === 'text' ? React.createElement('input', { type: 'text', className: 'form-control form-control-lg', placeholder: field.name, ...field }) :
+            field.type === 'number' ? React.createElement('input', { type: 'number', className: 'form-control form-control-lg', placeholder: field.name, ...field }) :
+                field.type === 'date' ? React.createElement('input', { type: 'date', className: 'form-control form-control-lg', placeholder: field.name, ...field }) :
+                    (field.type === 'select' && field.options && field.options.length > 0 && typeof field.options == "object") ? React.createElement('select', { className: 'form-select form-select-lg', placeholder: field.name, ...field }, field.options.map((option, k) => (
+                        <option key={k + "_" + option.value} value={option.value}>{option.name}</option>
+                    ))) : (field.type === 'radio' && field.options && field.options.length > 0 && typeof field.options == "object") ? React.createElement('div', {}, field.options.map((option, k) => (
+                        <div key={k + "_" + option.value} style={{ marginBottom: '10px' }}>
+                            <input type="radio" name={field.code} value={option.value} {...field} /> {option.name}
+                        </div>
+                    ))) : (field.type === 'checkbox' && field.options && field.options.length > 0 && typeof field.options == "object") ? React.createElement('div', {}, field.options.map((option, k) => (
+                        <div key={k + "_" + option.value} style={{ marginBottom: '10px' }}>
+                            <input type="checkbox" name={field.code} value={option.value} {...field} /> {option.name}
+                        </div>
+                    ))) : field.type === 'textarea' ? React.createElement('textarea', { className: 'form-control form-control-lg', placeholder: field.name, ...field }) :
+                        React.createElement(field.type, {
+                            key: field.code,
+                            id: field.code,
+                            name: field.name,
+                            style: { margin: '0px', minWidth: '50%' },
+                            children: ((field.type === 'h1' || field.type === 'h2' || field.type === 'h3' || field.type === 'h4' || field.type === 'h5' || field.type === 'h6') ? field.description || field.name || field.label :
+                                "This question could not be loaded")
+                        })}
+    </>)
+}
 
 // get user
 export const doGetSession = async () => {
@@ -227,7 +227,8 @@ export const doGetSession = async () => {
             if (data.status === true) {
                 // return user info
                 let session = {
-                    user: { ...data.user, type: (data.user.role == 1 ? "admin" : "participant") },
+                    // user: { ...data.user, type: (data.user.role == 1 ? "admin" : "participant") },
+                    user: { ...data.user, type: data.role?.name },
                     isLoggedIn: true,
                     token: window.sessionStorage.getItem('token'),
                     activeProgramCode: window.sessionStorage.getItem('activeProgramCode') || null,
@@ -244,24 +245,6 @@ export const doGetSession = async () => {
     }
     return null;
 }
-
-
-// export const simulateGetSession = () => {
-//     if (typeof window !== 'undefined') {
-//         let user = window.sessionStorage.getItem('user');
-//         let isLoggedIn = window.sessionStorage.getItem('isLoggedIn');
-//         let activeProgramCode = window.sessionStorage.getItem('activeProgramCode');
-//         if (user && isLoggedIn) {
-//             return {
-//                 isLoggedIn: true,
-//                 user: JSON.parse(user),
-//                 activeProgramCode: activeProgramCode
-//             }
-//         }
-//     }
-//     return null;
-// }
-
 
 export const simulateActiveSession = (sessionID) => {
     if (sessionID) {
