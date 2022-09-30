@@ -127,7 +127,7 @@ function AppNavbar() {
                             <Link href="/"><a className={"nav-link " + (router.pathname === '/user/settings' ? ' active' : '')}>Help Desk</a></Link>
                         </li>
                     </ul>
-                    {(isLoggedIn && user) ? <div className="btn-group">
+                    {(isLoggedIn && user) && <div className="btn-group">
                         <button className="btn bg-purple-dark text-white btn-sm dropdown-toggle outline-none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             {user.name}
                         </button>
@@ -148,9 +148,6 @@ function AppNavbar() {
                                 <button className="btn btn-link nav-link text-center w-100" onClick={ev => { doLogout(router) }}>Logout</button>
                             </li>
                         </ul>
-                    </div> : <div className="text-end d-flex">
-                        <Link href="/auth/login"><a style={{ whiteSpace: 'nowrap' }} className="btn btn-outline-light me-2">Login</a></Link>
-                        <Link href="/auth/signup"><a style={{ whiteSpace: 'nowrap' }} className="btn btn-light">Sign-up</a></Link>
                     </div>}
                 </div>
             </div>
