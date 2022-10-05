@@ -1,15 +1,13 @@
 import Head from 'next/head'
 import React from 'react'
+import Signup from '../../auth/signup'
 
 function NewUserForm() {
   return (
     <>
-      <Head>
-        <title>EPT | New User</title>
-        <meta name="description" content="EPT" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
       <div className='container'>New User</div>
+      <Signup></Signup>
+
     </>
   )
 }
