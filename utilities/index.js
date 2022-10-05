@@ -63,7 +63,7 @@ export const doLogin = async (email, password, rtr) => {
         })
     }
 }
-export const doSignup = async (name, email, phone, password, rtr) => {
+export const doSignup = async (name, email, phone, password,role,rtr) => {
     if (typeof window !== 'undefined') {
         // clear session storage
         window.sessionStorage.removeItem('user');
@@ -74,7 +74,7 @@ export const doSignup = async (name, email, phone, password, rtr) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ name, email, phone, password })
+            body: JSON.stringify({ name, email, phone, password,role })
         }).then(res => res.json()).then(data => {
             if(data.status === false) {
                 if (debug) console.log('/auth/register error::', data)
