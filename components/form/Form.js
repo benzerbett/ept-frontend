@@ -64,7 +64,14 @@ export function Form({ formId, form }) {
                     >
                         {form.sections && form.sections.length > 0 ? form.sections.map((section, index) => (
                             <li key={section.code + "_" + index} className="nav-link p-0 mx-2">
-                                <a className={"btn btn-outline btn-sm fs-6 mx-2 my-1 " + (currentSection === index ? "btn-primary" : "btn-outline-secondary")} onClick={(ev) => { ev.preventDefault(); ev.stopPropagation(); setCurrentSection(index); }}>{section.name}</a>
+                                <a className={"btn btn-outline btn-sm fs-6 mx-2 my-1 " + (currentSection === index ? "btn-primary" : "btn-outline-secondary")} onClick={(ev) => {
+                                    if (invalidFields.length > 0) {
+                                        ev.preventDefault();
+                                        alert("Please fill in all required fields before proceeding.");
+                                    } else {
+                                        ev.preventDefault(); ev.stopPropagation(); setCurrentSection(index);
+                                    }
+                                }}>{section.name}</a>
                             </li>
                         )) : <div>No sections found</div>}
                     </ul>
@@ -131,7 +138,7 @@ export function Form({ formId, form }) {
                                             setInvalidFields(invalidFields.filter(item => item.field !== fieldCode));
                                         } else {
                                             // invalidFields.add(fieldCode);
-                                            if(!Array.from(invalidFields, f=>f.field).includes(fieldCode)) setInvalidFields([...invalidFields, {
+                                            if (!Array.from(invalidFields, f => f.field).includes(fieldCode)) setInvalidFields([...invalidFields, {
                                                 field: fieldCode,
                                                 section: section.code
                                             }]);
@@ -145,7 +152,7 @@ export function Form({ formId, form }) {
                                     <div className="alert alert-secondary px-3 d-flex flex-column align-items-start justify-content-start" style={{ height: '100%', /*maxHeight: '600px',*/ overflow: 'scroll', backgroundColor: '#eef5f9' }} key={section.code + "_" + currentSection}>
                                         <div className="d-flex flex-column align-items-center justify-content-between w-100">
                                             <h4 className="w-100" style={{ marginBottom: 2, color: 'steelblue', textTransform: 'uppercase', textAlign: 'center' }}>{section.name} </h4>
-                                            {Array.from(invalidFields, f=>f.section).length > 0 && Array.from(invalidFields, f=>f.section).includes(form.sections[currentSection].code) && <div className="alert alert-danger py-1 px-2 mb-1 text-center" role="alert">
+                                            {Array.from(invalidFields, f => f.section).length > 0 && Array.from(invalidFields, f => f.section).includes(form.sections[currentSection].code) && <div className="alert alert-danger py-1 px-2 mb-1 text-center" role="alert">
                                                 <small className="mb-0">Please check that all fields have been filled correctly.</small>
                                             </div>}
                                         </div>
@@ -191,7 +198,7 @@ export function Form({ formId, form }) {
                                                     {/* ------ */}
 
                                                     {input_fields.includes(field.type) ? <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: 10, width: '80%' }}>
-                                                        <label className={"form-label mb-1 fw-bold mx-1 "+(Array.from(invalidFields, f=>f.field).includes(field.code) ? "text-danger" : "")}>{field.name}</label>
+                                                        <label className={"form-label mb-1 fw-bold mx-1 " + (Array.from(invalidFields, f => f.field).includes(field.code) ? "text-danger" : "")}>{field.name}</label>
                                                         {field.readOnly ? <small style={{ fontSize: '12px', color: 'gray' }}>(Readonly)</small> : null}
                                                     </div>
                                                         : null}
@@ -223,8 +230,8 @@ export function Form({ formId, form }) {
                                     if (currentSection > 0) {
                                         setCurrentSection(currentSection - 1);
                                     }
-                                }} type={currentSection !== 0 ? "submit" : ""} disabled={currentSection === 0 
-                                || Array.from(invalidFields, f=>f.section).includes(form.sections[currentSection].code)
+                                }} type={currentSection !== 0 ? "submit" : ""} disabled={currentSection === 0
+                                    || Array.from(invalidFields, f => f.section).includes(form.sections[currentSection].code)
                                 }> &larr; Previous</button>
                             <label>
                                 {currentSection + 1} of {form.sections.length}
@@ -236,9 +243,9 @@ export function Form({ formId, form }) {
                                     if (currentSection < form.sections.length - 1) {
                                         setCurrentSection(currentSection + 1);
                                     }
-                                }} type={currentSection !== form.sections.length - 1 ? "submit" : ""} disabled={(currentSection === form.sections.length - 1 
-                                || Array.from(invalidFields, f=>f.section).includes(form.sections[currentSection].code)
-                                )}> Next 
+                                }} type={currentSection !== form.sections.length - 1 ? "submit" : ""} disabled={(currentSection === form.sections.length - 1
+                                    || Array.from(invalidFields, f => f.section).includes(form.sections[currentSection].code)
+                                )}> Next
                                 {/* ({form.sections[currentSection].name}) */}
                                 {" "} &rarr;</button>
                         </div>
