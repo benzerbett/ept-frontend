@@ -26,18 +26,6 @@ function User() {
             })
     }
 
-    const getPrograms = () => {
-        return fetch(`/api/configurations`)
-            .then((res) => res.json())
-            .then((data) => {
-                if (data.length > 0) {
-                    setAllPrograms(data)
-                    if (data.length === 1) {
-                        getProgramConfig(data[0]?.code)
-                    }
-                }
-            })
-    }
     React.useEffect(() => {
         let mtd = true
         if (mtd) {
@@ -57,7 +45,14 @@ function User() {
                     router.push('/auth/login', undefined, { unstable_skipClientCache: true })
                 }
             })
-            getPrograms()
+            getPrograms().then((data) => {
+                if (data.length > 0) {
+                    setAllPrograms(data)
+                    if (data.length === 1) {
+                        getProgramConfig(data[0]?.code)
+                    }
+                }
+            })
         }
         return () => {
             mtd = false

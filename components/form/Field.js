@@ -95,27 +95,29 @@ export default function Field({ field }) {
         };
     }
     // return <>{JSON.stringify(field)}</>
-    return (<>
+    delete field.validation;
+    delete field.updateSectionValidity;
+    return (<React.Fragment key={field.code+"_____"+field.name}>
         {field.type === 'text' ? React.createElement('input', { ...field, type: 'text', className: ('form-control form-control-lgz' + (isValid == true ? ' is-valid' : (isValid == false ? ' is-invalid' : ''))), placeholder: field.name }) :
             field.type === 'number' ? React.createElement('input', { ...field, type: 'number', className: ('form-control form-control-lgz' + (isValid == true ? ' is-valid' : (isValid == false ? ' is-invalid' : ''))), placeholder: field.name }) :
                 field.type === 'date' ? React.createElement('input', { ...field, type: 'date', className: ('form-control form-control-lgz' + (isValid == true ? ' is-valid' : (isValid == false ? ' is-invalid' : ''))), placeholder: field.name }) :
                     (field.type === 'select' && field.options && field.options.length > 0 && typeof field.options == "object") ? React.createElement('select', { ...field, className: ('form-select form-select-lgz' + (isValid == true ? ' is-valid' : (isValid == false ? ' is-invalid' : ''))), placeholder: field.name, ...field }, field.options.map((option, k) => (
-                        <>
-                            {k == 0 ? (<option key={k} value={""} disabled> - Select - {/*field.name*/}</option>) : null}
-                            <option key={k + "_" + option.value} value={option.value}>{option.name}</option>
-                        </>
+                        <React.Fragment key={k + "_" + option.value+"_"+option.name}>
+                            {k == 0 ? (<option value={""} disabled> - Select - {/*field.name*/}</option>) : null}
+                            <option value={option.value}>{option.name}</option>
+                        </React.Fragment>
                     ))) : (field.type === 'radio' && field.options && field.options.length > 0 && typeof field.options == "object") ? React.createElement('div', {}, ...field, field.options.map((option, k) => (
-                        <div key={k + "_" + option.value} style={{ marginBottom: '10px', display: 'inline-flex', gap: 3, marginInlineEnd: '12px' }}>
+                        <div key={k + "_" + option.value+"_"+option.name} style={{ marginBottom: '10px', display: 'inline-flex', gap: 3, marginInlineEnd: '12px' }}>
                             <input type="radio" name={field.code} value={option.value} {...field} /> {option.name}
                         </div>
                     ))) : (field.type === 'checkbox' && field.options && field.options.length > 0 && typeof field.options == "object") ? React.createElement('div', {}, ...field, field.options.map((option, k) => (
-                        <div key={k + "_" + option.value} style={{ marginBottom: '10px' }}>
+                        <div key={k + "_" + option.value+"_"+option.name} style={{ marginBottom: '10px' }}>
                             <input type="checkbox" name={field.code} value={option.value} {...field} /> {option.name}
                         </div>
                     ))) : field.type === 'textarea' ? React.createElement('textarea', { ...field, className: ('form-control form-control-lgz' + (isValid == true ? ' is-valid' : (isValid == false ? ' is-invalid' : ''))), placeholder: field.name }) :
                         React.createElement(field.type, {
                             ...field,
-                            key: field.code,
+                            key: field.code+"_"+field.name,
                             id: field.code,
                             name: field.name,
                             style: { margin: '0px', minWidth: '50%' },
@@ -123,5 +125,5 @@ export default function Field({ field }) {
                                 "This question could not be loaded")
                         })}
         {isValid == false ? (<span className="text-danger">{vlmessage}</span>) : null}
-    </>);
+    </React.Fragment>);
 }

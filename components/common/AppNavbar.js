@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React from 'react'
-import { simulateGetUser, doLogout, doGetSession, simulateActiveSession } from '../../utilities'
+import { simulateGetUser, doLogout, doGetSession, simulateActiveSession, getPrograms } from '../../utilities'
 
 function AppNavbar() {
     const [user, setUser] = React.useState(null)
@@ -26,18 +26,6 @@ function AppNavbar() {
             })
     }
 
-    const getPrograms = () => {
-        return fetch(`/api/configurations`)
-            .then((res) => res.json())
-            .then((data) => {
-                if (data.length > 0) {
-                    setAllPrograms(data)
-                    if (data.length === 1) {
-                        getProgramConfig(data[0]?.code)
-                    }
-                }
-            })
-    }
     React.useEffect(() => {
         let mtd = true
         if (mtd) {

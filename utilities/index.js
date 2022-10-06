@@ -219,7 +219,13 @@ export const doGetSession = async () => {
 
 export const simulateActiveSession = (sessionID) => {
     if (sessionID) {
-        return fetch(`/api/configurations/${sessionID}`)
+        return fetch(`/api/configurations/${sessionID}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + window.sessionStorage.getItem('token')
+            }
+        })
             .then((res) => res.json())
             .then((data) => {
                 if (data.code) {
@@ -235,15 +241,33 @@ export const simulateActiveSession = (sessionID) => {
 }
 
 export const getProgramConfig = (id) => {
-    return fetch(`/api/configurations/${id}`)
+    return fetch(`/api/configurations/${id}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + window.sessionStorage.getItem('token')
+        }
+    })
         .then((res) => res.json())
         .then((data) => {
             return data
         })
 }
 
+
+export const getPrograms = () => {
+    return fetch(`/api/configurations`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + window.sessionStorage.getItem('token')
+        }
+    })
+        .then((res) => res.json())
+}
+
 export const submitFormData = (data) => {
-    return fetch('/api/submit', {
+    return fetch(api_url + '/api/submit', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

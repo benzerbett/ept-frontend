@@ -106,7 +106,7 @@ export function Form({ formId, form }) {
                     <ul className="nav"
                     >
                         {form.sections && form.sections.length > 0 ? form.sections.map((section, index) => (
-                            <li key={section.code + "_" + index} className="nav-link p-0 mx-2">
+                            <li key={section.code + "_" + index+"_"+section.name} className="nav-link p-0 mx-2">
                                 <a className={"btn btn-outline btn-sm fs-6 mx-2 my-1 " + (currentSection === index ? "btn-primary" : "btn-outline-secondary")} onClick={(ev) => {
                                     if (invalidFields.length > 0) {
                                         ev.preventDefault();
@@ -235,7 +235,7 @@ export function Form({ formId, form }) {
                                                 // TODO: set values from global state to the field if available
                                             }
 
-                                            return (<>
+                                            return (<React.Fragment key={fld.code+"___"+fx}>
                                                 <div className="form-group col-md-6" key={field.code} style={{ marginBottom: '6px', borderBottom: '1px solid #efefef', padding: '8px', display: 'flex', alignItems: 'center', width: '100%' }}>
 
                                                     {/* ------ */}
@@ -256,7 +256,7 @@ export function Form({ formId, form }) {
 
                                                     {/* ------ */}
                                                 </div>
-                                            </>
+                                            </React.Fragment>
                                             );
                                         }) : <div className="alert alert-warning">No fields found</div>}
                                     </div>
