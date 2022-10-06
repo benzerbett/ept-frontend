@@ -184,7 +184,7 @@ export const loadConfig = (json, session) => {
 
 
 //utility to render a form field given a field object
-export function renderField(field) {
+export function RenderField({field}) {
 
     const [isValid, setIsValid] = React.useState(null);
     const [vlmessage, setMessage] = React.useState(null);
@@ -209,7 +209,7 @@ export function renderField(field) {
                 if (validation.required && value === '') {
                     valid = false;
                     setIsValid(false);
-                    message += validation?.message || 'This field is required; ';
+                    message += validation?.message || 'This field is required. ';
                     setMessage(message)
                 }
 
@@ -218,7 +218,7 @@ export function renderField(field) {
                     if (validation.expression && !new RegExp(validation.expression).test(value)) {
                         valid = false;
                         setIsValid(false);
-                        message += validation?.message || 'Invalid value; ';
+                        message += validation?.message || 'Invalid value. ';
                         setMessage(message)
                     }
                 }
@@ -226,45 +226,47 @@ export function renderField(field) {
                 if (validation.min && value < validation.min) {
                     valid = false;
                     setIsValid(false);
-                    message += validation?.message || `Minimum value is ${validation.min}; `;
+                    message += validation?.message || `Minimum value is ${validation.min}. `;
                     setMessage(message)
                 }
 
                 if (validation.max && value > validation.max) {
                     valid = false;
                     setIsValid(false);
-                    message += validation?.message || `Maximum value is ${validation.max}; `;
+                    message += validation?.message || `Maximum value is ${validation.max}. `;
                     setMessage(message)
                 }
 
                 if (validation.minLength && value.length < validation.minLength) {
                     valid = false;
                     setIsValid(false);
-                    message += validation?.message || `Minimum length is ${validation.minLength}; `;
+                    message += validation?.message || `Minimum length is ${validation.minLength}. `;
                     setMessage(message)
                 }
 
                 if (validation.maxLength && value.length > validation.maxLength) {
                     valid = false;
                     setIsValid(false);
-                    message += validation?.message || `Maximum length is ${validation.maxLength}; `;
+                    message += validation?.message || `Maximum length is ${validation.maxLength}. `;
                     setMessage(message)
                 }
 
                 if (valid == false) {
-                    console.log("::INValid")
+                    // console.log("::INValid")
                     setIsValid(false);
                     setMessage(message)
+                    field.updateSectionValidity(field.code, false);
                 } else {
-                    console.log("::Valid")
+                    // console.log("::Valid")
                     setIsValid(true);
                     message += ' ';
                     setMessage(message)
+                    field.updateSectionValidity(field.code, true);
                 }
                 // TODO: check if field has been skipped
 
                 field['data-valid'] = valid;
-                console.log("onBlur():::  Field: ", field?.name, " Valid: ", valid, " Message: ", message);
+                // console.log("onBlur():::  Field: ", field?.name, " Valid: ", valid, " Message: ", message);
             });
         }
     }

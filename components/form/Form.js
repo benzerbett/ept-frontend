@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { doGetSession, renderField } from '../../utilities';
+import { doGetSession, RenderField } from '../../utilities';
 import Link from 'next/link';
 
 export function Form({ formId, form }) {
@@ -27,6 +27,7 @@ export function Form({ formId, form }) {
         });
         return flattened;
     };
+    let [invalidFields, setInvalidFields] = useState([]);
 
     useEffect(() => {
         let mounted = true;
@@ -122,13 +123,32 @@ export function Form({ formId, form }) {
                                 });
                                 section.fields = section.fields.filter(field => field.type !== 'groupstart' && field.type !== 'groupend');
 
-
-
+                                // callback function to update isSectionValid
+                                const updateSectionValidity = (fieldCode, valid) => {
+                                    if (fieldCode) {
+                                        if (valid) {
+                                            // invalidFields.delete(fieldCode);
+                                            setInvalidFields(invalidFields.filter(item => item.field !== fieldCode));
+                                        } else {
+                                            // invalidFields.add(fieldCode);
+                                            if(!Array.from(invalidFields, f=>f.field).includes(fieldCode)) setInvalidFields([...invalidFields, {
+                                                field: fieldCode,
+                                                section: section.code
+                                            }]);
+                                        }
+                                    }
+                                    return valid;
+                                };
 
 
                                 return (
                                     <div className="alert alert-secondary px-3 d-flex flex-column align-items-start justify-content-start" style={{ height: '100%', /*maxHeight: '600px',*/ overflow: 'scroll', backgroundColor: '#eef5f9' }} key={section.code + "_" + currentSection}>
-                                        <h4 style={{ marginBottom: 2, color: 'steelblue', textTransform: 'uppercase', textAlign: 'center' }}>{section.name}</h4>
+                                        <div className="d-flex flex-column align-items-center justify-content-between w-100">
+                                            <h4 className="w-100" style={{ marginBottom: 2, color: 'steelblue', textTransform: 'uppercase', textAlign: 'center' }}>{section.name} </h4>
+                                            {Array.from(invalidFields, f=>f.section).length > 0 && Array.from(invalidFields, f=>f.section).includes(form.sections[currentSection].code) && <div className="alert alert-danger py-1 px-2 mb-1 text-center" role="alert">
+                                                <small className="mb-0">Please check that all fields have been filled correctly.</small>
+                                            </div>}
+                                        </div>
                                         <hr className="border-top border-primary w-100" />
                                         {section.fields && section.fields.length > 0 ? section.fields.map((fld, fx) => {
                                             let field = fld;
@@ -136,7 +156,7 @@ export function Form({ formId, form }) {
                                             let input_fields = ["text", "number", "email", "tel", "url", "date", "time", "datetime-local", "month", "week", "color", "range", "select", "radio", "checkbox", "file", "textarea"];
                                             let ignored_attributes = ["description"];
                                             let default_attributes = {
-                                                title: field['description'] || field['name'] || '', className: 'form-control'
+                                                title: field['description'] || field['name'] || '', className: 'form-control', updateSectionValidity: updateSectionValidity
                                             }; // TODO: ignore these attributes when spreading the object
                                             if (input_fields.includes(field.type)) {
                                                 // onchange if not in the set attributes
@@ -160,7 +180,7 @@ export function Form({ formId, form }) {
                                                     console.log("state", JSON.stringify(nf, null, 2));
                                                     // zustand.setState({ [field.code]: e.target.value }); // TODO: set value to global state
                                                 };
-                                                
+
                                                 field = { ...field, ...default_attributes };
                                                 // TODO: set values from global state to the field if available
                                             }
@@ -171,12 +191,12 @@ export function Form({ formId, form }) {
                                                     {/* ------ */}
 
                                                     {input_fields.includes(field.type) ? <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: 10, width: '80%' }}>
-                                                        <label className="form-label mb-1 fw-bold mx-1">{field.name}</label>
+                                                        <label className={"form-label mb-1 fw-bold mx-1 "+(Array.from(invalidFields, f=>f.field).includes(field.code) ? "text-danger" : "")}>{field.name}</label>
                                                         {field.readOnly ? <small style={{ fontSize: '12px', color: 'gray' }}>(Readonly)</small> : null}
                                                     </div>
                                                         : null}
                                                     <div style={{ display: 'flex', flexDirection: 'column', width: '100%', fontSize: '0.8em' }}>
-                                                        {renderField(field)}
+                                                        <RenderField field={field} />
                                                         {/* <small className="text-muted">
                                                             <details open> <summary>Field Details</summary>
                                                                 <pre> {JSON.stringify(field, null, 2)} </pre>
@@ -194,7 +214,6 @@ export function Form({ formId, form }) {
 
                             }) : <div className="alert alert-warning">No sections found</div>}
                     </section>
-
                     <div id={"form-footer_" + form.code} style={{ textAlign: 'center', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end' }}>
                         <div style={{ textAlign: 'center', width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' }}>
                             <button className="btn btn-secondary btn-dark"
@@ -204,7 +223,9 @@ export function Form({ formId, form }) {
                                     if (currentSection > 0) {
                                         setCurrentSection(currentSection - 1);
                                     }
-                                }} type={currentSection !== 0 ? "submit" : ""} disabled={currentSection === 0}> &larr; Previous</button>
+                                }} type={currentSection !== 0 ? "submit" : ""} disabled={currentSection === 0 
+                                || Array.from(invalidFields, f=>f.section).includes(form.sections[currentSection].code)
+                                }> &larr; Previous</button>
                             <label>
                                 {currentSection + 1} of {form.sections.length}
                             </label>
@@ -215,8 +236,11 @@ export function Form({ formId, form }) {
                                     if (currentSection < form.sections.length - 1) {
                                         setCurrentSection(currentSection + 1);
                                     }
-                                }} type={currentSection !== form.sections.length - 1 ? "submit" : ""} disabled={currentSection === form.sections.length - 1}> Next &rarr;</button>
-
+                                }} type={currentSection !== form.sections.length - 1 ? "submit" : ""} disabled={(currentSection === form.sections.length - 1 
+                                || Array.from(invalidFields, f=>f.section).includes(form.sections[currentSection].code)
+                                )}> Next 
+                                {/* ({form.sections[currentSection].name}) */}
+                                {" "} &rarr;</button>
                         </div>
                         {currentSection === form.sections.length - 1 && <>
                             <hr /><hr />
