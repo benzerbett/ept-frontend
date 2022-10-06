@@ -1,17 +1,45 @@
 import React, { useEffect, useState } from "react";
-import { doGetSession, RenderField } from '../../utilities';
+import { doGetSession, submitFormData } from '../../utilities';
+import Field from "./Field";
 import Link from 'next/link';
 
 export function Form({ formId, form }) {
     const [fID, setFID] = useState(formId);
     const [flatFormState, setFlatFormState] = useState([]);
     const [currentSection, setCurrentSection] = useState(0);
+    const [loading, setLoading] = useState(true);
+    const [status, setStatus] = useState('');
+    const [message, setMsg] = useState('');
     const [formData, setFormData] = useState(
         {
             "formCode": fID,
             "formResponses": []
         }
     ); // TODO: Fetch previous form state for the user and store here
+
+    useEffect(() => {
+        let mounted = true;
+        if (mounted) {
+            doGetSession().then(session => {
+                if (session) {
+                    if (form) {
+                        setFID(form?.code);
+                    }
+                    setLoading(false);
+                } else {
+                    window.location.href = '/auth/login';
+                    window.location.reload();
+                }
+            }).catch(err => {
+                setLoading(false);
+                console.log(err);
+                setStatus('error');
+                setMsg('Error fetching session');
+            })
+        }
+        return () => mounted = false;
+    }, []);
+
     const flattenFormData = (formData) => {
         let flattened = [];
         formData.formResponses.forEach(response => {
@@ -29,19 +57,24 @@ export function Form({ formId, form }) {
     };
     let [invalidFields, setInvalidFields] = useState([]);
 
-    useEffect(() => {
-        let mounted = true;
-        if (mounted) {
-            doGetSession().then(session => {
-                if (session) {
-                    if (form) {
-                        setFID(form?.code);
-                    }
-                }
-            });
-        }
-        return () => mounted = false;
-    }, []);
+    const submitForm = (form_data) => {
+        console.log("Submitting form data", form_data);
+        submitFormData(form_data).then((response) => {
+            console.log("Form submitted: ", response);
+            if (response.status === true) {
+                setStatus('success');
+                setMsg(response.message);
+            }
+        }).catch((error) => {
+            console.log("Form submission failed", error);
+            setStatus('error');
+            setMsg(error.message);
+        });
+    }
+
+    if (loading) return <div style={{ width: '100%', height: '85vh', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <h5 className='mb-0'>Loading...</h5>
+    </div>
 
     if (!form || !form.sections || form.sections.length === 0) {
         return <main style={{ width: '100%', height: '85vh', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -55,10 +88,20 @@ export function Form({ formId, form }) {
     } else {
         return (
             <div>
-                <Link href="/user/surveys"><a className="">&larr; Back</a></Link>
+                <div className="row">
+                    <div className="col-md-2 d-flex align-items-center">
+                        <Link href="/user/surveys"><a className="">&larr; Back</a></Link>
+                    </div>
+                    <div className="col-md-10 d-flex align-items-center justify-content-center">
+                        {status && <div className={`py-3 mb-0 px-3 fs-6 alert w-100 text-center alert-${status === 'success' ? 'success' : ['danger', 'error', 'failed'].includes(status) ? 'danger' : status}`} role="alert">
+                            {message}
+                        </div>}
+                    </div>
+                    <hr className="mt-3 mb-3" style={{borderColor: '#ccc'}} />
+                </div>
                 <h1 style={{ marginTop: 9 }}>{form.name}</h1>
                 <h6>{form.description} &middot; <span className="text-muted">{form?.sections.length || 0} sections</span></h6>
-                <hr />
+                <hr className="mt-2 mb-2" style={{borderColor: '#ccc'}} />
                 <form {...form}>
                     <ul className="nav"
                     >
@@ -203,7 +246,7 @@ export function Form({ formId, form }) {
                                                     </div>
                                                         : null}
                                                     <div style={{ display: 'flex', flexDirection: 'column', width: '100%', fontSize: '0.8em' }}>
-                                                        <RenderField field={field} />
+                                                        <Field field={field} />
                                                         {/* <small className="text-muted">
                                                             <details open> <summary>Field Details</summary>
                                                                 <pre> {JSON.stringify(field, null, 2)} </pre>
@@ -256,6 +299,7 @@ export function Form({ formId, form }) {
                                     ev.preventDefault();
                                     ev.stopPropagation();
                                     console.log("submit: ", formData);
+                                    submitForm(formData);
                                     // zustand.setState({ form: { ...zustand.state.form, ...form } });
                                 }}>Submit</button>
                                 <button className="btn" type="reset" onClick={(ev) => {
