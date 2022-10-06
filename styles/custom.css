@@ -14,3 +14,12 @@
 .bg-purple-dark{
     background-color: var(--color-purple-dark);
 }
+.border-purple{
+    border-color: var(--color-purple);
+}
+.border-purple-light{
+    border-color: var(--color-purple-light);
+}
+.border-purple-dark{
+    border-color: var(--color-purple-dark);
+}
