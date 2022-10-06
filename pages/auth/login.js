@@ -68,7 +68,7 @@ export default function Login() {
                 <div className="row justify-content-md-center">
                     <div className="col-md-6 justify-content-md-center">
                         {status && status.message && ["warning","success","danger"].includes(status.type) && <div className={`alert py-2 mb-3 alert-${status.type} fade show`} role="alert" style={{ margin: '0px -15px' }}>
-                            <p className='text-center mb-0' style={{ textTransform: 'capitalize', fontSize: '0.85em' }}>{status.message}</p>
+                            <p className='text-center mb-0' style={{ fontSize: '0.85em' }}>{status.message}</p>
                         </div>}
                     </div>
                 </div>

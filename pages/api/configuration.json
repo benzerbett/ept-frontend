@@ -27,8 +27,8 @@
                                 "description": "Name of Laboratory",
                                 "type": "text",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -41,8 +41,8 @@
                                 "description": "Laboratory Code",
                                 "type": "text",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -56,7 +56,7 @@
                                 "type": "date",
                                 "format": "YYYY-MM-DD",
                                 "required": true,
-                                "validators": [
+                                "validation": [
                                     {
                                         "type": "date",
                                         "min": "01/01/1900",
@@ -71,7 +71,7 @@
                                 "type": "date",
                                 "format": "YYYY-MM-DD",
                                 "required": true,
-                                "validators": [
+                                "validation": [
                                     {
                                         "type": "date",
                                         "min": "01/01/1900",
@@ -86,7 +86,7 @@
                                 "type": "date",
                                 "format": "YYYY-MM-DD",
                                 "required": true,
-                                "validators": [
+                                "validation": [
                                     {
                                         "type": "date",
                                         "min": "01/01/1900",
@@ -101,7 +101,7 @@
                                 "type": "date",
                                 "format": "YYYY-MM-DD",
                                 "required": true,
-                                "validators": [
+                                "validation": [
                                     {
                                         "type": "date",
                                         "min": "01/01/1900",
@@ -115,8 +115,8 @@
                                 "description": "Test performed by",
                                 "type": "text",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -129,8 +129,8 @@
                                 "description": "Results reported by",
                                 "type": "text",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -156,8 +156,8 @@
                                 "description": "Sample Number",
                                 "type": "groupstart",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -224,8 +224,8 @@
                                 "description": "Remarks",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -368,8 +368,8 @@
                                 "description": "Algorithm",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -382,8 +382,8 @@
                                 "description": "Brand/ model name of machine",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -396,8 +396,8 @@
                                 "description": "Remarks",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -434,8 +434,8 @@
                                 "description": "Additional comments:",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -458,8 +458,8 @@
                                 "description": "Others, please specify:",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -472,8 +472,8 @@
                                 "description": "Unknown, please explain:",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -486,8 +486,8 @@
                                 "description": "Additional comments:",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -510,8 +510,8 @@
                                 "description": "If No, what is the criteria of prioritization of specimens for testing, please describe",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -524,8 +524,8 @@
                                 "description": "Additional comments:",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -558,8 +558,8 @@
                                 "description": "Additional comments:",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -582,8 +582,8 @@
                                 "description": "Additional comments:",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -606,8 +606,8 @@
                                 "description": "Additional comments:",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -640,8 +640,8 @@
                                 "description": "Additional comments:",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -664,8 +664,8 @@
                                 "description": "Additional comments:",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -688,8 +688,8 @@
                                 "description": "Additional comments:",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -729,8 +729,8 @@
                                 "description": "Name of Laboratory",
                                 "type": "text",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -743,8 +743,8 @@
                                 "description": "Laboratory Code",
                                 "type": "text",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -758,7 +758,7 @@
                                 "type": "date",
                                 "format": "YYYY-MM-DD",
                                 "required": true,
-                                "validators": [
+                                "validation": [
                                     {
                                         "type": "date",
                                         "min": "01/01/1900",
@@ -773,7 +773,7 @@
                                 "type": "date",
                                 "format": "YYYY-MM-DD",
                                 "required": true,
-                                "validators": [
+                                "validation": [
                                     {
                                         "type": "date",
                                         "min": "01/01/1900",
@@ -788,7 +788,7 @@
                                 "type": "date",
                                 "format": "YYYY-MM-DD",
                                 "required": true,
-                                "validators": [
+                                "validation": [
                                     {
                                         "type": "date",
                                         "min": "01/01/1900",
@@ -803,7 +803,7 @@
                                 "type": "date",
                                 "format": "YYYY-MM-DD",
                                 "required": true,
-                                "validators": [
+                                "validation": [
                                     {
                                         "type": "date",
                                         "min": "01/01/1900",
@@ -817,8 +817,8 @@
                                 "description": "Test performed by",
                                 "type": "text",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -831,8 +831,8 @@
                                 "description": "Results reported by",
                                 "type": "text",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -858,8 +858,8 @@
                                 "description": "Sample Number",
                                 "type": "groupstart",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -926,8 +926,8 @@
                                 "description": "Remarks",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -1070,8 +1070,8 @@
                                 "description": "Algorithm",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -1084,8 +1084,8 @@
                                 "description": "Brand/ model name of machine",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -1098,8 +1098,8 @@
                                 "description": "Remarks",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -1136,8 +1136,8 @@
                                 "description": "Additional comments:",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -1160,8 +1160,8 @@
                                 "description": "Others, please specify:",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -1174,8 +1174,8 @@
                                 "description": "Unknown, please explain:",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -1188,8 +1188,8 @@
                                 "description": "Additional comments:",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -1212,8 +1212,8 @@
                                 "description": "If No, what is the criteria of prioritization of specimens for testing, please describe",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -1226,8 +1226,8 @@
                                 "description": "Additional comments:",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -1260,8 +1260,8 @@
                                 "description": "Additional comments:",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -1284,8 +1284,8 @@
                                 "description": "Additional comments:",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -1308,8 +1308,8 @@
                                 "description": "Additional comments:",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -1342,8 +1342,8 @@
                                 "description": "Additional comments:",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -1366,8 +1366,8 @@
                                 "description": "Additional comments:",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -1390,8 +1390,8 @@
                                 "description": "Additional comments:",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -2031,8 +2031,8 @@
                                 "description": "Round Name",
                                 "type": "text",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -2045,8 +2045,8 @@
                                 "description": "Shipment Code",
                                 "type": "text",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -2060,7 +2060,7 @@
                                 "type": "date",
                                 "format": "YYYY-MM-DD",
                                 "required": true,
-                                "validators": [
+                                "validation": [
                                     {
                                         "type": "date",
                                         "min": "01/01/1900",
@@ -2075,7 +2075,7 @@
                                 "type": "number",
                                 "format": "YYYY-MM-DD",
                                 "required": true,
-                                "validators": [
+                                "validation": [
                                     {
                                         "type": "date",
                                         "min": "01/01/1900",
@@ -2089,8 +2089,8 @@
                                 "description": "Testing Instructions",
                                 "type": "text",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -2103,7 +2103,7 @@
                                 "description": "select checklist",
                                 "type": "select",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
+                                "relevant": "@ref(isDisabled)",
                                 "options": "@ref('dict:CHECKLIST')"
 
                             }
@@ -2126,8 +2126,8 @@
                                 "description": "Sample",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -2198,8 +2198,8 @@
                                 "description": "Round Name",
                                 "type": "text",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -2212,8 +2212,8 @@
                                 "description": "Shipment Code",
                                 "type": "text",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -2227,7 +2227,7 @@
                                 "type": "date",
                                 "format": "YYYY-MM-DD",
                                 "required": true,
-                                "validators": [
+                                "validation": [
                                     {
                                         "type": "date",
                                         "min": "01/01/1900",
@@ -2242,7 +2242,7 @@
                                 "type": "number",
                                 "format": "YYYY-MM-DD",
                                 "required": true,
-                                "validators": [
+                                "validation": [
                                     {
                                         "type": "date",
                                         "min": "01/01/1900",
@@ -2256,8 +2256,8 @@
                                 "description": "Testing Instructions",
                                 "type": "text",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -2270,7 +2270,7 @@
                                 "description": "select checklist",
                                 "type": "select",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
+                                "relevant": "@ref(isDisabled)",
                                 "options": "@ref('dict:CHECKLIST')"
 
                             }
@@ -2293,8 +2293,8 @@
                                 "description": "Sample",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -2548,8 +2548,8 @@
                                 "description": "Participant Name",
                                 "type": "text",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -2562,8 +2562,8 @@
                                 "description": "Participant Code",
                                 "type": "text",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -2576,8 +2576,8 @@
                                 "description": "Affiliation",
                                 "type": "text",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -2590,8 +2590,8 @@
                                 "description": "Email Address",
                                 "type": "text",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -2604,8 +2604,8 @@
                                 "description": "Mobile Number ",
                                 "type": "text",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -2619,7 +2619,7 @@
                                 "type": "date",
                                 "format": "YYYY-MM-DD",
                                 "required": true,
-                                "validators": [
+                                "validation": [
                                     {
                                         "type": "date",
                                         "min": "01/01/1900",
@@ -2634,7 +2634,7 @@
                                 "type": "date",
                                 "format": "YYYY-MM-DD",
                                 "required": true,
-                                "validators": [
+                                "validation": [
                                     {
                                         "type": "date",
                                         "min": "01/01/1900",
@@ -2663,7 +2663,7 @@
                                 "description": "Are you able to participate in this challenge?",
                                 "type": "radio",
                                 "required": "true",
-                                "shown": "@ref(isDisabled)",
+                                "relevant": "@ref(isDisabled)",
                                 "options":"@ref('dict:YES_NO_OPTIONS')"
                             },
                             {
@@ -2672,8 +2672,8 @@
                                 "description": "If No, Please Explain",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -2687,7 +2687,7 @@
                                 "type": "date",
                                 "format": "YYYY-MM-DD",
                                 "required": true,
-                                "validators": [
+                                "validation": [
                                     {
                                         "type": "date",
                                         "min": "01/01/1900",
@@ -2701,7 +2701,7 @@
                                 "description": "Were your samples received in good condition?",
                                 "type": "radio",
                                 "required": "true",
-                                "shown": "@ref(isDisabled)",
+                                "relevant": "@ref(isDisabled)",
                                 "options":"@ref('dict:YES_NO_OPTIONS')"
                             },
                             {
@@ -2710,8 +2710,8 @@
                                 "description": "If No, Please Explain",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -2725,7 +2725,7 @@
                                 "type": "date",
                                 "format": "YYYY-MM-DD",
                                 "required": true,
-                                "validators": [
+                                "validation": [
                                     {
                                         "type": "date",
                                         "min": "01/01/1900",
@@ -2740,7 +2740,7 @@
                                 "type": "date",
                                 "format": "YYYY-MM-DD",
                                 "required": true,
-                                "validators": [
+                                "validation": [
                                     {
                                         "type": "date",
                                         "min": "01/01/1900",
@@ -2764,8 +2764,8 @@
                                 "description": "If Other, Please Explain.",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -2838,8 +2838,8 @@
                                 "description": "If Other, Please Explain.",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -2986,8 +2986,8 @@
                                 "description": "If Other, Please Explain.",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -3020,8 +3020,8 @@
                                 "description": "If Other, Please Explain.",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -3051,8 +3051,8 @@
                                 "description": "Colonial characteristics",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -3130,8 +3130,8 @@
                                 "description": "If Other, Please Explain.",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -3171,8 +3171,8 @@
                                 "description": "If No, Please Explain.",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -3232,8 +3232,8 @@
                                 "description": "If No, Please Explain.",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -3568,8 +3568,8 @@
                                 "description": "Participant Name",
                                 "type": "text",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -3582,8 +3582,8 @@
                                 "description": "Participant Code",
                                 "type": "text",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -3596,8 +3596,8 @@
                                 "description": "Affiliation",
                                 "type": "text",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -3610,8 +3610,8 @@
                                 "description": "Email Address",
                                 "type": "text",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -3624,8 +3624,8 @@
                                 "description": "Mobile Number ",
                                 "type": "text",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -3639,7 +3639,7 @@
                                 "type": "date",
                                 "format": "YYYY-MM-DD",
                                 "required": true,
-                                "validators": [
+                                "validation": [
                                     {
                                         "type": "date",
                                         "min": "01/01/1900",
@@ -3654,7 +3654,7 @@
                                 "type": "date",
                                 "format": "YYYY-MM-DD",
                                 "required": true,
-                                "validators": [
+                                "validation": [
                                     {
                                         "type": "date",
                                         "min": "01/01/1900",
@@ -3683,7 +3683,7 @@
                                 "description": "Are you able to participate in this challenge?",
                                 "type": "radio",
                                 "required": "true",
-                                "shown": "@ref(isDisabled)",
+                                "relevant": "@ref(isDisabled)",
                                 "options":"@ref('dict:YES_NO_OPTIONS')"
                             },
                             {
@@ -3692,8 +3692,8 @@
                                 "description": "If No, Please Explain",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -3707,7 +3707,7 @@
                                 "type": "date",
                                 "format": "YYYY-MM-DD",
                                 "required": true,
-                                "validators": [
+                                "validation": [
                                     {
                                         "type": "date",
                                         "min": "01/01/1900",
@@ -3721,7 +3721,7 @@
                                 "description": "Were your samples received in good condition?",
                                 "type": "radio",
                                 "required": "true",
-                                "shown": "@ref(isDisabled)",
+                                "relevant": "@ref(isDisabled)",
                                 "options":"@ref('dict:YES_NO_OPTIONS')"
                             },
                             {
@@ -3730,8 +3730,8 @@
                                 "description": "If No, Please Explain",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -3745,7 +3745,7 @@
                                 "type": "date",
                                 "format": "YYYY-MM-DD",
                                 "required": true,
-                                "validators": [
+                                "validation": [
                                     {
                                         "type": "date",
                                         "min": "01/01/1900",
@@ -3760,7 +3760,7 @@
                                 "type": "date",
                                 "format": "YYYY-MM-DD",
                                 "required": true,
-                                "validators": [
+                                "validation": [
                                     {
                                         "type": "date",
                                         "min": "01/01/1900",
@@ -3784,8 +3784,8 @@
                                 "description": "If Other, Please Explain.",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -3858,8 +3858,8 @@
                                 "description": "If Other, Please Explain.",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -4006,8 +4006,8 @@
                                 "description": "If Other, Please Explain.",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -4040,8 +4040,8 @@
                                 "description": "If Other, Please Explain.",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -4071,8 +4071,8 @@
                                 "description": "Colonial characteristics",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -4150,8 +4150,8 @@
                                 "description": "If Other, Please Explain.",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -4191,8 +4191,8 @@
                                 "description": "If No, Please Explain.",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"
@@ -4252,8 +4252,8 @@
                                 "description": "If No, Please Explain.",
                                 "type": "textarea",
                                 "required": "!@ref(isDisabled)",
-                                "shown": "@ref(isDisabled)",
-                                "validators": [
+                                "relevant": "@ref(isDisabled)",
+                                "validation": [
                                     {
                                         "type": "regex",
                                         "expression": "^[a-zA-Z ]+$"

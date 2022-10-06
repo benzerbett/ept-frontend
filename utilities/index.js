@@ -10,7 +10,7 @@ export const doLogin = async (email, password, rtr) => {
         window.sessionStorage.removeItem('user');
         window.sessionStorage.removeItem('isLoggedIn');
 
-        return fetch(api_url+'/auth/login', {
+        return fetch(api_url + '/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -18,14 +18,14 @@ export const doLogin = async (email, password, rtr) => {
             body: JSON.stringify({ email, password })
         }).then(res => res.json()).then(data => {
             if (debug) console.log('/auth/login data::', data)
-            if(data.status === false) {
+            if (data.status === false) {
                 if (debug) console.log('/auth/login 401 error::', data)
                 return data
-            }else {
+            } else {
                 window.sessionStorage.setItem('isLoggedIn', true)
                 window.sessionStorage.setItem('token', data.token)
                 // get user details
-                return fetch(api_url+'/auth/user', {
+                return fetch(api_url + '/auth/user', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ export const doLogin = async (email, password, rtr) => {
                         // window.sessionStorage.setItem('user', JSON.stringify({ ...data.user, type: (data.user.role == 1 ? "admin" : "participant") }))
                         window.sessionStorage.setItem('user', JSON.stringify({ ...data.user, type: data.role?.name }))
                         // redirect to admin or user dashboard
-                        if (data.role?.name == "super_admin" || data.role?.name == "admin") {
+                        if (data.role?.name == "superadmin" || data.role?.name == "super_admin" || data.role?.name == "admin") {
                             rtr.push('/admin', undefined, { unstable_skipClientCache: true })
                         } else {
                             rtr.push('/user', undefined, { unstable_skipClientCache: true })
@@ -69,17 +69,17 @@ export const doSignup = async (name, email, phone, password,role,rtr) => {
         window.sessionStorage.removeItem('user');
         window.sessionStorage.removeItem('isLoggedIn');
 
-        return fetch(api_url+'/auth/register', {
+        return fetch(api_url + '/auth/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ name, email, phone, password,role })
         }).then(res => res.json()).then(data => {
-            if(data.status === false) {
+            if (data.status === false) {
                 if (debug) console.log('/auth/register error::', data)
                 return data
-            }else {
+            } else {
                 if (debug) console.log('/auth/register success::', data)
                 return data
             }
@@ -96,7 +96,7 @@ export const doLogout = async (rtr) => {
         window.sessionStorage.removeItem('user');
         window.sessionStorage.removeItem('isLoggedIn');
         window.sessionStorage.removeItem('token');
-        fetch(api_url+'/auth/logout', {
+        fetch(api_url + '/auth/logout', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -185,22 +185,110 @@ export const loadConfig = (json, session) => {
 
 //utility to render a form field given a field object
 export function renderField(field) {
+
+    const [isValid, setIsValid] = React.useState(null);
+    const [vlmessage, setMessage] = React.useState(null);
+    // validation based on the 'validation' attribute
+    if (field.validation) {
+        if (field?.required) field.required = field.validation.required;
+        if (field?.pattern) field.pattern = field.validation.pattern;
+        if (field?.min) field.min = field.validation.min;
+        if (field?.max) field.max = field.validation.max;
+        if (field?.minLength) field.minLength = field.validation.minLength;
+        if (field?.maxLength) field.maxLength = field.validation.maxLength;
+
+        // listeners for validation
+        field.onBlur = (e) => {
+            // validation types: required, pattern/regex, min, max, minLength, maxLength
+            let validations = field.validation;
+            let value = e.target.value;
+            let valid = null;
+            let message = '';
+            validations.forEach((validation) => {
+                setMessage(message)
+                if (validation.required && value === '') {
+                    valid = false;
+                    setIsValid(false);
+                    message += validation?.message || 'This field is required; ';
+                    setMessage(message)
+                }
+
+                // if (validation.pattern && !new RegExp(validation.pattern).test(value)) {
+                if (validation.type == 'regex') {
+                    if (validation.expression && !new RegExp(validation.expression).test(value)) {
+                        valid = false;
+                        setIsValid(false);
+                        message += validation?.message || 'Invalid value; ';
+                        setMessage(message)
+                    }
+                }
+
+                if (validation.min && value < validation.min) {
+                    valid = false;
+                    setIsValid(false);
+                    message += validation?.message || `Minimum value is ${validation.min}; `;
+                    setMessage(message)
+                }
+
+                if (validation.max && value > validation.max) {
+                    valid = false;
+                    setIsValid(false);
+                    message += validation?.message || `Maximum value is ${validation.max}; `;
+                    setMessage(message)
+                }
+
+                if (validation.minLength && value.length < validation.minLength) {
+                    valid = false;
+                    setIsValid(false);
+                    message += validation?.message || `Minimum length is ${validation.minLength}; `;
+                    setMessage(message)
+                }
+
+                if (validation.maxLength && value.length > validation.maxLength) {
+                    valid = false;
+                    setIsValid(false);
+                    message += validation?.message || `Maximum length is ${validation.maxLength}; `;
+                    setMessage(message)
+                }
+
+                if (valid == false) {
+                    console.log("::INValid")
+                    setIsValid(false);
+                    setMessage(message)
+                } else {
+                    console.log("::Valid")
+                    setIsValid(true);
+                    message += ' ';
+                    setMessage(message)
+                }
+                // TODO: check if field has been skipped
+
+                field['data-valid'] = valid;
+                console.log("onBlur():::  Field: ", field?.name, " Valid: ", valid, " Message: ", message);
+            });
+        }
+    }
+    // return <>{JSON.stringify(field)}</>
     return (<>
-        {field.type === 'text' ? React.createElement('input', { type: 'text', className: 'form-control form-control-lg', placeholder: field.name, ...field }) :
-            field.type === 'number' ? React.createElement('input', { type: 'number', className: 'form-control form-control-lg', placeholder: field.name, ...field }) :
-                field.type === 'date' ? React.createElement('input', { type: 'date', className: 'form-control form-control-lg', placeholder: field.name, ...field }) :
-                    (field.type === 'select' && field.options && field.options.length > 0 && typeof field.options == "object") ? React.createElement('select', { className: 'form-select form-select-lg', placeholder: field.name, ...field }, field.options.map((option, k) => (
-                        <option key={k + "_" + option.value} value={option.value}>{option.name}</option>
-                    ))) : (field.type === 'radio' && field.options && field.options.length > 0 && typeof field.options == "object") ? React.createElement('div', {}, field.options.map((option, k) => (
-                        <div key={k + "_" + option.value} style={{ marginBottom: '10px' }}>
+        {field.type === 'text' ? React.createElement('input', { ...field, type: 'text', className: ('form-control form-control-lgz' + (isValid == true ? ' is-valid' : (isValid == false ? ' is-invalid' : ''))), placeholder: field.name }) :
+            field.type === 'number' ? React.createElement('input', { ...field, type: 'number', className: ('form-control form-control-lgz' + (isValid == true ? ' is-valid' : (isValid == false ? ' is-invalid' : ''))), placeholder: field.name }) :
+                field.type === 'date' ? React.createElement('input', { ...field, type: 'date', className: ('form-control form-control-lgz' + (isValid == true ? ' is-valid' : (isValid == false ? ' is-invalid' : ''))), placeholder: field.name }) :
+                    (field.type === 'select' && field.options && field.options.length > 0 && typeof field.options == "object") ? React.createElement('select', { ...field, className: ('form-select form-select-lgz' + (isValid == true ? ' is-valid' : (isValid == false ? ' is-invalid' : ''))), placeholder: field.name, ...field }, field.options.map((option, k) => (
+                        <>
+                            {k == 0 ? (<option key={k} value={""} disabled> - Select - {/*field.name*/}</option>) : null}
+                            <option key={k + "_" + option.value} value={option.value}>{option.name}</option>
+                        </>
+                    ))) : (field.type === 'radio' && field.options && field.options.length > 0 && typeof field.options == "object") ? React.createElement('div', {}, ...field, field.options.map((option, k) => (
+                        <div key={k + "_" + option.value} style={{ marginBottom: '10px', display: 'inline-flex', gap: 3, marginInlineEnd: '12px' }}>
                             <input type="radio" name={field.code} value={option.value} {...field} /> {option.name}
                         </div>
-                    ))) : (field.type === 'checkbox' && field.options && field.options.length > 0 && typeof field.options == "object") ? React.createElement('div', {}, field.options.map((option, k) => (
+                    ))) : (field.type === 'checkbox' && field.options && field.options.length > 0 && typeof field.options == "object") ? React.createElement('div', {}, ...field, field.options.map((option, k) => (
                         <div key={k + "_" + option.value} style={{ marginBottom: '10px' }}>
                             <input type="checkbox" name={field.code} value={option.value} {...field} /> {option.name}
                         </div>
-                    ))) : field.type === 'textarea' ? React.createElement('textarea', { className: 'form-control form-control-lg', placeholder: field.name, ...field }) :
+                    ))) : field.type === 'textarea' ? React.createElement('textarea', { ...field, className: ('form-control form-control-lgz' + (isValid == true ? ' is-valid' : (isValid == false ? ' is-invalid' : ''))), placeholder: field.name }) :
                         React.createElement(field.type, {
+                            ...field,
                             key: field.code,
                             id: field.code,
                             name: field.name,
@@ -208,6 +296,7 @@ export function renderField(field) {
                             children: ((field.type === 'h1' || field.type === 'h2' || field.type === 'h3' || field.type === 'h4' || field.type === 'h5' || field.type === 'h6') ? field.description || field.name || field.label :
                                 "This question could not be loaded")
                         })}
+        {isValid == false ? (<span className="text-danger">{vlmessage}</span>) : null}
     </>)
 }
 

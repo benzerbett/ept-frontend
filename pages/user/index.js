@@ -48,13 +48,11 @@ function User() {
                     setHomeUrl(session.user.type === 'admin' ? '/admin' : '/user')
                     if (session.activeProgramCode) {
                         getProgramConfig(session.activeProgramCode, true)
+                        // // check if an active program is set in session storage
+                        // if (router.pathname !== '/user') {
+                        //     router.push('/user/surveys', undefined, { unstable_skipClientCache: true })
+                        // }
                     }
-                    // check if an active program is set in session storage
-                    // if (session.activeProgramCode) {
-                    //     if (router.pathname !== '/user') {
-                    //         router.push('/user/surveys', undefined, { unstable_skipClientCache: true })
-                    //     }
-                    // }
                 } else {
                     router.push('/auth/login', undefined, { unstable_skipClientCache: true })
                 }
@@ -85,7 +83,7 @@ function User() {
                                         {allPrograms.find(ap => ap.code == activeProgram)?.name || "Select a Program"}
                                     </button>
                                     <ul className="dropdown-menu">
-                                        {allPrograms.map((ap, x) => <li key={ap.code}><a className="dropdown-item" onClick={(ev) => {
+                                        {allPrograms.map((ap, x) => <li key={ap.code}><a className="dropdown-item" style={{ cursor: 'pointer' }} onClick={(ev) => {
                                             ev.preventDefault()
                                             getProgramConfig(ap.code, false)
                                         }}>{ap.name}</a></li>)}

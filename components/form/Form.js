@@ -130,13 +130,13 @@ export function Form({ formId, form }) {
                                     <div className="alert alert-secondary px-3 d-flex flex-column align-items-start justify-content-start" style={{ height: '100%', /*maxHeight: '600px',*/ overflow: 'scroll', backgroundColor: '#eef5f9' }} key={section.code + "_" + currentSection}>
                                         <h4 style={{ marginBottom: 2, color: 'steelblue', textTransform: 'uppercase', textAlign: 'center' }}>{section.name}</h4>
                                         <hr className="border-top border-primary w-100" />
-                                        {section.fields && section.fields.length > 0 ? section.fields.map(fld => {
+                                        {section.fields && section.fields.length > 0 ? section.fields.map((fld, fx) => {
                                             let field = fld;
                                             // set default attributes for input fields
                                             let input_fields = ["text", "number", "email", "tel", "url", "date", "time", "datetime-local", "month", "week", "color", "range", "select", "radio", "checkbox", "file", "textarea"];
                                             let ignored_attributes = ["description"];
                                             let default_attributes = {
-                                                title: field['description'] || field['name'] || '',
+                                                title: field['description'] || field['name'] || '', className: 'form-control'
                                             }; // TODO: ignore these attributes when spreading the object
                                             if (input_fields.includes(field.type)) {
                                                 // onchange if not in the set attributes
@@ -160,25 +160,33 @@ export function Form({ formId, form }) {
                                                     console.log("state", JSON.stringify(nf, null, 2));
                                                     // zustand.setState({ [field.code]: e.target.value }); // TODO: set value to global state
                                                 };
+                                                
                                                 field = { ...field, ...default_attributes };
                                                 // TODO: set values from global state to the field if available
                                             }
 
-                                            return (
-                                                <div className="form-group col-md-6" key={field.code} style={{ marginBottom: '6px', borderBottom: '1px solid #efefef', padding: '8px' }}>
+                                            return (<>
+                                                <div className="form-group col-md-6" key={field.code} style={{ marginBottom: '6px', borderBottom: '1px solid #efefef', padding: '8px', display: 'flex', alignItems: 'center', width: '100%' }}>
 
                                                     {/* ------ */}
 
-                                                    {input_fields.includes(field.type) ? <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: 10 }}>
+                                                    {input_fields.includes(field.type) ? <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: 10, width: '80%' }}>
                                                         <label className="form-label mb-1 fw-bold mx-1">{field.name}</label>
                                                         {field.readOnly ? <small style={{ fontSize: '12px', color: 'gray' }}>(Readonly)</small> : null}
                                                     </div>
                                                         : null}
-
-                                                    {renderField(field)}
+                                                    <div style={{ display: 'flex', flexDirection: 'column', width: '100%', fontSize: '0.8em' }}>
+                                                        {renderField(field)}
+                                                        {/* <small className="text-muted">
+                                                            <details open> <summary>Field Details</summary>
+                                                                <pre> {JSON.stringify(field, null, 2)} </pre>
+                                                            </details>
+                                                        </small> */}
+                                                    </div>
 
                                                     {/* ------ */}
                                                 </div>
+                                            </>
                                             );
                                         }) : <div className="alert alert-warning">No fields found</div>}
                                     </div>
