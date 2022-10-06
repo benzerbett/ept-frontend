@@ -37,7 +37,7 @@ function AppNavbar() {
                     if (session.activeProgramCode) {
                         getProgramConfig(session.activeProgramCode, true)
                     } else {
-                        if (router.pathname !== '/user') {
+                        if (router.pathname !== '/user' && router.pathname !== '/user/settings/account') {
                             router.push('/user', undefined, { unstable_skipClientCache: true })
                         }
                     }

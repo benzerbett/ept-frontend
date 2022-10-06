@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import React from 'react'
 import { useRouter } from 'next/router'
-import { simulateGetUser, doLogout, doGetSession, simulateActiveSession } from '../../utilities'
+import { simulateGetUser, doLogout, doGetSession, simulateActiveSession, getPrograms } from '../../utilities'
 
 function User() {
     const [user, setUser] = React.useState(null)

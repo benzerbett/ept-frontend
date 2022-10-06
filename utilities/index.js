@@ -185,7 +185,7 @@ export const loadConfig = (json, session) => {
 // get user
 export const doGetSession = async () => {
     if (typeof window !== 'undefined') {
-        return fetch('http://localhost:8000/api/auth/user', {
+        return fetch(api_url+'/auth/user', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -199,7 +199,9 @@ export const doGetSession = async () => {
                 // return user info
                 let session = {
                     // user: { ...data.user, type: (data.user.role == 1 ? "admin" : "participant") },
-                    user: { ...data.user, type: data.role?.name },
+                    user: { ...data.user, type: data.role?.name, permissions: Array.from(data?.permissions, p=>p?.name), programs: Array.from(data?.programs, p=>{
+                        return {code: p?.uuid, name: p?.name}
+                    }) },
                     isLoggedIn: true,
                     token: window.sessionStorage.getItem('token'),
                     activeProgramCode: window.sessionStorage.getItem('activeProgramCode') || null,
