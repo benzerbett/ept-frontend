@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { doGetSession, getProgramConfig, loadConfig } from '../../../../utilities'
 import { useRouter } from 'next/router';
-// import { configuration, loadConfig } from '../../../../utilities/config'
 import Head from "next/head";
 import { Form } from "../../../../components/form/Form";
 
@@ -85,6 +84,7 @@ function App() {
             <div className="container">
                 {formId ? <article style={{ padding: '10px 15px' }}>
                     <Form form={form} />
+                    {/* <pre>{JSON.stringify(form,null,2)}</pre> */}
                 </article> : <main style={{ width: '100%', height: '85vh', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <h5 className='mb-0'>Loading...</h5>
                 </main>}

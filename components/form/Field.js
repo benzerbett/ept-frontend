@@ -99,7 +99,7 @@ export default function Field({ field }) {
     delete fieldProps.validation;
     delete fieldProps.updateSectionValidity;
     delete fieldProps['Description'];
-    
+    // console.log("Field: ", fieldProps);
     // return <>{JSON.stringify(field)}</>
     return (<React.Fragment key={field.code+"_____"+field.name}>
         {field.type === 'text' ? React.createElement('input', { ...fieldProps, type: 'text', className: ('form-control form-control-lgz' + (isValid == true ? ' is-valid' : (isValid == false ? ' is-invalid' : ''))), placeholder: field.name }) :
@@ -107,16 +107,20 @@ export default function Field({ field }) {
                 field.type === 'date' ? React.createElement('input', { ...fieldProps, type: 'date', className: ('form-control form-control-lgz' + (isValid == true ? ' is-valid' : (isValid == false ? ' is-invalid' : ''))), placeholder: field.name }) :
                     (field.type === 'select' && field.options && field.options.length > 0 && typeof field.options == "object") ? React.createElement('select', { ...fieldProps, className: ('form-select form-select-lgz' + (isValid == true ? ' is-valid' : (isValid == false ? ' is-invalid' : ''))), placeholder: field.name, ...fieldProps }, field.options.map((option, k) => (
                         <React.Fragment key={k + "_" + option.value+"_"+option.name}>
-                            {k == 0 ? (<option value={""} disabled> - Select - {/*field.name*/}</option>) : null}
+                            {k == 0 ? (<option value={""} disabled> - Selectz - {/*field.name*/}</option>) : null}
                             <option value={option.value}>{option.name}</option>
                         </React.Fragment>
-                    ))) : (field.type === 'radio' && field.options && field.options.length > 0 && typeof field.options == "object") ? React.createElement('div', {}, ...fieldProps, field.options.map((option, k) => (
+                    ))) : (field.type === 'radio' && field.options && field.options.length > 0 && typeof field.options == "object") ? React.createElement('div', {}, /*...fieldProps,*/ field.options.map((option, k) => (
                         <div key={k + "_" + option.value+"_"+option.name} style={{ marginBottom: '10px', display: 'inline-flex', gap: 3, marginInlineEnd: '12px' }}>
-                            <input type="radio" name={field.code} value={option.value} {...fieldProps} /> {option.name}
+                            <input type="radio" name={field.code} value={option.value} 
+                            // {...fieldProps} 
+                            /> {option.name}
                         </div>
                     ))) : (field.type === 'checkbox' && field.options && field.options.length > 0 && typeof field.options == "object") ? React.createElement('div', {}, ...fieldProps, field.options.map((option, k) => (
                         <div key={k + "_" + option.value+"_"+option.name} style={{ marginBottom: '10px' }}>
-                            <input type="checkbox" name={field.code} value={option.value} {...field} /> {option.name}
+                            <input type="checkbox" name={field.code} value={option.value} 
+                            // {...field}
+                             /> {option.name}
                         </div>
                     ))) : field.type === 'textarea' ? React.createElement('textarea', { ...fieldProps, className: ('form-control form-control-lgz' + (isValid == true ? ' is-valid' : (isValid == false ? ' is-invalid' : ''))), placeholder: field.name }) :
                         React.createElement(field.type, {

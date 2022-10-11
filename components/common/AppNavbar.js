@@ -12,6 +12,7 @@ function AppNavbar() {
     const router = useRouter()
 
     const getProgramConfig = (id, isItInit) => {
+        console.log('getProgramConfig', id, isItInit)
         simulateActiveSession(id)
             .then((activeP) => {
                 if (activeP) {
@@ -22,6 +23,14 @@ function AppNavbar() {
                             router.push('/user/surveys')
                         }
                     }
+                }
+            })
+    }
+    const fetchPrograms = () => {
+        return getPrograms()
+            .then((data) => {
+                if (data.length > 0) {
+                    setAllPrograms(data)
                 }
             })
     }
@@ -45,7 +54,7 @@ function AppNavbar() {
                     router.push('/auth/login', undefined, { unstable_skipClientCache: true })
                 }
             })
-            getPrograms()
+            fetchPrograms()
         }
         return () => {
             mtd = false

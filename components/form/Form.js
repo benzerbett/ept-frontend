@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { doGetSession, submitFormData } from '../../utilities';
 import Field from "./Field";
 import Link from 'next/link';
+import { flushSync } from "react-dom";
 
 export function Form({ formId, form }) {
     const [fID, setFID] = useState(formId);
@@ -16,6 +17,8 @@ export function Form({ formId, form }) {
             "formResponses": []
         }
     ); // TODO: Fetch previous form state for the user and store here
+
+    // TODO: add formresponses to global dictionary
 
     useEffect(() => {
         let mounted = true;
@@ -56,6 +59,7 @@ export function Form({ formId, form }) {
         return flattened;
     };
     let [invalidFields, setInvalidFields] = useState([]);
+    let [completeSections, setCompleteSections] = useState([]);
 
     const submitForm = (form_data) => {
         console.log("Submitting form data", form_data);
@@ -97,16 +101,16 @@ export function Form({ formId, form }) {
                             {message}
                         </div>}
                     </div>
-                    <hr className="mt-3 mb-3" style={{borderColor: '#ccc'}} />
+                    <hr className="mt-3 mb-3" style={{ borderColor: '#ccc' }} />
                 </div>
                 <h1 style={{ marginTop: 9 }}>{form.name}</h1>
                 <h6>{form.description} &middot; <span className="text-muted">{form?.sections.length || 0} sections</span></h6>
-                <hr className="mt-2 mb-2" style={{borderColor: '#ccc'}} />
+                <hr className="mt-2 mb-2" style={{ borderColor: '#ccc' }} />
                 <form {...form}>
                     <ul className="nav"
                     >
                         {form.sections && form.sections.length > 0 ? form.sections.map((section, index) => (
-                            <li key={section.code + "_" + index+"_"+section.name} className="nav-link p-0 mx-2">
+                            <li key={section.code + "_" + index + "_" + section.name} className="nav-link p-0 mx-2">
                                 <a className={"btn btn-outline btn-sm fs-6 mx-2 my-1 " + (currentSection === index ? "btn-primary" : "btn-outline-secondary")} onClick={(ev) => {
                                     if (invalidFields.length > 0) {
                                         ev.preventDefault();
@@ -179,12 +183,24 @@ export function Form({ formId, form }) {
                                         if (valid) {
                                             // invalidFields.delete(fieldCode);
                                             setInvalidFields(invalidFields.filter(item => item.field !== fieldCode));
+                                            // complete the section if all fields are valid
+                                            if (invalidFields.length === 0 && currentSection < form.sections.length - 1) {
+                                                setCompleteSections([...completeSections, section.code]);
+                                            } else {
+                                                setCompleteSections(completeSections.filter(item => item !== section.code));
+                                            }
                                         } else {
                                             // invalidFields.add(fieldCode);
                                             if (!Array.from(invalidFields, f => f.field).includes(fieldCode)) setInvalidFields([...invalidFields, {
                                                 field: fieldCode,
                                                 section: section.code
                                             }]);
+                                            // incomplete the section if any field is invalid
+                                            if (completeSections.includes(section.code)) {
+                                                setCompleteSections(completeSections.filter(item => item !== section.code));
+                                            } else {
+                                                setCompleteSections([...completeSections]);
+                                            }
                                         }
                                     }
                                     return valid;
@@ -206,7 +222,7 @@ export function Form({ formId, form }) {
                                             let input_fields = ["text", "number", "email", "tel", "url", "date", "time", "datetime-local", "month", "week", "color", "range", "select", "radio", "checkbox", "file", "textarea"];
                                             let ignored_attributes = ["description"];
                                             let default_attributes = {
-                                                title: field['description'] || field['name'] || '', className: 'form-control', updateSectionValidity: updateSectionValidity
+                                                title: field['description'] || field['name'] || '', className: (fld.type && fld.type=='select' ? 'form-select':'form-control'), updateSectionValidity: updateSectionValidity
                                             }; // TODO: ignore these attributes when spreading the object
                                             if (input_fields.includes(field.type)) {
                                                 // onchange if not in the set attributes
@@ -228,6 +244,7 @@ export function Form({ formId, form }) {
                                                     let nf = flattenFormData(newFormData);
                                                     setFlatFormState(nf);
                                                     console.log("state", JSON.stringify(nf, null, 2));
+
                                                     // zustand.setState({ [field.code]: e.target.value }); // TODO: set value to global state
                                                 };
 
@@ -235,7 +252,7 @@ export function Form({ formId, form }) {
                                                 // TODO: set values from global state to the field if available
                                             }
 
-                                            return (<React.Fragment key={fld.code+"___"+fx}>
+                                            return (<React.Fragment key={fld.code + "___" + fx}>
                                                 <div className="form-group col-md-6" key={field.code} style={{ marginBottom: '6px', borderBottom: '1px solid #efefef', padding: '8px', display: 'flex', alignItems: 'center', width: '100%' }}>
 
                                                     {/* ------ */}
@@ -301,7 +318,11 @@ export function Form({ formId, form }) {
                                     console.log("submit: ", formData);
                                     submitForm(formData);
                                     // zustand.setState({ form: { ...zustand.state.form, ...form } });
-                                }}>Submit</button>
+                                }}
+                                    disabled={(currentSection === form.sections.length - 1
+                                        || Array.from(invalidFields, f => f.section).includes(form.sections[currentSection].code)
+                                        || (completeSections.length !== form.sections.length && !completeSections.includes(form.sections[currentSection].code))
+                                    )}>Submit</button>
                                 <button className="btn" type="reset" onClick={(ev) => {
                                     ev.preventDefault();
                                     ev.stopPropagation();

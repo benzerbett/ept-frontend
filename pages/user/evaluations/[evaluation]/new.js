@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { doGetSession, getProgramConfig, loadConfig, renderField } from '../../../../utilities'
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-// import { configuration, loadConfig } from '../../../../utilities/config'
 import Head from "next/head";
 
 import { Form } from "../../../../components/form/Form";

@@ -2,12 +2,16 @@
 
 import { doGetSession } from "../../../utilities";
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
     // get token from request
     const token = req.headers.authorization.split(' ')[1];
     const api_url = process.env.API_URL;
-    // const configs = require('../configuration.json')
-    return fetch(api_url+'/auth/user', {
+    if (process.env.USE_MOCK_API === 'true') {
+        const configs = require('../configuration.json')
+        res.status(200).json(Array.from(configs, (c) => { return { code: c.code, name: c.name } }))
+        return
+    }
+    return fetch(api_url + '/auth/user', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -27,5 +31,4 @@ export default function handler(req, res) {
     }).catch(err => {
         res.status(500).json({ statusCode: 500, message: err.message })
     })
-    // res.status(200).json(Array.from(configs, (c) => { return { code: c.code, name: c.name } }))
 }

@@ -96,10 +96,10 @@ function resolveDynamicValues(json, customDictionary) {
 }
 
 
-    let configuration = []
-    configuration_o.forEach(function (cfg) {
-        let cf = loadConfig(cfg);
-        configuration.push(cf);
-    });
+    // let configuration = []
+    // configuration_o.forEach(function (cfg) {
+    //     let cf = loadConfig(cfg);
+    //     configuration.push(cf);
+    // });
 
     module.exports = { configuration, user, loadConfig };
