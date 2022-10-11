@@ -43,6 +43,27 @@ export function Form({ formId, form }) {
         return () => mounted = false;
     }, []);
 
+    const defaultOnChange = (e, field, form, section) => {
+        console.log("onChange: ", field.code, e.target.value);
+        let newFormData = { ...formData };
+        let formResponse = newFormData.formResponses.find(fr => fr.sectionCode === section.code);
+        let fieldResponse = formResponse.fields.find(fr => fr.fieldCode === field.code);
+        if (fieldResponse) {
+            fieldResponse.fieldValue = e.target.value;
+        } else {
+            formResponse.fields.push({
+                "fieldCode": field.code,
+                "fieldValue": e.target.value || null
+            });
+        }
+        setFormData(newFormData);
+        let nf = flattenFormData(newFormData);
+        setFlatFormState(nf);
+        // console.log("state", JSON.stringify(nf, null, 2));
+
+        // zustand.setState({ [field.code]: e.target.value }); // TODO: set value to global state
+    }
+
     const flattenFormData = (formData) => {
         let flattened = [];
         formData.formResponses.forEach(response => {
@@ -179,30 +200,51 @@ export function Form({ formId, form }) {
 
                                 // callback function to update isSectionValid
                                 const updateSectionValidity = (fieldCode, valid) => {
+
                                     if (fieldCode) {
                                         if (valid) {
                                             // invalidFields.delete(fieldCode);
                                             setInvalidFields(invalidFields.filter(item => item.field !== fieldCode));
-                                            // complete the section if all fields are valid
-                                            if (invalidFields.length === 0 && currentSection < form.sections.length - 1) {
-                                                setCompleteSections([...completeSections, section.code]);
-                                            } else {
-                                                setCompleteSections(completeSections.filter(item => item !== section.code));
-                                            }
+                                            // BUGGY: complete the section if all fields are valid
+                                            // if (invalidFields.length === 0 && currentSection < form.sections.length - 1 && !Array.from(invalidFields, fs=>fs.section).includes(section.code)) {
+                                            //     setCompleteSections([...completeSections, section.code]);
+                                            // } else {
+                                            //     setCompleteSections(completeSections.filter(item => item !== section.code));
+                                            // }
                                         } else {
                                             // invalidFields.add(fieldCode);
                                             if (!Array.from(invalidFields, f => f.field).includes(fieldCode)) setInvalidFields([...invalidFields, {
                                                 field: fieldCode,
-                                                section: section.code
+                                                section: section.code,
+                                                reason: "invalid_input"
                                             }]);
-                                            // incomplete the section if any field is invalid
-                                            if (completeSections.includes(section.code)) {
-                                                setCompleteSections(completeSections.filter(item => item !== section.code));
-                                            } else {
-                                                setCompleteSections([...completeSections]);
-                                            }
+                                            // BUGGY: incomplete the section if any field is invalid
+                                            // if (completeSections.includes(section.code) && !Array.from(invalidFields, f => f.section).includes(section.code)) {
+                                            //     setCompleteSections(completeSections.filter(item => item !== section.code));
+                                            // }
                                         }
                                     }
+                                    // BUGGY: check all fields in section for required fields with no value
+                                    // let requiredFields = section.fields.filter(field => {
+                                    //     let field_required = false;
+                                    //     if (field.required && (field.required == true || field.required == 'true')) field_required = true;
+                                    //     return field_required;
+                                    // });
+                                    // console.log("requiredFields", requiredFields);
+                                    // requiredFields.forEach(field_ => {
+                                    //     let formResponse_ = formData.formResponses.find(fr => fr.sectionCode === section.code);
+                                    //     let fieldResponse_ = formResponse_.fields.find(fr => fr.fieldCode === field_.code);
+                                    //     console.log("fieldResponse_", fieldResponse_);
+                                    //     if (!fieldResponse_ || !fieldResponse_.value) {
+                                    //         if (!Array.from(invalidFields, f => f.field).includes(field_.code)) {
+                                    //             setInvalidFields([...invalidFields, {
+                                    //                 field: field_.code,
+                                    //                 section: section.code,
+                                    //                 reason: 'required'
+                                    //             }]);
+                                    //         }
+                                    //     }
+                                    // });
                                     return valid;
                                 };
 
@@ -222,30 +264,13 @@ export function Form({ formId, form }) {
                                             let input_fields = ["text", "number", "email", "tel", "url", "date", "time", "datetime-local", "month", "week", "color", "range", "select", "radio", "checkbox", "file", "textarea"];
                                             let ignored_attributes = ["description"];
                                             let default_attributes = {
-                                                title: field['description'] || field['name'] || '', className: (fld.type && fld.type=='select' ? 'form-select':'form-control'), updateSectionValidity: updateSectionValidity
+                                                title: field['description'] || field['name'] || '', className: (fld.type && fld.type == 'select' ? 'form-select' : 'form-control'), updateSectionValidity: updateSectionValidity
                                             }; // TODO: ignore these attributes when spreading the object
                                             if (input_fields.includes(field.type)) {
                                                 // onchange if not in the set attributes
                                                 // SKIPPING set onChange check since we're deprecating setting events on fields
                                                 default_attributes.onChange = (e) => {
-                                                    console.log("onChange: ", field.code, e.target.value);
-                                                    let newFormData = { ...formData };
-                                                    let formResponse = newFormData.formResponses.find(fr => fr.sectionCode === section.code);
-                                                    let fieldResponse = formResponse.fields.find(fr => fr.fieldCode === field.code);
-                                                    if (fieldResponse) {
-                                                        fieldResponse.fieldValue = e.target.value;
-                                                    } else {
-                                                        formResponse.fields.push({
-                                                            "fieldCode": field.code,
-                                                            "fieldValue": e.target.value || null
-                                                        });
-                                                    }
-                                                    setFormData(newFormData);
-                                                    let nf = flattenFormData(newFormData);
-                                                    setFlatFormState(nf);
-                                                    console.log("state", JSON.stringify(nf, null, 2));
-
-                                                    // zustand.setState({ [field.code]: e.target.value }); // TODO: set value to global state
+                                                    defaultOnChange(e, field, form, section);
                                                 };
 
                                                 field = { ...field, ...default_attributes };
@@ -258,7 +283,9 @@ export function Form({ formId, form }) {
                                                     {/* ------ */}
 
                                                     {input_fields.includes(field.type) ? <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: 10, width: '80%' }}>
-                                                        <label className={"form-label mb-1 fw-bold mx-1 " + (Array.from(invalidFields, f => f.field).includes(field.code) ? "text-danger" : "")}>{field.name}</label>
+                                                        <label className={"form-label mb-1 fw-bold mx-1 " + (Array.from(invalidFields, f => f.field).includes(field.code) ? "text-danger" : "")}>{field.name} {
+                                                            field.required == true || field.required == 'true' ? <span className="text-danger" title="This field is required">*</span> : null
+                                                        }</label>
                                                         {field.readOnly ? <small style={{ fontSize: '12px', color: 'gray' }}>(Readonly)</small> : null}
                                                     </div>
                                                         : null}
@@ -321,7 +348,7 @@ export function Form({ formId, form }) {
                                 }}
                                     disabled={(currentSection === form.sections.length - 1
                                         || Array.from(invalidFields, f => f.section).includes(form.sections[currentSection].code)
-                                        || (completeSections.length !== form.sections.length && !completeSections.includes(form.sections[currentSection].code))
+                                        // || (completeSections.length !== form.sections.length && !completeSections.includes(form.sections[currentSection].code))
                                     )}>Submit</button>
                                 <button className="btn" type="reset" onClick={(ev) => {
                                     ev.preventDefault();
