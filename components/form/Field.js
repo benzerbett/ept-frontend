@@ -80,13 +80,13 @@ export default function Field({ field }) {
                     // console.log("::INValid")
                     setIsValid(false);
                     setMessage(message);
-                    field.updateSectionValidity(field.code, false);
+                    field.updateSectionValidity(field.uuid, false);
                 } else {
                     // console.log("::Valid")
                     setIsValid(true);
                     message += ' ';
                     setMessage(message);
-                    field.updateSectionValidity(field.code, true);
+                    field.updateSectionValidity(field.uuid, true);
                 }
                 // TODO: check if field has been skipped
                 field['data-valid'] = valid;
@@ -101,7 +101,7 @@ export default function Field({ field }) {
     delete fieldProps['Description'];
     // console.log("Field: ", fieldProps);
     // return <>{JSON.stringify(field)}</>
-    return (<React.Fragment key={field.code+"_____"+field.name}>
+    return (<React.Fragment key={field.uuid+"_____"+field.name}>
         {field.type === 'text' ? React.createElement('input', { ...fieldProps, type: 'text', className: ('form-control form-control-lgz' + (isValid == true ? ' is-valid' : (isValid == false ? ' is-invalid' : ''))), placeholder: field.name }) :
             field.type === 'number' ? React.createElement('input', { ...fieldProps, type: 'number', className: ('form-control form-control-lgz' + (isValid == true ? ' is-valid' : (isValid == false ? ' is-invalid' : ''))), placeholder: field.name }) :
                 field.type === 'date' ? React.createElement('input', { ...fieldProps, type: 'date', className: ('form-control form-control-lgz' + (isValid == true ? ' is-valid' : (isValid == false ? ' is-invalid' : ''))), placeholder: field.name }) :
@@ -112,21 +112,21 @@ export default function Field({ field }) {
                         </React.Fragment>
                     ))) : (field.type === 'radio' && field.options && field.options.length > 0 && typeof field.options == "object") ? React.createElement('div', {}, /*...fieldProps,*/ field.options.map((option, k) => (
                         <div key={k + "_" + option.value+"_"+option.name} style={{ marginBottom: '10px', display: 'inline-flex', gap: 3, marginInlineEnd: '12px' }}>
-                            <input type="radio" name={field.code} value={option.value} 
+                            <input type="radio" name={field.uuid} value={option.value} 
                             // {...fieldProps} 
                             /> {option.name}
                         </div>
                     ))) : (field.type === 'checkbox' && field.options && field.options.length > 0 && typeof field.options == "object") ? React.createElement('div', {}, ...fieldProps, field.options.map((option, k) => (
                         <div key={k + "_" + option.value+"_"+option.name} style={{ marginBottom: '10px' }}>
-                            <input type="checkbox" name={field.code} value={option.value} 
+                            <input type="checkbox" name={field.uuid} value={option.value} 
                             // {...field}
                              /> {option.name}
                         </div>
                     ))) : field.type === 'textarea' ? React.createElement('textarea', { ...fieldProps, className: ('form-control form-control-lgz' + (isValid == true ? ' is-valid' : (isValid == false ? ' is-invalid' : ''))), placeholder: field.name }) :
                         React.createElement(field.type, {
                             ...fieldProps,
-                            key: field.code+"_"+field.name,
-                            id: field.code,
+                            key: field.uuid+"_"+field.name,
+                            id: field.uuid,
                             name: field.name,
                             style: { margin: '0px', minWidth: '50%' },
                             children: ((field.type === 'h1' || field.type === 'h2' || field.type === 'h3' || field.type === 'h4' || field.type === 'h5' || field.type === 'h6') ? field.description || field.name || field.label :

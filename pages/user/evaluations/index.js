@@ -24,11 +24,11 @@ function Evaluations() {
                         data.rounds.map(round => {
                             if (round.active) {
                                 console.log('round', round)
-                                let f_m = data.forms.find(f => f.code == round.form)
+                                let f_m = data.forms.find(f => f.uuid == round.form)
                                 if (f_m) {
                                     svys = Array.from([...svys, f_m], fm => {
                                         return {
-                                            code: fm.code,
+                                            code: fm.uuid,
                                             name: fm.name,
                                             description: fm.description,
                                             metadata: fm.metadata,
@@ -79,10 +79,10 @@ function Evaluations() {
                             <tbody>
                                 {evaluations.map((evaluation) => (
 
-                                    <tr key={evaluation.code}>
+                                    <tr key={evaluation.uuid}>
                                         <td>
                                             {evaluation.name}
-                                            {/* <Link href={`/user/evaluations/${evaluation.code}`}><a>{survey.name}</a></Link> */}
+                                            {/* <Link href={`/user/evaluations/${evaluation.uuid}`}><a>{survey.name}</a></Link> */}
                                         </td>
                                         <td className='text-capitalize'>{evaluation.status == 'open' ? <span className='badge bg-success'>Open</span> : evaluation.status || "-"}</td>
                                         <td>{new Date(evaluation.metadata.created).toDateString('en-GB') || "-"}</td>
@@ -90,13 +90,13 @@ function Evaluations() {
                                         <td>No</td>
                                         <td className="d-flex flex-column flex-md-row gap-2 justify-content-center">
                                             <Link href={{
-                                                pathname: `/user/evaluations/${evaluation.code}/new`,
+                                                pathname: `/user/evaluations/${evaluation.uuid}/new`,
 
                                             }}
                                             >
                                                 <a className='btn btn-primary btn-sm py-0 text-nowrap'>Take Evaluation</a></Link>
                                             <Link href={{
-                                                pathname: `/user/evaluations/${evaluation.code}/new`,
+                                                pathname: `/user/evaluations/${evaluation.uuid}/new`,
                                             }}
                                             >
                                                 <a className='btn btn-dark btn-sm py-0 text-nowrap'>Edit Evaluation</a></Link>

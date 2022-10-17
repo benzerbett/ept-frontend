@@ -181,7 +181,6 @@ export const loadConfig = (json, session) => {
     }
 }
 
-
 // get user
 export const doGetSession = async () => {
     if (typeof window !== 'undefined') {
@@ -219,9 +218,9 @@ export const doGetSession = async () => {
     return null;
 }
 
-export const simulateActiveSession = (sessionID) => {
+export const getActiveSession = (sessionID) => {
     if (sessionID) {
-        return fetch(`/api/configurations/${sessionID}`, {
+        return fetch(`/api/configurations/${sessionID}?details`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -230,11 +229,11 @@ export const simulateActiveSession = (sessionID) => {
         })
             .then((res) => res.json())
             .then((data) => {
-                if (data.code) {
+                if (data.uuid) {
                     if (typeof window !== 'undefined') {
-                        window.sessionStorage.setItem('activeProgramCode', data?.code)
+                        window.sessionStorage.setItem('activeProgramCode', data?.uuid)
                     }
-                    return data?.code
+                    return data?.uuid
                 }
             })
     } else {

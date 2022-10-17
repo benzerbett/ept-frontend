@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import React from 'react'
 import { useRouter } from 'next/router'
-import { simulateGetUser, doLogout, doGetSession, simulateActiveSession, getPrograms } from '../../utilities'
+import { simulateGetUser, doLogout, doGetSession, getPrograms, getProgramConfig, getActiveSession } from '../../utilities'
 
 function User() {
     const [user, setUser] = React.useState(null)
@@ -11,9 +11,11 @@ function User() {
     const [activeProgram, setActiveProgram] = React.useState(null)
     const router = useRouter()
 
-    const getProgramConfig = (id, isItInit) => {
-        simulateActiveSession(id)
+    const getProgConf = (id, isItInit) => {
+        console.log('getProgConf', id, isItInit)
+        getActiveSession(id)
             .then((activeP) => {
+                console.log('activeP', activeP)
                 if (activeP) {
                     setActiveProgram(activeP)
                     if (!isItInit) {
@@ -35,7 +37,7 @@ function User() {
                     setIsLoggedIn(true)
                     setHomeUrl(session.user.type === 'admin' ? '/admin' : '/user')
                     if (session.activeProgramCode) {
-                        getProgramConfig(session.activeProgramCode, true)
+                        getProgConf(session.activeProgramCode, true)
                         // // check if an active program is set in session storage
                         // if (router.pathname !== '/user') {
                         //     router.push('/user/surveys', undefined, { unstable_skipClientCache: true })
@@ -49,7 +51,7 @@ function User() {
                 if (data.length > 0) {
                     setAllPrograms(data)
                     if (data.length === 1) {
-                        getProgramConfig(data[0]?.code)
+                        getProgConf(data[0]?.uuid)
                     }
                 }
             })
@@ -73,17 +75,17 @@ function User() {
                         <hr />
                         <div className='row text-center'>
                             <div className='col-md-12 mt-3'>
-                                {allPrograms && allPrograms.length > 0 ? <div className="btn-group fw-bold">
+                                {allPrograms ? (allPrograms.length > 0 ? <div className="btn-group fw-bold">
                                     <button className="btn btn-primary bg-purple-light btn-block text-white dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        {allPrograms.find(ap => ap.code == activeProgram)?.name || "Select a Program"}
+                                        {allPrograms.find(ap => ap.uuid == activeProgram)?.name || "Select a Program"}
                                     </button>
                                     <ul className="dropdown-menu">
-                                        {allPrograms.map((ap, x) => <li key={ap.code}><a className="dropdown-item" style={{ cursor: 'pointer' }} onClick={(ev) => {
+                                        {allPrograms.map((ap, x) => <li key={ap.uuid}><a className="dropdown-item" style={{ cursor: 'pointer' }} onClick={(ev) => {
                                             ev.preventDefault()
-                                            getProgramConfig(ap.code, false)
+                                            getProgConf(ap.uuid, false)
                                         }}>{ap.name}</a></li>)}
                                     </ul>
-                                </div> : <h6 className="text-white mb-0">Loading programs...</h6>}
+                                </div> : <div><small className="alert alert-warning py-2 fs-6 mb-0">No programs found</small></div>) : <h6 className="mb-0">Loading programs...</h6>}
                             </div>
                         </div>
                     </form>

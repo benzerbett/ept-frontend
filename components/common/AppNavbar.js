@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React from 'react'
-import { simulateGetUser, doLogout, doGetSession, simulateActiveSession, getPrograms } from '../../utilities'
+import { simulateGetUser, doLogout, doGetSession, getPrograms, getProgramConfig, getActiveSession } from '../../utilities'
 
 function AppNavbar() {
     const [user, setUser] = React.useState(null)
@@ -11,9 +11,9 @@ function AppNavbar() {
     const [activeProgram, setActiveProgram] = React.useState(null)
     const router = useRouter()
 
-    const getProgramConfig = (id, isItInit) => {
-        console.log('getProgramConfig', id, isItInit)
-        simulateActiveSession(id)
+    const getProgConf = (id, isItInit) => {
+        console.log('getProgConf', id, isItInit)
+        getActiveSession(id)
             .then((activeP) => {
                 if (activeP) {
                     setActiveProgram(activeP)
@@ -44,7 +44,7 @@ function AppNavbar() {
                     setIsLoggedIn(true)
                     setHomeUrl(session.user.type === 'admin' ? '/admin' : '/user')
                     if (session.activeProgramCode) {
-                        getProgramConfig(session.activeProgramCode, true)
+                        getProgConf(session.activeProgramCode, true)
                     } else {
                         if (router.pathname !== '/user' && router.pathname !== '/user/settings/account') {
                             router.push('/user', undefined, { unstable_skipClientCache: true })
@@ -66,17 +66,17 @@ function AppNavbar() {
                 {/* <Link href={homeUrl}>
                     <a className="navbar-brand">Oncology EPT</a>
                 </Link> */}
-                {allPrograms && allPrograms.length > 0 ? <div className="btn-group fw-bold">
+                {allPrograms ? (allPrograms.length > 0 ? <div className="btn-group fw-bold">
                     <button className="btn bg-purple-light btn-sm text-white btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        {allPrograms.find(ap => ap.code == activeProgram)?.name || "Select a Program"}
+                        {allPrograms.find(ap => ap.uuid == activeProgram)?.name || "Select a Program"}
                     </button>
                     <ul className="dropdown-menu">
-                        {allPrograms.map((ap, x) => <li key={ap.code}><a className="dropdown-item" onClick={(ev) => {
+                        {allPrograms.map((ap, x) => <li key={ap.uuid}><a className="dropdown-item" style={{ cursor: 'pointer' }} onClick={(ev) => {
                             ev.preventDefault()
-                            getProgramConfig(ap.code, false)
+                            getProgConf(ap.uuid, false)
                         }}>{ap.name}</a></li>)}
                     </ul>
-                </div> : <h6 className="text-white mb-0">EPT | Loading...</h6>}
+                </div> : <h6 className="text-white mb-0">EPT | Guest</h6>) : <h6 className="text-white mb-0">EPT | Loading...</h6>}
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#appNavbarToggler" aria-controls="appNavbarToggler" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>

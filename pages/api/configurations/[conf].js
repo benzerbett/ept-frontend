@@ -6,7 +6,7 @@ export default async function handler(req, res) {
     const api_url = process.env.API_URL;
     if (process.env.USE_MOCK_API === 'true') {
         const configs = require('../configuration.json')
-        const config = configs.find((c) => c.code === conf)
+        const config = configs.find((c) => c.uuid === conf)
         if (config) {
             res.status(200).json(config)
         }else{
@@ -14,7 +14,7 @@ export default async function handler(req, res) {
         }
         return
     }
-    return fetch(api_url+'/program/'+conf, {
+    return fetch(api_url+'/program/'+conf+'?details=1', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

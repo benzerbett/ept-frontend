@@ -22,13 +22,13 @@ function Surveys() {
                         let svys = []
                         data.rounds.map(round => {
                             if (round?.active && round.useChecklist) {
-                                let f_m = data.forms.find(f => f.code == round.checklistForm)
+                                let f_m = data.forms.find(f => f.uuid == round.checklistForm)
                                 if (f_m) {
                                     // svys.push(f_m)
                                     svys = Array.from([...svys, f_m], fm => {
                                         return {
                                             round_name: round.name,
-                                            code: fm.code,
+                                            code: fm.uuid,
                                             name: fm.name,
                                             description: fm.description,
                                             metadata: fm.metadata,
@@ -80,14 +80,14 @@ function Surveys() {
                             </thead>
                             <tbody>
                                 {surveys && surveys.length > 0 ? surveys.map((survey) => (
-                                    <tr key={survey.code}>
+                                    <tr key={survey.uuid}>
                                         <td>
                                             {survey.round_name}
-                                            {/* <Link href={`/user/surveys/${survey.code}`}><a>{survey.name}</a></Link> */}
+                                            {/* <Link href={`/user/surveys/${survey.uuid}`}><a>{survey.name}</a></Link> */}
                                         </td>
                                         <td>
                                             {survey.name}
-                                            {/* <Link href={`/user/surveys/${survey.code}`}><a>{survey.name}</a></Link> */}
+                                            {/* <Link href={`/user/surveys/${survey.uuid}`}><a>{survey.name}</a></Link> */}
                                         </td>
                                         <td className='text-capitalize'>{(survey.status == 'open' || survey.status == 'active') ? <span className='badge bg-success'>Open</span> : (survey.status || "-")}</td>
                                         <td>{new Date(survey.metadata.created).toDateString('en-GB') || "-"}</td>
@@ -95,13 +95,13 @@ function Surveys() {
                                         <td>No</td>
                                         <td className="d-flex flex-column flex-md-row gap-2 justify-content-center">
                                             <Link href={{
-                                                pathname: `/user/surveys/${survey.code}/new`,
+                                                pathname: `/user/surveys/${survey.uuid}/new`,
                                             }}>
                                                 <a className='btn btn-primary btn-sm py-0 text-nowrap'>Take Survey</a>
                                             </Link>
                                             {/* TODO: take or edit */}
                                             {/* <Link href={{
-                                                pathname: `/user/surveys/${survey.code}/edit/${session.user?.id}`,
+                                                pathname: `/user/surveys/${survey.uuid}/edit/${session.user?.id}`,
                                             }}
                                             >
                                                 <a className='btn btn-dark btn-sm py-0 text-nowrap'>Edit Survey Submission</a>

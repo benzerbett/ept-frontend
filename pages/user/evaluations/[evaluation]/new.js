@@ -18,7 +18,7 @@ function App() {
         if (config) {
             let fm = loadConfig(config, sess);
             if (fm) {
-                return fm.forms.find(frm => frm.code === form_id)
+                return fm.forms.find(frm => frm.uuid === form_id)
             } else {
                 return 'fm'
             }

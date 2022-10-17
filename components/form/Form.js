@@ -26,7 +26,7 @@ export function Form({ formId, form }) {
             doGetSession().then(session => {
                 if (session) {
                     if (form) {
-                        setFID(form?.code);
+                        setFID(form?.uuid);
                     }
                     setLoading(false);
                 } else {
@@ -44,15 +44,15 @@ export function Form({ formId, form }) {
     }, []);
 
     const defaultOnChange = (e, field, form, section) => {
-        console.log("onChange: ", field.code, e.target.value);
+        console.log("onChange: ", field.uuid, e.target.value);
         let newFormData = { ...formData };
-        let formResponse = newFormData.formResponses.find(fr => fr.sectionCode === section.code);
-        let fieldResponse = formResponse.fields.find(fr => fr.fieldCode === field.code);
+        let formResponse = newFormData.formResponses.find(fr => fr.sectionCode === section.uuid);
+        let fieldResponse = formResponse.fields.find(fr => fr.fieldCode === field.uuid);
         if (fieldResponse) {
             fieldResponse.fieldValue = e.target.value;
         } else {
             formResponse.fields.push({
-                "fieldCode": field.code,
+                "fieldCode": field.uuid,
                 "fieldValue": e.target.value || null
             });
         }
@@ -61,7 +61,7 @@ export function Form({ formId, form }) {
         setFlatFormState(nf);
         // console.log("state", JSON.stringify(nf, null, 2));
 
-        // zustand.setState({ [field.code]: e.target.value }); // TODO: set value to global state
+        // zustand.setState({ [field.uuid]: e.target.value }); // TODO: set value to global state
     }
 
     const flattenFormData = (formData) => {
@@ -72,7 +72,7 @@ export function Form({ formId, form }) {
                 flattened.push({
                     "formCode": formData.formCode,
                     "sectionCode": section.sectionCode,
-                    "fieldCode": field.fieldCode || field.code || null,
+                    "fieldCode": field.fieldCode || field.uuid || null,
                     "value": field.fieldValue || field.value || null
                 });
             });
@@ -131,7 +131,7 @@ export function Form({ formId, form }) {
                     <ul className="nav"
                     >
                         {form.sections && form.sections.length > 0 ? form.sections.map((section, index) => (
-                            <li key={section.code + "_" + index + "_" + section.name} className="nav-link p-0 mx-2">
+                            <li key={section.uuid + "_" + index + "_" + section.name} className="nav-link p-0 mx-2">
                                 <a className={"btn btn-outline btn-sm fs-6 mx-2 my-1 " + (currentSection === index ? "btn-primary" : "btn-outline-secondary")} onClick={(ev) => {
                                     if (invalidFields.length > 0) {
                                         ev.preventDefault();
@@ -148,10 +148,10 @@ export function Form({ formId, form }) {
                         {form.sections && form.sections.length > 0 ? [form.sections[currentSection]].map(
                             (section, s_index) => {
                                 let newFormData = { ...formData };
-                                let formSection = newFormData.formResponses.find(item => item.sectionCode === section.code);
+                                let formSection = newFormData.formResponses.find(item => item.sectionCode === section.uuid);
                                 if (!formSection) {
                                     formSection = {
-                                        "sectionCode": section.code,
+                                        "sectionCode": section.uuid,
                                         "fields": []
                                     };
                                     newFormData.formResponses.push(formSection);
@@ -166,7 +166,7 @@ export function Form({ formId, form }) {
                                         groups.push(
                                             {
                                                 index: i,
-                                                code: section.fields[i].code,
+                                                code: section.fields[i].uuid,
                                                 data: section.fields[i].options || []
                                             }
                                         );
@@ -189,9 +189,9 @@ export function Form({ formId, form }) {
                                     group.data.forEach((data, dx) => {
                                         group.fields.forEach((field, fx) => {
                                             let newField = { ...field };
-                                            newField.code = `${field.code}_${data.code}`;
+                                            newField.uuid = `${field.uuid}_${data.uuid}`;
                                             newField.name = `${field.name} (${data.name})`;
-                                            section.fields = section.fields.filter(item => item.code !== field.code); // remove the group field from the section fields array
+                                            section.fields = section.fields.filter(item => item.uuid !== field.uuid); // remove the group field from the section fields array
                                             section.fields.push(newField);
                                         });
                                     });
@@ -206,21 +206,21 @@ export function Form({ formId, form }) {
                                             // invalidFields.delete(fieldCode);
                                             setInvalidFields(invalidFields.filter(item => item.field !== fieldCode));
                                             // BUGGY: complete the section if all fields are valid
-                                            // if (invalidFields.length === 0 && currentSection < form.sections.length - 1 && !Array.from(invalidFields, fs=>fs.section).includes(section.code)) {
-                                            //     setCompleteSections([...completeSections, section.code]);
+                                            // if (invalidFields.length === 0 && currentSection < form.sections.length - 1 && !Array.from(invalidFields, fs=>fs.section).includes(section.uuid)) {
+                                            //     setCompleteSections([...completeSections, section.uuid]);
                                             // } else {
-                                            //     setCompleteSections(completeSections.filter(item => item !== section.code));
+                                            //     setCompleteSections(completeSections.filter(item => item !== section.uuid));
                                             // }
                                         } else {
                                             // invalidFields.add(fieldCode);
                                             if (!Array.from(invalidFields, f => f.field).includes(fieldCode)) setInvalidFields([...invalidFields, {
                                                 field: fieldCode,
-                                                section: section.code,
+                                                section: section.uuid,
                                                 reason: "invalid_input"
                                             }]);
                                             // BUGGY: incomplete the section if any field is invalid
-                                            // if (completeSections.includes(section.code) && !Array.from(invalidFields, f => f.section).includes(section.code)) {
-                                            //     setCompleteSections(completeSections.filter(item => item !== section.code));
+                                            // if (completeSections.includes(section.uuid) && !Array.from(invalidFields, f => f.section).includes(section.uuid)) {
+                                            //     setCompleteSections(completeSections.filter(item => item !== section.uuid));
                                             // }
                                         }
                                     }
@@ -232,14 +232,14 @@ export function Form({ formId, form }) {
                                     // });
                                     // console.log("requiredFields", requiredFields);
                                     // requiredFields.forEach(field_ => {
-                                    //     let formResponse_ = formData.formResponses.find(fr => fr.sectionCode === section.code);
-                                    //     let fieldResponse_ = formResponse_.fields.find(fr => fr.fieldCode === field_.code);
+                                    //     let formResponse_ = formData.formResponses.find(fr => fr.sectionCode === section.uuid);
+                                    //     let fieldResponse_ = formResponse_.fields.find(fr => fr.fieldCode === field_.uuid);
                                     //     console.log("fieldResponse_", fieldResponse_);
                                     //     if (!fieldResponse_ || !fieldResponse_.value) {
-                                    //         if (!Array.from(invalidFields, f => f.field).includes(field_.code)) {
+                                    //         if (!Array.from(invalidFields, f => f.field).includes(field_.uuid)) {
                                     //             setInvalidFields([...invalidFields, {
-                                    //                 field: field_.code,
-                                    //                 section: section.code,
+                                    //                 field: field_.uuid,
+                                    //                 section: section.uuid,
                                     //                 reason: 'required'
                                     //             }]);
                                     //         }
@@ -250,10 +250,10 @@ export function Form({ formId, form }) {
 
 
                                 return (
-                                    <div className="alert alert-secondary px-3 d-flex flex-column align-items-start justify-content-start" style={{ height: '100%', /*maxHeight: '600px',*/ overflow: 'scroll', backgroundColor: '#eef5f9' }} key={section.code + "_" + currentSection}>
+                                    <div className="alert alert-secondary px-3 d-flex flex-column align-items-start justify-content-start" style={{ height: '100%', /*maxHeight: '600px',*/ overflow: 'scroll', backgroundColor: '#eef5f9' }} key={section.uuid + "_" + currentSection}>
                                         <div className="d-flex flex-column align-items-center justify-content-between w-100">
                                             <h4 className="w-100" style={{ marginBottom: 2, color: 'steelblue', textTransform: 'uppercase', textAlign: 'center' }}>{section.name} </h4>
-                                            {Array.from(invalidFields, f => f.section).length > 0 && Array.from(invalidFields, f => f.section).includes(form.sections[currentSection].code) && <div className="alert alert-danger py-1 px-2 mb-1 text-center" role="alert">
+                                            {Array.from(invalidFields, f => f.section).length > 0 && Array.from(invalidFields, f => f.section).includes(form.sections[currentSection].uuid) && <div className="alert alert-danger py-1 px-2 mb-1 text-center" role="alert">
                                                 <small className="mb-0">Please check that all fields have been filled correctly.</small>
                                             </div>}
                                         </div>
@@ -277,13 +277,13 @@ export function Form({ formId, form }) {
                                                 // TODO: set values from global state to the field if available
                                             }
 
-                                            return (<React.Fragment key={fld.code + "___" + fx}>
-                                                <div className="form-group col-md-6" key={field.code} style={{ marginBottom: '6px', borderBottom: '1px solid #efefef', padding: '8px', display: 'flex', alignItems: 'center', width: '100%' }}>
+                                            return (<React.Fragment key={fld.uuid + "___" + fx}>
+                                                <div className="form-group col-md-6" key={field.uuid} style={{ marginBottom: '6px', borderBottom: '1px solid #efefef', padding: '8px', display: 'flex', alignItems: 'center', width: '100%' }}>
 
                                                     {/* ------ */}
 
                                                     {input_fields.includes(field.type) ? <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: 10, width: '80%' }}>
-                                                        <label className={"form-label mb-1 fw-bold mx-1 " + (Array.from(invalidFields, f => f.field).includes(field.code) ? "text-danger" : "")}>{field.name} {
+                                                        <label className={"form-label mb-1 fw-bold mx-1 " + (Array.from(invalidFields, f => f.field).includes(field.uuid) ? "text-danger" : "")}>{field.name} {
                                                             field.required == true || field.required == 'true' ? <span className="text-danger" title="This field is required">*</span> : null
                                                         }</label>
                                                         {field.readOnly ? <small style={{ fontSize: '12px', color: 'gray' }}>(Readonly)</small> : null}
@@ -308,7 +308,7 @@ export function Form({ formId, form }) {
 
                             }) : <div className="alert alert-warning">No sections found</div>}
                     </section>
-                    <div id={"form-footer_" + form.code} style={{ textAlign: 'center', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end' }}>
+                    <div id={"form-footer_" + form.uuid} style={{ textAlign: 'center', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end' }}>
                         <div style={{ textAlign: 'center', width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' }}>
                             <button className="btn btn-secondary btn-dark"
                                 onClick={(ev) => {
@@ -318,7 +318,7 @@ export function Form({ formId, form }) {
                                         setCurrentSection(currentSection - 1);
                                     }
                                 }} type={currentSection !== 0 ? "submit" : ""} disabled={currentSection === 0
-                                    || Array.from(invalidFields, f => f.section).includes(form.sections[currentSection].code)
+                                    || Array.from(invalidFields, f => f.section).includes(form.sections[currentSection].uuid)
                                 }> &larr; Previous</button>
                             <label>
                                 {currentSection + 1} of {form.sections.length}
@@ -331,7 +331,7 @@ export function Form({ formId, form }) {
                                         setCurrentSection(currentSection + 1);
                                     }
                                 }} type={currentSection !== form.sections.length - 1 ? "submit" : ""} disabled={(currentSection === form.sections.length - 1
-                                    || Array.from(invalidFields, f => f.section).includes(form.sections[currentSection].code)
+                                    || Array.from(invalidFields, f => f.section).includes(form.sections[currentSection].uuid)
                                 )}> Next
                                 {/* ({form.sections[currentSection].name}) */}
                                 {" "} &rarr;</button>
@@ -347,8 +347,8 @@ export function Form({ formId, form }) {
                                     // zustand.setState({ form: { ...zustand.state.form, ...form } });
                                 }}
                                     disabled={(currentSection === form.sections.length - 1
-                                        || Array.from(invalidFields, f => f.section).includes(form.sections[currentSection].code)
-                                        // || (completeSections.length !== form.sections.length && !completeSections.includes(form.sections[currentSection].code))
+                                        || Array.from(invalidFields, f => f.section).includes(form.sections[currentSection].uuid)
+                                        // || (completeSections.length !== form.sections.length && !completeSections.includes(form.sections[currentSection].uuid))
                                     )}>Submit</button>
                                 <button className="btn" type="reset" onClick={(ev) => {
                                     ev.preventDefault();

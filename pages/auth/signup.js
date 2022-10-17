@@ -11,7 +11,6 @@ function Signup() {
     let [lname, setLName] = useState('');
     let [phone, setPhone] = useState('');
     let [email, setEmail] = useState('');
-    let [userRoles, setuserRoles] = useState('');
     let [password, setPassword] = useState('');
     let [password2, setPassword2] = useState('');
     let [loading, setLoading] = useState(true);
@@ -24,16 +23,14 @@ function Signup() {
             password2: [],
             phone: [],
             name: [],
-            userRoles: []
         }
     });
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
     const handleSubmit = async (e) => {
         setStatus({
             type: 'info',
             message: 'Loading...'
         })
-            
+
         let full_name = name + ' ' + lname;
         //validate name, email, phone, password
         if (full_name === '' || full_name.length < 3) {
@@ -59,15 +56,6 @@ function Signup() {
                 errors: {
                     ...status.errors,
                     email: ['Email is required']
-                }
-            })
-            return
-        }
-        if (userRoles === '') {
-            setStatus({
-                errors: {
-                    ...status.errors,
-                    userRoles: ['User Role is required']
                 }
             })
             return
@@ -110,23 +98,14 @@ function Signup() {
             })
             return
         }
-        doSignup(full_name.trim(), email.trim(), phone.trim(), password, userRoles, router).then((data) => {
-            console.log('doSignup data::', data)
+        doSignup(full_name.trim(), email.trim(), phone.trim(), password, router).then((data) => {
+            // console.log('doSignup data::', data)
             if (data.status === true) {
                 // login success
-                {isLoggedIn ? (
-                    setStatus({
-                        type: 'success',
-                        message: "Account created successfully."
-                    })
-
-                ):(
-                    setStatus({
-                        type: 'success',
-                        message: "Account created successfully. Please login to continue"
-                    })
-                )}
-                
+                setStatus({
+                    type: 'success',
+                    message: "Account created successfully. Please login to continue"
+                })
                 // clear form
                 setName('')
                 setLName('')
@@ -134,7 +113,6 @@ function Signup() {
                 setEmail('')
                 setPassword('')
                 setPassword2('')
-                setuserRoles('')
             } else {
                 // login failed
                 setStatus({
@@ -146,20 +124,16 @@ function Signup() {
             console.log('doSignup error::', error)
         })
     }
+
+
     useEffect(() => {
-        doGetSession().then(session=>{            
-            if (session) {
-                setIsLoggedIn(true)
-            }
-        })
         let mounted = true;
         if (mounted) {
             setLoading(false);
         }
-        
         return () => mounted = false;
     }, [])
- 
+
 
     if (loading) return <div style={{ width: '100%', height: '85vh', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <h5 className='mb-0'>Loading...</h5>
@@ -182,16 +156,7 @@ function Signup() {
                     }} action="" method="post" className="col-sm-7 border border-grey p-5">
                         <h3 className='text-center'>Create an account</h3>
                         <hr />
-                        {isLoggedIn ? (
-                               <div className="row justify-content-md-center">
-                               <div className="col-md-12 justify-content-md-center">
-                                   {status && status.message && ["warning", "success", "danger"].includes(status.type) && <div className={`alert py-2 mb-3 alert-${status.type} fade show`} role="alert" style={{ margin: '0px -15px' }}>
-                                       <p className='text-center mb-0' style={{ textTransform: 'capitalize' }}>{status.message}</p>
-                                   </div>}
-                               </div>
-                           </div>
-                        ):(
-                            <div className="row justify-content-md-center">
+                        <div className="row justify-content-md-center">
                             <div className="col-md-12 justify-content-md-center">
                                 {status && status.message && ["warning", "success", "danger"].includes(status.type) && <div className={`alert py-2 mb-3 alert-${status.type} fade show`} role="alert" style={{ margin: '0px -15px' }}>
                                     <p className='text-center mb-0' style={{ textTransform: 'capitalize' }}>{status.message}</p>
@@ -201,8 +166,6 @@ function Signup() {
                                 </div>}
                             </div>
                         </div>
-                        )}
-                        
                         <div className='row'>
                             <div className='col-md-6 mt-3'>
                                 <div className="form-group">
@@ -306,53 +269,12 @@ function Signup() {
                                     {status && status.errors && status.errors.password2 && status.errors.password2.length > 0 && <div className="alert alert-danger border-white my-1 p-0 px-2"><small>{status.errors.password2.join('; ')}</small></div>}
                                 </div>
                             </div>
-                            {isLoggedIn ? (
-                            <div>
-                            <div className='col-md-6 mt-3'>
-                                    <div className="form-group">
-                                        <label htmlFor='userRoles' className='form-label mb-2'>userRoles:</label>
-                                        <select
-                                        onChange={(e) => {
-                                            setuserRoles(e.target.value);
-                                            setStatus({
-                                                ...status,
-                                                errors: {
-                                                    ...status.errors,
-                                                    userRoles: []
-                                                }
-                                            })
-                                        }} 
-                                        name="userRoles" 
-                                        className={"form-control " + (status?.errors?.userRoles && status?.errors?.userRoles.length > 0 ? "is-invalid" : "")}  
-                                        value={userRoles} 
-                                        >
-                                        <option value="">
-                                        Select user Role
-                                        </option>
-                                        <option value="1">
-                                            Admin
-                                        </option>
-                                        <option value="=2">
-                                            Participant
-                                        </option>
-                                        </select>
-                                        {status && status.errors && status.errors.userRoles && status.errors.userRoles.length > 0 && <div className="alert alert-danger border-white my-1 p-0 px-2"><small>{status.errors.userRoles.join('; ')}</small></div>}
-                                    </div>
-                                </div>
-                            </div>
-                        ):(
-                            <div></div>
-                        )}
-                        
                         </div>
                         <button className="btn btn-primary w-100 mt-4" >Create an account</button>
                         <div className='py-3 text-muted'>
                             <small>By creating an account, you agree to the terms and conditions and the privacy policy of this application website.</small>
-                        </div>  
-                        {isLoggedIn ? (
-                            <div></div>
-                        ):(
-                            <div className='d-flex mt-3 flex-row justify-content-around align-items-center text-center'>
+                        </div>
+                        <div className='d-flex mt-3 flex-row justify-content-around align-items-center text-center'>
                             <span>Have an account?{' '}<Link href="/auth/login">
                                 <a>Log in</a>
                             </Link></span>
@@ -360,8 +282,6 @@ function Signup() {
                                 <a>Forgot Password</a>
                             </Link>
                         </div>
-                        )}  
-                       
                     </form>
                 </div>
             </div>
@@ -369,4 +289,4 @@ function Signup() {
     )
 }
 
-export default Signup 
+export default Signup
