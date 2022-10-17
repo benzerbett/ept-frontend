@@ -13,7 +13,7 @@ function User() {
 
     const getProgConf = (id, isItInit) => {
         console.log('getProgConf', id, isItInit)
-        getActiveSession(id)
+        if (id) getActiveSession(id)
             .then((activeP) => {
                 console.log('activeP', activeP)
                 if (activeP) {

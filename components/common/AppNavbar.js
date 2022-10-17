@@ -13,9 +13,10 @@ function AppNavbar() {
 
     const getProgConf = (id, isItInit) => {
         console.log('getProgConf', id, isItInit)
-        getActiveSession(id)
+        if(id) getActiveSession(id)
             .then((activeP) => {
                 if (activeP) {
+                    console.log('activeP', activeP)
                     setActiveProgram(activeP)
                     if (!isItInit) {
                         router.reload()
@@ -64,7 +65,7 @@ function AppNavbar() {
         <nav className="navbar navbar-expand-lg navbar-dark fixed-top bg-purple">
             <div className="container">
                 {/* <Link href={homeUrl}>
-                    <a className="navbar-brand">Oncology EPT</a>
+                    <a className="navbar-brand">{activeProgram}</a>
                 </Link> */}
                 {allPrograms ? (allPrograms.length > 0 ? <div className="btn-group fw-bold">
                     <button className="btn bg-purple-light btn-sm text-white btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">

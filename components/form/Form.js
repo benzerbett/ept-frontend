@@ -166,7 +166,7 @@ export function Form({ formId, form }) {
                                         groups.push(
                                             {
                                                 index: i,
-                                                code: section.fields[i].uuid,
+                                                uuid: section.fields[i].uuid,
                                                 data: section.fields[i].options || []
                                             }
                                         );

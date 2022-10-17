@@ -199,7 +199,7 @@ export const doGetSession = async () => {
                 let session = {
                     // user: { ...data.user, type: (data.user.role == 1 ? "admin" : "participant") },
                     user: { ...data.user, type: data.role?.name, permissions: Array.from(data?.permissions, p=>p?.name), programs: Array.from(data?.programs, p=>{
-                        return {code: p?.uuid, name: p?.name}
+                        return {uuid: p?.uuid, name: p?.name}
                     }) },
                     isLoggedIn: true,
                     token: window.sessionStorage.getItem('token'),
@@ -219,6 +219,7 @@ export const doGetSession = async () => {
 }
 
 export const getActiveSession = (sessionID) => {
+    console.log("getActiveSession", sessionID)
     if (sessionID) {
         return fetch(`/api/configurations/${sessionID}?details`, {
             method: 'GET',
@@ -236,13 +237,13 @@ export const getActiveSession = (sessionID) => {
                     return data?.uuid
                 }
             })
-    } else {
+    } /*else {
         return null;
-    }
+    }*/
 }
 
 export const getProgramConfig = (id) => {
-    return fetch(`/api/configurations/${id}`, {
+    return fetch(`/api/configurations/${id}?details`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

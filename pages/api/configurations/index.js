@@ -8,7 +8,7 @@ export default async function handler(req, res) {
     const api_url = process.env.API_URL;
     if (process.env.USE_MOCK_API === 'true') {
         const configs = require('../configuration.json')
-        res.status(200).json(Array.from(configs, (c) => { return { code: c.uuid, name: c.name } }))
+        res.status(200).json(Array.from(configs, (c) => { return { id: c.uuid, name: c.name } }))
         return
     }
     return fetch(api_url + '/auth/user', {
@@ -22,7 +22,7 @@ export default async function handler(req, res) {
             if (data.programs && data.programs.length > 0) {
                 res.status(200).json(Array.from(data.programs, program => {
                     return {
-                        code: program.uuid,
+                        id: program.uuid,
                         name: program.name,
                     }
                 }));

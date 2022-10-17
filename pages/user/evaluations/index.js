@@ -28,7 +28,7 @@ function Evaluations() {
                                 if (f_m) {
                                     svys = Array.from([...svys, f_m], fm => {
                                         return {
-                                            code: fm.uuid,
+                                            uuid: fm.uuid,
                                             name: fm.name,
                                             description: fm.description,
                                             metadata: fm.metadata,

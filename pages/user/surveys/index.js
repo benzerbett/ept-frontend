@@ -28,7 +28,7 @@ function Surveys() {
                                     svys = Array.from([...svys, f_m], fm => {
                                         return {
                                             round_name: round.name,
-                                            code: fm.uuid,
+                                            uuid: fm.uuid,
                                             name: fm.name,
                                             description: fm.description,
                                             metadata: fm.metadata,

@@ -3,7 +3,7 @@ const debug = false
 const configuration_o = require("../pages/api/configuration.json");
 let user = {
     "id": "5af8560f-d2d8-5b15-b2eb-9b0bef30b26b",
-    "code": "5db79734-7759-5233-85c7-fe1fb05ade8d",
+    "uuid": "5db79734-7759-5233-85c7-fe1fb05ade8d",
     "name": "John Doe",
     "email": "jdoeson@googlemail.net",
     "created": "2020-08-22T11:00:00.000Z",
