@@ -77,7 +77,7 @@ function Evaluations() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {evaluations.map((evaluation) => (
+                            {evaluations && evaluations.length > 0 ? evaluations.map((evaluation) => (
 
                                     <tr key={evaluation.uuid}>
                                         <td>
@@ -103,7 +103,7 @@ function Evaluations() {
                                             {/* <a className='btn btn-dark btn-sm py-0 text-nowrap' href={`/user/evaluations/${evaluation.id}`}> Preview form</a> */}
                                         </td>
                                     </tr>
-                                ))}
+                                )) : <tr><td colSpan={7} className="text-center">No evaluations found</td></tr>}
                             </tbody>
                         </table>
                     </div>

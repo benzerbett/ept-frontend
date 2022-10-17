@@ -109,7 +109,7 @@ function Surveys() {
                                         </td>
 
                                     </tr>
-                                )) : <tr><td colSpan="6" className="text-center">No surveys found</td></tr>}
+                                )) : <tr><td colSpan={8} className="text-center">No surveys found</td></tr>}
                             </tbody>
                         </table>
                     </div>

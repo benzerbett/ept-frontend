@@ -22,7 +22,7 @@ export default async function handler(req, res) {
             if (data.programs && data.programs.length > 0) {
                 res.status(200).json(Array.from(data.programs, program => {
                     return {
-                        id: program.uuid,
+                        uuid: program.uuid,
                         name: program.name,
                     }
                 }));
