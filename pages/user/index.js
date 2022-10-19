@@ -12,10 +12,8 @@ function User() {
     const router = useRouter()
 
     const getProgConf = (id, isItInit) => {
-        console.log('getProgConf', id, isItInit)
         if (id) getActiveSession(id)
             .then((activeP) => {
-                console.log('activeP', activeP)
                 if (activeP) {
                     setActiveProgram(activeP)
                     if (!isItInit) {

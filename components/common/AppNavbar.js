@@ -12,11 +12,9 @@ function AppNavbar() {
     const router = useRouter()
 
     const getProgConf = (id, isItInit) => {
-        console.log('getProgConf', id, isItInit)
         if(id) getActiveSession(id)
             .then((activeP) => {
                 if (activeP) {
-                    console.log('activeP', activeP)
                     setActiveProgram(activeP)
                     if (!isItInit) {
                         router.reload()

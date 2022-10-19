@@ -166,7 +166,7 @@ export function Form({ formId, form }) {
                                         groups.push(
                                             {
                                                 index: i,
-                                                uuid: section.fields[i].uuid,
+                                                code: section.fields[i].code,
                                                 data: section.fields[i].options || []
                                             }
                                         );
@@ -175,7 +175,11 @@ export function Form({ formId, form }) {
                                 // get the closest 'groupend' object and get the index
                                 for (let i = 0; i < groups.length; i++) {
                                     for (let j = groups[i].index + 1; j < section.fields.length; j++) {
-                                        if (section.fields[j].type === 'groupend') {
+                                        if (
+                                            section.fields[j].type === 'groupend'
+                                            // match the code
+                                            && section.fields[j].code == groups[i].code
+                                        ) {
                                             groups[i].endIndex = j;
                                             break;
                                         }
