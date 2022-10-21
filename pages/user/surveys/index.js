@@ -22,7 +22,9 @@ function Surveys() {
                         let svys = []
                         data.rounds.map(round => {
                             if (round?.active && round.useChecklist) {
-                                let f_m = data.forms.find(f => f.uuid == round.checklistForm)
+                                // TODO: update to match new form structure i.e. (round.forms.find(f => ['checklist','survey'].includes(f.type))) ))
+                                // TODO: handle pre/post surveys. For post surveys, we need to check if the user has completed the evaluation
+                                let f_m = data.forms.find(f => f.uuid == round.checklistForm) 
                                 if (f_m) {
                                     // svys.push(f_m)
                                     svys = Array.from([...svys, f_m], fm => {

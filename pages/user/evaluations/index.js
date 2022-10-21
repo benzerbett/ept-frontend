@@ -23,8 +23,9 @@ function Evaluations() {
                         let svys = []
                         data.rounds.map(round => {
                             if (round.active) {
-                                console.log('round', round)
-                                let f_m = data.forms.find(f => f.uuid == round.form)
+                                // TODO: update to match new form structure i.e. (round.forms.find(f => ['evaluation'].includes(f.type))) ))
+                                // TODO: for mandatory_pre_survey, we need to check if the user has completed the survey & if the survey has been reviewed/approved
+                                let f_m = data.forms.find(f => f.uuid == round.form) 
                                 if (f_m) {
                                     svys = Array.from([...svys, f_m], fm => {
                                         return {
