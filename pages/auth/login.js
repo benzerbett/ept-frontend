@@ -4,7 +4,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { doGetSession, doLogin } from '../../utilities';
 import { useRouter } from 'next/router';
-const API_URL = "http://localhost:8000/test_laravel/api/";
+
 export default function Login() {
     const router = useRouter()
     let [email, setEmail] = useState('');
@@ -78,6 +78,12 @@ export default function Login() {
                         e.stopPropagation()
                         handleSubmit(e)
                     }} action="" method="post" className="col-sm-5 border border-gray p-4 rounded">
+                        <div className="row justify-content-md-center text-center">
+                            <h3>
+                                Log in
+                            </h3>
+                            <hr/>
+                        </div>
                         <div className="form-group mb-4">
                             <label className='form-label' htmlFor="email">Email</label>
                             <input onInput={(e) => setEmail(e.target.value)} type="text" id="email" value={email} className="form-control" placeholder='email' />

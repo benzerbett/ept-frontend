@@ -19,21 +19,22 @@ function PublicNavbar() {
     React.useEffect(() => {
         let mtd = true
         if (mtd) {
-            doGetSession().then(session => {
-                if (session) {
-                    setUser(session.user)
-                    setIsLoggedIn(true)
-                    if (session.user.type === 'admin') {
-                        router.push('/admin', undefined, { unstable_skipClientCache: true })
-                    } else if (session.user.type === 'user') {
-                        router.push('/user', undefined, { unstable_skipClientCache: true })
-                    }
-                } else {
-                    if (router.pathname !== '/auth/login' && router.pathname !== '/auth/signup') {
-                        router.push('/auth/login', undefined, { unstable_skipClientCache: true })
-                    }
-                }
-            })
+            // TODO: move all these session stuff to a context or to _app.js
+            // doGetSession().then(session => {
+            //     if (session) {
+            //         setUser(session.user)
+            //         setIsLoggedIn(true)
+            //         if (session.user.type === 'admin') {
+            //             router.push('/admin', undefined, { unstable_skipClientCache: true })
+            //         } else if (session.user.type === 'user') {
+            //             router.push('/user', undefined, { unstable_skipClientCache: true })
+            //         }
+            //     } else {
+            //         if (!router.pathname.includes('/auth')) {
+            //             router.push('/auth/login', undefined, { unstable_skipClientCache: true })
+            //         }
+            //     }
+            // })
         }
         return () => {
             mtd = false

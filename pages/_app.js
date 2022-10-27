@@ -45,9 +45,13 @@ function MyApp({ Component, pageProps }) {
                     pageProps.session = session
                 } else {
                     // Layout = PublicTheme
-                    if (typeof window != 'undefined' && window.location.pathname !== '/auth/login' && window.location.pathname !== '/auth/signup') {
+                    if (typeof window != 'undefined' && !window.location.pathname.includes('/auth')) {
                         window.location.href = '/auth/login'
                     }
+                    setIsLoggedIn(false)
+                    setUser(null)
+                    setSession(null)
+                    pageProps.session = null
                 }
             }).then(() => {
                 // Layout = isLoggedIn ? ((user && user?.type == "admin") ? AdminTheme : AppTheme) : PublicTheme

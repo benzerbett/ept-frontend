@@ -62,6 +62,52 @@ export const doLogin = async (email, password, rtr) => {
         })
     }
 }
+export const sendPasswordResetLink = async (email, rtr) => {
+    if (typeof window !== 'undefined') {
+        return fetch(api_url + '/auth/forgot-password', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email })
+        }).then(res => res.json()).then(data => {
+            if (debug) console.log('/auth/forgot-password data::', data)
+            if (data.status === false) {
+                if (debug) console.log('/auth/forgot-password error::', data)
+                return data
+            } else {
+                // rtr.push('/login', undefined, { unstable_skipClientCache: true })
+                return data
+            }
+        }).catch(err => {
+            if (debug) console.error('/auth/forgot-password error::', err)
+            return err
+        })
+    }
+}
+export const doPasswordReset = async (email, password, password_confirmation, token, rtr) => {
+    if (typeof window !== 'undefined') {
+        return fetch(api_url + '/auth/reset-password', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password, password_confirmation, token })
+        }).then(res => res.json()).then(data => {
+            if (debug) console.log('/auth/reset-password data::', data)
+            if (data.status === false) {
+                if (debug) console.log('/auth/reset-password error::', data)
+                return data
+            } else {
+                // rtr.push('/login', undefined, { unstable_skipClientCache: true })
+                return data
+            }
+        }).catch(err => {
+            if (debug) console.error('/auth/reset-password error::', err)
+            return err
+        })
+    }
+}
 export const doSignup = async (name, email, phone, password,role,rtr) => {
     if (typeof window !== 'undefined') {
         // clear session storage
@@ -184,6 +230,12 @@ export const loadConfig = (json, session) => {
 // get user
 export const doGetSession = async () => {
     if (typeof window !== 'undefined') {
+        // TODO: first check if the user is logged in i.e. check the session storage / cookie - DONE
+        let isLoggedIn = window.sessionStorage.getItem('isLoggedIn');
+        if (!isLoggedIn || isLoggedIn == 'false') {
+            if (debug) console.log("User is not logged in");
+            return null;
+        }
         return fetch(api_url+'/auth/user', {
             method: 'GET',
             headers: {
