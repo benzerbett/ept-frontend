@@ -2,19 +2,19 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React from 'react'
 
-function ViewScheme() {
+function Reports() {
   const router = useRouter()
-  const {scheme} = router.query
+  const {prog} = router.query 
   return (
     <>
       <Head>
-        <title>EPT | View Scheme</title>
+        <title>EPT | Reports</title>
         <meta name="description" content="EPT" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className='container'>ViewScheme {scheme}</div>
+      <div className='container'>Reports Program:{prog}</div>
     </>
   )
 }
 
-export default ViewScheme
+export default Reports

@@ -17,7 +17,7 @@ function AdminSidebar({ router }) {
                             </ul>
                         </div>
                     </li>
-                    <li className="mb-1">
+                    {/* <li className="mb-1">
                         <button className="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#menu_forms" aria-expanded="true">
                             Forms/Surveys
                         </button>
@@ -31,15 +31,15 @@ function AdminSidebar({ router }) {
                                 </li>
                             </ul>
                         </div>
-                    </li>
+                    </li> */}
                     <li className="mb-1">
-                        <button className="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#menu_pt_schemes" aria-expanded="false">
-                            Schemes
+                        <button className="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#menu_pt_programs" aria-expanded="false">
+                            Programs
                         </button>
-                        <div className="collapse" id="menu_pt_schemes">
+                        <div className="collapse" id="menu_pt_programs">
                             <ul className="btn-toggle-nav list-unstyledz fw-normal pb-1 small">
-                                <li> <Link href="/admin/schemes"><a className={"dropdown-item " + (router.pathname == '/admin/schemes' ? ' active' : '')} aria-current="page">All schemes</a></Link> </li>
-                                <li> <Link href="/admin/schemes/new"><a className={"dropdown-item " + (router.pathname == '/admin/schemes/new' ? ' active' : '')} aria-current="page">Add new scheme</a></Link> </li>
+                                <li> <Link href="/admin/programs"><a className={"dropdown-item " + (router.pathname == '/admin/programs' ? ' active' : '')} aria-current="page">All programs</a></Link> </li>
+                                <li> <Link href="/admin/programs/new"><a className={"dropdown-item " + (router.pathname == '/admin/programs/new' ? ' active' : '')} aria-current="page">Add new program</a></Link> </li>
                             </ul>
                         </div>
                     </li>

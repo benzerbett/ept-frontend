@@ -2,19 +2,19 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React from 'react'
 
-function SchemeForm() {
+function EditReport() {
   const router = useRouter()
-  const {scheme} = router.query
+  const {prog, report} = router.query
   return (
     <>
       <Head>
-        <title>EPT | Edit Scheme</title>
+        <title>EPT | Edit Report</title>
         <meta name="description" content="EPT" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className='container'>EditScheme {scheme}</div>
+      <div className='container'>EditReport Program:{prog}, Report:{report}</div>
     </>
   )
 }
 
-export default SchemeForm
+export default EditReport

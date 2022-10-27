@@ -1,17 +1,17 @@
 import Head from 'next/head'
 import React from 'react'
 
-function Schemes() {
+function NewProgram() {
   return (
     <>
       <Head>
-        <title>EPT | Schemes</title>
+        <title>EPT | New Program</title>
         <meta name="description" content="EPT" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className='container'>Schemes</div>
+      <div className='container'>NewProg</div>
     </>
   )
 }
 
-export default Schemes
+export default NewProgram
