@@ -3,9 +3,14 @@ import React from 'react'
 
 function AdminSidebar({ router }) {
     return (
-        <nav id="sidebarMenu" className="col-md-3 col-lg-3 col-xl-2 d-md-block bg-light sidebar collapse" >
-            <div className="position-sticky pt-3">
+        <nav id="sidebarMenu" className="col-xs-12 col-md-3 col-lg-3 col-xl-2 d-md-block bg-light sidebar collapse" style={{ top: '1rem' }}>
+            <div className="position-sticky pt-0">
                 <ul className="list-unstyled ps-0">
+                    <li className="mb-1 d-md-none d-flex align-items-start justify-content-end w-100 p-0">
+                        <button className="navbar-toggler d-md-none collapsed text-right fs-3 p-0" style={{ marginRight: '2.1em' }} type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+                            &times;
+                        </button>
+                    </li>
                     <li className="mb-1">
                         <button className="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#menu_users" aria-expanded="true">
                             Users
@@ -17,21 +22,6 @@ function AdminSidebar({ router }) {
                             </ul>
                         </div>
                     </li>
-                    {/* <li className="mb-1">
-                        <button className="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#menu_forms" aria-expanded="true">
-                            Forms/Surveys
-                        </button>
-                        <div className="collapse show" id="menu_forms">
-                            <ul className="btn-toggle-nav list-unstyledz fw-normal pb-1 small">
-                                <li>
-                                    <Link href="/admin/forms"><a className={"dropdown-item " + (router.pathname == '/admin/forms' ? ' active' : '')} aria-current="page">Forms</a></Link>
-                                </li>
-                                <li>
-                                    <Link href="/admin/forms/new"><a className={"dropdown-item " + (router.pathname == '/admin/forms/new' ? ' active' : '')} aria-current="page">Add new form</a></Link>
-                                </li>
-                            </ul>
-                        </div>
-                    </li> */}
                     <li className="mb-1">
                         <button className="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#menu_pt_programs" aria-expanded="false">
                             Programs

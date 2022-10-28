@@ -53,6 +53,7 @@ body {
   
   .sidebar .nav-link.active {
     color: #2470dc;
+    border-bottom: 1px solid #2470dc;
   }
   
   .sidebar .nav-link:hover .feather,
@@ -175,3 +176,7 @@ body {
   .fw-semibold { font-weight: 600; }
   .lh-tight { line-height: 1.25; }
   
+  .nav-secondary .nav-link.active {
+    color: #384454;
+    border-bottom: 2px solid #2470dc;
+  }

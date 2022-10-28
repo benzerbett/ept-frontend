@@ -9,7 +9,7 @@ function AdminNavbar() {
     const [isLoggedIn, setIsLoggedIn] = React.useState(false)
     const [homeUrl, setHomeUrl] = React.useState('/')
     React.useEffect(() => {
-        doGetSession().then(session=>{
+        doGetSession().then(session => {
             if (session) {
                 setUser(session.user)
                 setIsLoggedIn(true)
@@ -19,18 +19,31 @@ function AdminNavbar() {
     }, [])
     return (
         <header className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-            <a className="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="/">EPT Administrator</a>
-            <button className="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className='w-100'>
-                {/* <input className="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search" /> */}
-            </div>
-            <div className="navbar-nav">
-                <div className="nav-item text-nowrap">
-                    <button className="nav-link text-dark px-3" onClick={ev=>{doLogout(router)}}>Sign out</button>
+            <div className='w-100 d-flex align-items-center justify-content-between'>
+                <a className="navbar-brand col-md-3 col-lg-2 me-0 py-2 px-3 bg-transparent border-none" href="/">EPT Administrator</a>
+                <div className="px-3">
+                    <ul className="navbar-nav me-auto mb-lg-0">
+                        <li className="nav-item dropdown">
+                            <a className="nav-link dropdown-toggle" href="#" id="adminAccDropDwn" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {/* <span>{user ? user.name : 'Account'}</span> */}
+                                <span>
+                                    <i className='fa fa-user'></i>
+                                </span>
+                            </a>
+                            <ul className="dropdown-menu" aria-labelledby="adminAccDropDwn" style={{position: 'absolute', right: 2, left: 'auto', marginTop: 5}}>
+                                <li><Link href={'/admin'}><a className="dropdown-item">Home</a></Link></li>
+                                <li><Link href="/admin/account"><a className="dropdown-item">Profile</a></Link></li>
+                                <li><Link href="/admin/settings"><a className="dropdown-item">Settings</a></Link></li>
+                                <li><hr className="dropdown-divider" /></li>
+                                <li><button className="dropdown-item" onClick={ev => { doLogout(router) }}>Sign out</button></li>
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
             </div>
+            <button className="navbar-toggler position-absolute d-md-none collapsed" style={{marginRight: '2.1em'}} type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <span className="navbar-toggler-icon"></span>
+            </button>
         </header>
     )
 }
