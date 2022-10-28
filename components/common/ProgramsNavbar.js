@@ -7,10 +7,10 @@ function ProgramsNavbar({router}) {
         <>
             {/* subnav */}
             <div className="row mb-2">
-                <div className="col-md-2">
+                <div className="col-md-3">
                     <h3>Program [{prog}]</h3>
                 </div>
-                <div className="col-md-10 position-relative overflow-x-hidden d-flex p-0">
+                <div className="col-md-9 position-relative overflow-x-hidden d-flex p-0">
                     <div className="row w-md-100 position-absolute start-0 end-0">
                         <div className="position-relative w-100 overflow-x-hidden d-flex p-0">
                             <nav className="d-flex flex-nowrap nav nav-secondary rounded text-nowrap w-100 px-2" aria-label="Secondary navigation" style={{ overflowX: 'auto', backgroundColor: '#eeeeef' }}>

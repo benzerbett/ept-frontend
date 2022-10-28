@@ -26,12 +26,11 @@ function AdminNavbar() {
                         <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" href="#" id="adminAccDropDwn" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 {/* <span>{user ? user.name : 'Account'}</span> */}
-                                <span>
-                                    <i className='fa fa-user'></i>
+                                <span className='ml-1'>
+                                    <i className='fa fa-user'></i> <span className='d-none d-md-inline-flex'>Account</span>
                                 </span>
                             </a>
                             <ul className="dropdown-menu" aria-labelledby="adminAccDropDwn" style={{position: 'absolute', right: 2, left: 'auto', marginTop: 5}}>
-                                <li><Link href={'/admin'}><a className="dropdown-item">Home</a></Link></li>
                                 <li><Link href="/admin/account"><a className="dropdown-item">Profile</a></Link></li>
                                 <li><Link href="/admin/settings"><a className="dropdown-item">Settings</a></Link></li>
                                 <li><hr className="dropdown-divider" /></li>
