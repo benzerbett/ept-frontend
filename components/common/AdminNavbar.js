@@ -18,9 +18,9 @@ function AdminNavbar() {
         })
     }, [])
     return (
-        <header className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+        <header className="navbar navbar-dark sticky-top bg-darkz bg-purple flex-md-nowrap p-0 shadow">
             <div className='w-100 d-flex align-items-center justify-content-between'>
-                <a className="navbar-brand col-md-3 col-lg-2 me-0 py-2 px-3 bg-transparent border-none" href="/">EPT Administrator</a>
+                <a className="navbar-brand col-md-3 col-lg-2 me-0 py-3 px-3 bg-transparent border-none" href="/">EPT Administrator</a>
                 <div className="px-3">
                     <ul className="navbar-nav me-auto mb-lg-0">
                         <li className="nav-item dropdown">
@@ -31,7 +31,7 @@ function AdminNavbar() {
                                 </span>
                             </a>
                             <ul className="dropdown-menu" aria-labelledby="adminAccDropDwn" style={{position: 'absolute', right: 2, left: 'auto', marginTop: 5}}>
-                                <li><Link href="/admin/account"><a className="dropdown-item">Profile</a></Link></li>
+                                <li><Link href="/admin/settings/account"><a className="dropdown-item">Profile</a></Link></li>
                                 <li><Link href="/admin/settings"><a className="dropdown-item">Settings</a></Link></li>
                                 <li><hr className="dropdown-divider" /></li>
                                 <li><button className="dropdown-item" onClick={ev => { doLogout(router) }}>Sign out</button></li>
@@ -40,7 +40,7 @@ function AdminNavbar() {
                     </ul>
                 </div>
             </div>
-            <button className="navbar-toggler position-absolute d-md-none collapsed" style={{marginRight: '2.1em'}} type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <button className="navbar-toggler position-absolute d-md-none collapsed" style={{marginRight: '2.1em', marginTop: '0.5rem'}} type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
             </button>
         </header>

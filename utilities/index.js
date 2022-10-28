@@ -330,3 +330,23 @@ export const submitFormData = (data) => {
         body: JSON.stringify(data),
     }).then((res) => res.json())
 }
+
+export const getResource = (resource, options) => {
+    // check if resource is a url
+    let url
+    if (resource.startsWith("http://") || resource.startsWith("https://")) {
+        url = resource
+    }else {
+        url = api_url + '/' + resource
+    }
+    let request_options = {};
+    request_options.method = options?.method || 'GET';
+    request_options.headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + window.sessionStorage.getItem('token'),
+        ...options?.headers || {}
+    };
+    if (options?.body) request_options.body = JSON.stringify(options?.body);
+    return fetch(url, request_options)
+        .then((res) => res.json())
+}
