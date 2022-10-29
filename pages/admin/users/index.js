@@ -19,11 +19,11 @@ function Users() {
                 setSession(session)
                 // fetch users
                 getResource('users').then((data) => {
-                    if(data.status === true){
+                    if (data.status === true) {
                         setUsers(data?.data)
                         setStatus('')   // ('success')
                         setMessage('')  // ('Users fetched successfully')
-                    }else{
+                    } else {
                         setStatus('error')
                         setMessage(data.message)
                     }
@@ -101,7 +101,9 @@ function Users() {
 
                                     <tr key={user.uuid}>
                                         <td>
-                                            {user?.name}
+                                            <Link href={`/admin/users/${user.uuid}`}>
+                                                <a className="">{user.name}</a>
+                                            </Link>
                                         </td>
                                         <td>
                                             {user?.role?.name || 'N/A'}
@@ -114,26 +116,26 @@ function Users() {
                                             <Link href={{ pathname: `/user/${user.uuid}/edit` }} >
                                                 <a className='btn btn-primary btn-sm py-0 text-nowrap'>Edit User</a>
                                             </Link>
-                                                <a className='btn text-danger btn-link btn-sm py-0 text-nowrap' onClick={ev=>{
-                                                    ev.preventDefault();
-                                                    ev.stopPropagation();
-                                                    if(confirm('Are you sure you want to delete this user?')){
-                                                        getResource(`users/delete/${user.uuid}`, {uuid: user.uuid}).then((data) => {
-                                                            if(data.status === true){
-                                                                setStatus('success')
-                                                                setMessage('User deleted successfully')
-                                                                setUsers(users.filter(u=>u.uuid !== user.uuid))
-                                                            }else{
-                                                                setStatus('error')
-                                                                setMessage(data.message)
-                                                            }
-                                                        }).catch((err) => {
-                                                            console.log(err)
+                                            <a className='btn text-danger btn-link btn-sm py-0 text-nowrap' onClick={ev => {
+                                                ev.preventDefault();
+                                                ev.stopPropagation();
+                                                if (confirm('Are you sure you want to delete this user?')) {
+                                                    getResource(`users/delete/${user.uuid}`, { uuid: user.uuid }).then((data) => {
+                                                        if (data.status === true) {
+                                                            setStatus('success')
+                                                            setMessage('User deleted successfully')
+                                                            setUsers(users.filter(u => u.uuid !== user.uuid))
+                                                        } else {
                                                             setStatus('error')
-                                                            setMessage('Error deleting user: ' + err.message || err)
-                                                        } )
-                                                    }
-                                                }}>Deactivate User</a>
+                                                            setMessage(data.message)
+                                                        }
+                                                    }).catch((err) => {
+                                                        console.log(err)
+                                                        setStatus('error')
+                                                        setMessage('Error deleting user: ' + err.message || err)
+                                                    })
+                                                }
+                                            }}>Deactivate User</a>
                                         </td>
                                     </tr>
                                 )) : <tr><td colSpan={7} className="text-center">No users found</td></tr>}

@@ -5,64 +5,64 @@ import React, { useEffect, useState } from 'react'
 import { doGetSession, getResource } from '../../../utilities'
 
 function Roles() {
-  const [roles, setRoles] = useState([])
-  const [session, setSession] = useState([])
-  const [status, setStatus] = useState('')
-  const [message, setMessage] = useState('')
-  const [loading, setLoading] = useState(true);
-  const router = useRouter()
+    const [roles, setRoles] = useState([])
+    const [session, setSession] = useState([])
+    const [status, setStatus] = useState('')
+    const [message, setMessage] = useState('')
+    const [loading, setLoading] = useState(true);
+    const router = useRouter()
 
 
-  useEffect(() => {
-      doGetSession().then((session) => {
-          if (session) {
-              setSession(session)
-              // fetch roles
-              getResource('roles').then((data) => {
-                  if(data.status === true){
-                      setRoles(data?.data)
-                      setStatus('')   // ('success')
-                      setMessage('')  // ('Roles fetched successfully')
-                  }else{
-                      setStatus('error')
-                      setMessage(data.message)
-                  }
-                  setLoading(false)
-              }).catch((err) => {
-                  console.log(err)
-                  setStatus('error')
-                  setMessage('Error fetching roles: ' + err.message || err)
-                  setLoading(false)
-              })
-          } else {
-              router.push('/auth/login', undefined, { unstable_skipClientCache: true })
-          }
-      })
-  }, [])
+    useEffect(() => {
+        doGetSession().then((session) => {
+            if (session) {
+                setSession(session)
+                // fetch roles
+                getResource('roles').then((data) => {
+                    if (data.status === true) {
+                        setRoles(data?.data)
+                        setStatus('')   // ('success')
+                        setMessage('')  // ('Roles fetched successfully')
+                    } else {
+                        setStatus('error')
+                        setMessage(data.message)
+                    }
+                    setLoading(false)
+                }).catch((err) => {
+                    console.log(err)
+                    setStatus('error')
+                    setMessage('Error fetching roles: ' + err.message || err)
+                    setLoading(false)
+                })
+            } else {
+                router.push('/auth/login', undefined, { unstable_skipClientCache: true })
+            }
+        })
+    }, [])
 
 
-  if (loading) return <main style={{ width: '100%', height: '85vh', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <h5 className='mb-0'>Loading...</h5>
-  </main>
+    if (loading) return <main style={{ width: '100%', height: '85vh', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <h5 className='mb-0'>Loading...</h5>
+    </main>
 
-  // return (
-  //     <main>
-  //         <Head>
-  //             <title>Roles</title>
-  //         </Head>
-  //         <div className="container">
-  //             <pre>{JSON.stringify(roles, null, 2)}</pre>
-  //         </div>
-  //     </main>
-  // )
-  return (
-    <>
-      <Head>
-        <title>EPT | Roles</title>
-        <meta name="description" content="EPT" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <div className="container">
+    // return (
+    //     <main>
+    //         <Head>
+    //             <title>Roles</title>
+    //         </Head>
+    //         <div className="container">
+    //             <pre>{JSON.stringify(roles, null, 2)}</pre>
+    //         </div>
+    //     </main>
+    // )
+    return (
+        <>
+            <Head>
+                <title>EPT | Roles</title>
+                <meta name="description" content="EPT" />
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
+            <div className="container">
                 <div className="d-flex flex-column flex-md-row justify-content-between align-items-center">
                     <h1 className="font-bold my-4">Roles</h1>
                     <div className="d-flex align-items-center my-2">
@@ -89,7 +89,9 @@ function Roles() {
 
                                     <tr key={role.uuid}>
                                         <td>
-                                            {role?.name}
+                                            <Link href={`/admin/roles/${role.uuid}`}>
+                                                <a className="">{role.name}</a>
+                                            </Link>
                                         </td>
                                         <td>
                                             {role?.description}
@@ -102,26 +104,26 @@ function Roles() {
                                             <Link href={{ pathname: `/role/${role.uuid}/edit` }} >
                                                 <a className='btn btn-primary btn-sm py-0 text-nowrap'>Edit Role</a>
                                             </Link>
-                                                <a className='btn text-danger btn-link btn-sm py-0 text-nowrap' onClick={ev=>{
-                                                    ev.preventDefault();
-                                                    ev.stopPropagation();
-                                                    if(confirm('Are you sure you want to delete this role?')){
-                                                        getResource(`roles/delete/${role.uuid}`, {uuid: role.uuid}).then((data) => {
-                                                            if(data.status === true){
-                                                                setStatus('success')
-                                                                setMessage('Role deleted successfully')
-                                                                setRoles(roles.filter(u=>u.uuid !== role.uuid))
-                                                            }else{
-                                                                setStatus('error')
-                                                                setMessage(data.message)
-                                                            }
-                                                        }).catch((err) => {
-                                                            console.log(err)
+                                            <a className='btn text-danger btn-link btn-sm py-0 text-nowrap' onClick={ev => {
+                                                ev.preventDefault();
+                                                ev.stopPropagation();
+                                                if (confirm('Are you sure you want to delete this role?')) {
+                                                    getResource(`roles/delete/${role.uuid}`, { uuid: role.uuid }).then((data) => {
+                                                        if (data.status === true) {
+                                                            setStatus('success')
+                                                            setMessage('Role deleted successfully')
+                                                            setRoles(roles.filter(u => u.uuid !== role.uuid))
+                                                        } else {
                                                             setStatus('error')
-                                                            setMessage('Error deleting role: ' + err.message || err)
-                                                        } )
-                                                    }
-                                                }}>Delete Role</a>
+                                                            setMessage(data.message)
+                                                        }
+                                                    }).catch((err) => {
+                                                        console.log(err)
+                                                        setStatus('error')
+                                                        setMessage('Error deleting role: ' + err.message || err)
+                                                    })
+                                                }
+                                            }}>Delete Role</a>
                                         </td>
                                     </tr>
                                 )) : <tr><td colSpan={7} className="text-center">No roles found</td></tr>}
@@ -130,8 +132,8 @@ function Roles() {
                     </div>
                 </div>
             </div>
-    </>
-  )
+        </>
+    )
 }
 
 export default Roles
