@@ -17,51 +17,47 @@ function Permissions() {
     const [pageLinks, setPageLinks] = useState([])
 
     const [search, setSearch] = useState('')
+    const [isSearch, setIsSearch] = useState(false)
 
     const [status, setStatus] = useState('')
     const [message, setMessage] = useState('')
     const [loading, setLoading] = useState(true);
     const router = useRouter()
 
+    const fetchPermissions = (resource) => {
+        getResource(resource).then((data) => {
+            if (data.status === true) {
+                setPermissions(data?.data?.data)
+                // set page
+                setPage(data?.data?.current_page)
+                setTotalPages(data?.data?.last_page)
+                setPerPage(data?.data?.per_page)
+                setTotalRecords(data?.data?.total)
+                setLastPage(data?.data?.last_page)
+                setPageLinks(data?.data?.links)
+                setCount(data?.data?.data.length || 0)
+
+                setStatus('')   // ('success')
+                setMessage('')  // ('Permissions fetched successfully')
+            } else {
+                setStatus('error')
+                setMessage(data.message)
+            }
+            setLoading(false)
+        }).catch((err) => {
+            console.log(err)
+            setStatus('error')
+            setMessage('Error fetching permissions: ' + err.message || err)
+            setLoading(false)
+        })
+    }
 
     useEffect(() => {
         let mounted = true
         if (mounted) {
-            doGetSession().then((session) => {
-                if (session) {
-                    setSession(session)
-                    // fetch permissions
-                    let rsc = 'permissions?page='+page
-                    getResource(rsc).then((data) => {
-                        if (data.status === true) {
-                            setPermissions(data?.data?.data)
-
-                            // set page
-                            setPage(data?.data?.current_page)
-                            setTotalPages(data?.data?.last_page)
-                            setPerPage(data?.data?.per_page)
-                            setTotalRecords(data?.data?.total)
-                            setLastPage(data?.data?.last_page)
-                            setPageLinks(data?.data?.links)
-                            setCount(data?.data?.data.length || 0)
-
-                            setStatus('')   // ('success')
-                            setMessage('')  // ('Permissions fetched successfully')
-                        } else {
-                            setStatus('error')
-                            setMessage(data.message)
-                        }
-                        setLoading(false)
-                    }).catch((err) => {
-                        console.log(err)
-                        setStatus('error')
-                        setMessage('Error fetching permissions: ' + err.message || err)
-                        setLoading(false)
-                    })
-                } else {
-                    router.push('/auth/login', undefined, { unstable_skipClientCache: true })
-                }
-            })
+            let rsc = 'permissions?page=' + page
+            fetchPermissions(rsc)
+            setIsSearch(false)
         }
         return () => mounted = false
     }, [page])
@@ -91,11 +87,22 @@ function Permissions() {
             </Head>
             <div className="container">
                 <div className="d-flex flex-column flex-md-row justify-content-between align-items-center">
-                    <h1 className="font-bold my-4">Permissions</h1>
+                    <h2 className="font-bold my-4">Permissions</h2>
+                        {isSearch && <span>
+                            Showing search results for '<strong>{search}</strong>' <button className="btn btn-link text-danger" onClick={() => { setSearch(''); setIsSearch(false); fetchPermissions('permissions?page=' + page) }}>Clear</button>
+                        </span>}
                     <div className="d-flex align-items-center my-2">
                         <form className="input-group">
-                            <input type="text" className="form-control" placeholder="Search" />
-                            <button className="btn btn-primary bg-dark">Search</button>
+                            <input type="text" className="form-control" value={search} placeholder="Search" onChange={ev => {
+                                setSearch(ev.target.value)
+                            }} />
+                            <button className="btn btn-primary bg-dark" onClick={ev => {
+                                ev.preventDefault();
+                                if (search && search !== '' && search !== null && search.length > 2) {
+                                    fetchPermissions('permissions?search=' + search)
+                                    setIsSearch(true)
+                                }
+                            }}>Search</button>
                         </form>
                     </div>
                 </div>
@@ -161,33 +168,23 @@ function Permissions() {
                             </div>
                         </div>
                     </div>
+                    {/* pagination */}
                     <div className='col-md-12'>
-                        {/* pagination */}
                         <div className="d-flex justify-content-between align-items-center">
                             <nav aria-label='Pagination'>
                                 <ul className="pagination">
-                                    {/* <li className="page-item">
-                                        <button disabled={true} className="page-link" onClick={ev => {
-                                            ev.preventDefault(); ev.stopPropagation(); setPage(page - 1)
-                                        }}>Previous</button>
-                                    </li> */}
                                     {pageLinks.map((link, index) => (
                                         <li key={index} className={`page-item ${link.active ? 'active' : ''}`}>
-                                            {true && <button className="page-link" onClick={ev => {
+                                            <button className="page-link" onClick={ev => {
                                                 ev.preventDefault(); ev.stopPropagation();
                                                 if (link.url) {
                                                     setPage(link.url.split('page=')[1])
                                                 }
                                             }}>
-                                                {link.label.split(' ').filter(w=>!w.includes('&')).join(' ')}
-                                            </button>}
+                                                {link.label.split(' ').filter(w => !w.includes('&')).join(' ')}
+                                            </button>
                                         </li>
                                     ))}
-                                    {/* {<li className="page-item">
-                                        <button className="page-link" disabled={
-                                            page == lastPage
-                                        } onClick={ev => { ev.preventDefault(); ev.stopPropagation(); setPage(page + 1) }}>Next</button>
-                                    </li>} */}
                                 </ul>
                             </nav>
                             <div className='d-flex align-items-end flex-column justify-content-center'>
