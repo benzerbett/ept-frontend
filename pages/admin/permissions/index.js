@@ -6,7 +6,6 @@ import { doGetSession, getResource } from '../../../utilities'
 
 function Permissions() {
     const [permissions, setPermissions] = useState([])
-    const [session, setSession] = useState([])
 
     const [page, setPage] = useState(1)
     const [lastPage, setLastPage] = useState(1)
