@@ -4,7 +4,7 @@ import React from 'react'
 
 import { doGetSession } from '../utilities';
 
-function index() {
+function Index() {
     const router = useRouter()
     const [session, setSession] = React.useState(null)
     
@@ -44,4 +44,4 @@ function index() {
     )
 }
 
-export default index
+export default Index

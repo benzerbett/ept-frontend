@@ -74,7 +74,9 @@ function MyApp({ Component, pageProps }) {
                 <h5 className='mb-0'>Loading...</h5>
             </div> : (isLoggedIn && isLoggedIn === true ? (
                 userType === 'admin' ? <AdminTheme><Component {...pageProps} /></AdminTheme> : <AppTheme><Component {...pageProps} /></AppTheme>
-            ) : (<PublicTheme children={<Component {...pageProps} />} />))}
+            ) : (<PublicTheme>
+                <Component {...pageProps} />
+            </PublicTheme>))}
         </>
     )
 }

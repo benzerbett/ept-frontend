@@ -128,10 +128,11 @@ export default function Field({ field }) {
                             key: field.uuid+"_"+field.name,
                             id: field.uuid,
                             name: field.name,
-                            style: { margin: '0px', minWidth: '50%' },
-                            children: ((field.type === 'h1' || field.type === 'h2' || field.type === 'h3' || field.type === 'h4' || field.type === 'h5' || field.type === 'h6') ? field.description || field.name || field.label :
+                            style: { margin: '0px', minWidth: '50%' }
+                        },
+                        ((field.type === 'h1' || field.type === 'h2' || field.type === 'h3' || field.type === 'h4' || field.type === 'h5' || field.type === 'h6') ? field.description || field.name || field.label :
                                 "This question could not be loaded")
-                        })}
+                        )}
         {isValid == false ? (<span className="text-danger">{vlmessage}</span>) : null}
     </React.Fragment>);
 }

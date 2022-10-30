@@ -20,7 +20,7 @@ function AdminNavbar() {
     return (
         <header className="navbar navbar-dark sticky-top bg-darkz bg-purple flex-md-nowrap p-0 shadow">
             <div className='w-100 d-flex align-items-center justify-content-between'>
-                <a className="navbar-brand col-md-3 col-lg-2 me-0 py-3 px-3 bg-transparent border-none" href="/">EPT Administrator</a>
+                <Link href="/"><a className="navbar-brand col-md-3 col-lg-2 me-0 py-3 px-3 bg-transparent border-none" >EPT Administrator</a></Link>
                 <div className="px-3">
                     <ul className="navbar-nav me-auto mb-lg-0">
                         <li className="nav-item dropdown">

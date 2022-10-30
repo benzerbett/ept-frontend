@@ -16,7 +16,6 @@ function Permissions() {
     useEffect(() => {
         let mounted = true
         if (mounted) {
-            console.log('mounted', new Date().toISOString())
             doGetSession().then((session) => {
                 if (session) {
                     setSession(session)
