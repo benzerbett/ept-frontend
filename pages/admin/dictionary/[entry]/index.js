@@ -21,7 +21,7 @@ function ViewDictionary() {
                 setDictionaryData(data?.data)
 
                 setStatus('')   // ('success')
-                setMessage('')  // ('Dictionarys fetched successfully')
+                setMessage('')  // ('Dictionary fetched successfully')
             } else {
                 setStatus('error')
                 setMessage(data.message)
@@ -30,7 +30,7 @@ function ViewDictionary() {
         }).catch((err) => {
             console.log(err)
             setStatus('error')
-            setMessage('Error fetching dictionarys: ' + err.message || err)
+            setMessage('Error fetching dictionary: ' + err.message || err)
             setLoading(false)
         })
     }
@@ -53,7 +53,7 @@ function ViewDictionary() {
     return (
         <>
             <Head>
-                <title>EPT | Dictionarys</title>
+                <title>EPT | Dictionary</title>
                 <meta name="description" content="EPT" />
                 <link rel="icon" href="/favicon.ico" />
                 <meta charSet="utf-8" />
@@ -64,7 +64,7 @@ function ViewDictionary() {
                         <button className="btn btn-link" onClick={() => router.back()}>&larr; Back</button>
                         <h2 className="font-bold my-4">Dictionary details</h2>
                     </div>
-                    <Link href="/admin/dictionarys/[dictionary]/edit" as={`/admin/dictionarys/${entry}/edit`}>
+                    <Link href="/admin/dictionary/[dictionary]/edit" as={`/admin/dictionary/${entry}/edit`}>
                         <a className="btn btn-primary btn-sm">
                             <i className='fa fa-pencil'></i> &nbsp;
                             Edit Dictionary

@@ -53,7 +53,7 @@ function ViewPermission() {
     return (
         <>
             <Head>
-                <title>EPT | Permissions</title>
+                <title>EPT | Edit Permission</title>
                 <meta name="description" content="EPT" />
                 <link rel="icon" href="/favicon.ico" />
                 <meta charSet="utf-8" />
