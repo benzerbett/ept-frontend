@@ -152,7 +152,7 @@ function Rounds() {
                                                     year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true
                                                 }) || "-"}</td>
                                                 <td className="d-flex flex-column flex-lg-row gap-2 justify-content-center">
-                                                    <Link href={{ pathname: `/round/${round.uuid}/edit` }} >
+                                                    <Link href={{ pathname: `/admin/programs/${prog}/rounds/${round.uuid}/edit` }} >
                                                         <a className='btn btn-primary btn-sm py-0 text-nowrap'>Edit</a>
                                                     </Link>
                                                     <a className='btn text-danger btn-link btn-sm py-0 text-nowrap' onClick={ev => {
