@@ -5,9 +5,9 @@ import React, { useEffect, useState } from 'react'
 import ProgramsNavbar from '../../../../../../components/common/ProgramsNavbar'
 import { getResource } from '../../../../../../utilities'
 
-function ViewScheme() {
+function ViewSchema() {
     const router = useRouter()
-    const { prog, scheme } = router.query
+    const { prog, schema } = router.query
     const [programData, setProgramData] = useState(null)
 
     const [status, setStatus] = useState('')
@@ -51,7 +51,7 @@ function ViewScheme() {
     return (
         <>
             <Head>
-                <title>EPT | View Scheme</title>
+                <title>EPT | View Schema</title>
                 <meta name="description" content="EPT" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
@@ -61,10 +61,10 @@ function ViewScheme() {
                         <div className="d-flex w-100 flex-row flex-wrap justify-content-center justify-content-lg-between align-items-center gap-lg-4">
                             <button className="btn btn-link btn-sm" onClick={() => router.back()}>&larr; Back</button>
                             <ProgramsNavbar program={programData} router={router} />
-                            <Link href="/admin/programs/[program]/schemes/[scheme]/edit" as={`/admin/programs/${prog}/schemes/${scheme}/edit`}>
+                            <Link href="/admin/programs/[program]/schemas/[schema]/edit" as={`/admin/programs/${prog}/schemas/${schema}/edit`}>
                                 <a className="btn btn-primary btn-sm">
                                     <i className='fa fa-pencil'></i> &nbsp;
-                                    Edit Scheme
+                                    Edit Schema
                                 </a>
                             </Link>
                         </div>
@@ -73,7 +73,7 @@ function ViewScheme() {
                 <hr />
                 <div className="row">
                     <div className='col-lg-12'>
-                        ViewScheme Program:{prog}, Scheme:{scheme}
+                        ViewSchema Program:{prog}, Schema:{schema}
                     </div>
                 </div>
             </div>
@@ -81,4 +81,4 @@ function ViewScheme() {
     )
 }
 
-export default ViewScheme
+export default ViewSchema

@@ -1,11 +1,11 @@
 import Head from 'next/head'
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import ProgramsNavbar from '../../../../../components/common/ProgramsNavbar';
-import { getResource } from '../../../../../utilities';
+import ProgramsNavbar from '../../../../../components/common/ProgramsNavbar'
+import { getResource } from '../../../../../utilities'
 
-function Schemes() {
+function NewSchema() {
     const router = useRouter()
     const { prog } = router.query
     const [programData, setProgramData] = useState(null)
@@ -47,10 +47,11 @@ function Schemes() {
     if (loading) return <main style={{ width: '100%', height: '85vh', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <h5 className='mb-0'>Loading...</h5>
     </main>
+
     return (
         <>
             <Head>
-                <title>EPT | Schemes</title>
+                <title>EPT | New Schema</title>
                 <meta name="description" content="EPT" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
@@ -60,11 +61,8 @@ function Schemes() {
                         <div className="d-flex w-100 flex-row flex-wrap justify-content-center justify-content-lg-between align-items-center gap-lg-4">
                             <button className="btn btn-link btn-sm" onClick={() => router.back()}>&larr; Back</button>
                             <ProgramsNavbar program={programData} router={router} />
-                            <Link href="/admin/programs/[program]/schemes/new" as={`/admin/programs/${prog}/schemes/new`}>
-                                <a className="btn btn-primary btn-sm">
-                                    <i className='fa fa-plus'></i> &nbsp;
-                                    New Scheme
-                                </a>
+                            <Link href={`/admin/programs/${prog}/schemas`}>
+                                <a className="btn btn-default text-muted">&nbsp; Cancel &nbsp;</a>
                             </Link>
                         </div>
                     </div>
@@ -72,7 +70,7 @@ function Schemes() {
                 <hr />
                 <div className="row">
                     <div className='col-lg-12'>
-                        Schemes Program:{prog}
+                        NewSchema Program:{prog}
                     </div>
                 </div>
             </div>
@@ -80,4 +78,4 @@ function Schemes() {
     )
 }
 
-export default Schemes
+export default NewSchema
