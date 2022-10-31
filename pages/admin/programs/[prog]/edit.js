@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
+import ProgramsNavbar from '../../../../components/common/ProgramsNavbar';
 import { getResource } from '../../../../utilities';
 
 function EditProgram() {
@@ -84,7 +85,7 @@ function EditProgram() {
                     <div className="d-flex flex-column flex-lg-row justify-content-between align-items-center">
                         <div className="d-flex w-100 flex-row flex-wrap justify-content-center justify-content-lg-between align-items-center gap-lg-4">
                             <button className="btn btn-link btn-sm" onClick={() => router.back()}>&larr; Back</button>
-                            <h3>New program</h3>
+                            <ProgramsNavbar program={programData} router={router} />
                             <Link href="/admin/programs" as={`/admin/programs`}>
                                 <a className="btn btn-default text-muted btn-sm"> Cancel </a>
                             </Link>
