@@ -159,7 +159,7 @@ function Rounds() {
                                                         ev.preventDefault();
                                                         ev.stopPropagation();
                                                         if (confirm('Are you sure you want to delete this round?')) {
-                                                            getResource(`round/delete/${round.uuid}`, { uuid: round.uuid }).then((data) => {
+                                                            getResource(`round/delete/${round.uuid}`, { method: 'DELETE' }).then((data) => {
                                                                 if (data.status === true) {
                                                                     setStatus('success')
                                                                     setMessage('Round deleted successfully')

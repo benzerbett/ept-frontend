@@ -159,7 +159,7 @@ function Reports() {
                                                         ev.preventDefault();
                                                         ev.stopPropagation();
                                                         if (confirm('Are you sure you want to delete this report?')) {
-                                                            getResource(`report/delete/${report.uuid}`, { uuid: report.uuid }).then((data) => {
+                                                            getResource(`report/delete/${report.uuid}`, { method: 'DELETE' }).then((data) => {
                                                                 if (data.status === true) {
                                                                     setStatus('success')
                                                                     setMessage('Report deleted successfully')

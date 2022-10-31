@@ -159,7 +159,7 @@ function Schemas() {
                                                         ev.preventDefault();
                                                         ev.stopPropagation();
                                                         if (confirm('Are you sure you want to delete this schema?')) {
-                                                            getResource(`schema/delete/${schema.uuid}`, { uuid: schema.uuid }).then((data) => {
+                                                            getResource(`schema/delete/${schema.uuid}`, { method: 'DELETE' }).then((data) => {
                                                                 if (data.status === true) {
                                                                     setStatus('success')
                                                                     setMessage('Schema deleted successfully')

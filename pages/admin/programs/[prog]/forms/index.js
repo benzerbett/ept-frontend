@@ -159,7 +159,7 @@ function Forms() {
                                                         ev.preventDefault();
                                                         ev.stopPropagation();
                                                         if (confirm('Are you sure you want to delete this form?')) {
-                                                            getResource(`form/delete/${form.uuid}`, { uuid: form.uuid }).then((data) => {
+                                                            getResource(`form/delete/${form.uuid}`, { method: 'DELETE' }).then((data) => {
                                                                 if (data.status === true) {
                                                                     setStatus('success')
                                                                     setMessage('Form deleted successfully')

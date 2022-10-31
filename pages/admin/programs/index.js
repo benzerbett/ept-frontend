@@ -144,14 +144,14 @@ function Programs() {
                                                     year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true
                                                 }) || "-"}</td>
                                                 <td className="d-flex flex-column flex-lg-row gap-2 justify-content-center">
-                                                    <Link href={{ pathname: `/program/${program.uuid}/edit` }} >
+                                                    <Link href={{ pathname: `/admin/programs/${program.uuid}/edit` }} >
                                                         <a className='btn btn-primary btn-sm py-0 text-nowrap'>Edit</a>
                                                     </Link>
                                                     <a className='btn text-danger btn-link btn-sm py-0 text-nowrap' onClick={ev => {
                                                         ev.preventDefault();
                                                         ev.stopPropagation();
                                                         if (confirm('Are you sure you want to delete this program?')) {
-                                                            getResource(`program/delete/${program.uuid}`, { uuid: program.uuid }).then((data) => {
+                                                            getResource(`program/delete/${program.uuid}`, { method: 'DELETE' }).then((data) => {
                                                                 if (data.status === true) {
                                                                     setStatus('success')
                                                                     setMessage('Program deleted successfully')
