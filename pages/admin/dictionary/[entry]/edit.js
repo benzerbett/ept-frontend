@@ -65,8 +65,8 @@ function EditDictionary() {
                 <meta charSet="utf-8" />
             </Head>
             <div className="container">
-                <div className="d-flex flex-column flex-md-row justify-content-between align-items-center">
-                    <div className="d-flex flex-column flex-md-row justify-content-between align-items-center gap-4">
+                <div className="d-flex flex-column flex-lg-row justify-content-between align-items-center">
+                    <div className="d-flex flex-column flex-lg-row justify-content-between align-items-center gap-4">
                         <button className="btn btn-link" onClick={() => router.back()}>&larr; Back</button>
                         <h2 className="font-bold my-4">Edit Dictionary Entry</h2>
                     </div>
@@ -83,37 +83,37 @@ function EditDictionary() {
                         - value (list_of_items) (textarea) (key:value pairs)
                         - value (string) (text)
                     */}
-                    <form className="col-md-12">
+                    <form className="col-lg-12">
                         <div className="mb-3 form-group row">
-                            <div className='col-md-3'>
+                            <div className='col-lg-3'>
                                 <label htmlFor="name" className="form-label">Name</label>
                             </div>
-                            <div className='col-md-6'>
+                            <div className='col-lg-6'>
                                 <input type="text" className="form-control" id="name" placeholder="Name" value={dictionaryData?.name} />
                             </div>
                         </div>
                         <div className="mb-3 form-group row">
-                            <div className='col-md-3'>
+                            <div className='col-lg-3'>
                                 <label htmlFor="description" className="form-label">Description</label>
                             </div>
-                            <div className='col-md-6'>
+                            <div className='col-lg-6'>
                                 <textarea className="form-control" id="description" placeholder="Description" rows="3" value={dictionaryData?.description} />
                             </div>
                         </div>
                         <div className="mb-3 form-group row">
-                            <div className='col-md-3'>
+                            <div className='col-lg-3'>
                                 <label htmlFor="code" className="form-label">Code</label>
                             </div>
-                            <div className='col-md-6'>
+                            <div className='col-lg-6'>
 
                                 <input type="text" className="form-control" id="code" placeholder="Code" value={dictionaryData?.code} />
                             </div>
                         </div>
                         <div className="mb-3 form-group row">
-                            <div className='col-md-3'>
+                            <div className='col-lg-3'>
                                 <label htmlFor="program" className="form-label">Program</label>
                             </div>
-                            <div className='col-md-6'>
+                            <div className='col-lg-6'>
                                 <select className="form-select" id="program" aria-label="Program">
                                     <option value="" selected disabled>Select program</option>
                                     <option value="EPT">EPT</option>
@@ -125,19 +125,19 @@ function EditDictionary() {
                             </div>
                         </div>
                         <div className="mb-3 form-group row">
-                            <div className='col-md-3'>
+                            <div className='col-lg-3'>
                                 <label htmlFor="metadata" className="form-label">Metadata</label>
                             </div>
-                            <div className='col-md-6'>
+                            <div className='col-lg-6'>
 
                                 <textarea className="form-control" id="metadata" placeholder="Metadata" rows="3" value={dictionaryData?.metadata} />
                             </div>
                         </div>
                         <div className="mb-3 form-group row">
-                            <div className='col-md-3'>
+                            <div className='col-lg-3'>
                                 <label htmlFor="type" className="form-label">Type</label>
                             </div>
-                            <div className='col-md-6'>
+                            <div className='col-lg-6'>
                                 <select className="form-select" id="type" aria-label="Type" value={valueType} onChange={ev=>{
                                     setValueType(ev.target.value)
                                 }}>
@@ -148,10 +148,10 @@ function EditDictionary() {
                             </div>
                         </div>
                         <div className="mb-3 form-group row">
-                            <div className='col-md-3'>
+                            <div className='col-lg-3'>
                                 <label htmlFor="value" className="form-label">Value</label>
                             </div>
-                            <div className='col-md-6'>
+                            <div className='col-lg-6'>
                                 {valueType && valueType == 'list_of_items' ? <textarea className="form-control" id="value" placeholder="Value" rows="3" value={JSON.stringify(dictionaryData?.value)} /> : <input type="text" className="form-control" id="value" placeholder="Value" value={JSON.stringify(dictionaryData?.value)} />}
                             </div>
                         </div>

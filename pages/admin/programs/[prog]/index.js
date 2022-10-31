@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useState, useEffect } from 'react'
+import ProgramsNavbar from '../../../../components/common/ProgramsNavbar'
 import { getResource } from '../../../../utilities'
 
 function ViewProgram() {
@@ -21,7 +22,7 @@ function ViewProgram() {
                 setProgramData(data?.data)
 
                 setStatus('')   // ('success')
-                setMessage('')  // ('Programs fetched successfully')
+                setMessage('')  // 
             } else {
                 setStatus('error')
                 setMessage(data.message)
@@ -58,22 +59,24 @@ function ViewProgram() {
                 <link rel="icon" href="/favicon.ico" />
                 <meta charSet="utf-8" />
             </Head>
-            <div className="container">
-                <div className="d-flex flex-column flex-md-row justify-content-between align-items-center">
-                    <div className="d-flex flex-column flex-md-row justify-content-between align-items-center gap-4">
-                        <button className="btn btn-link" onClick={() => router.back()}>&larr; Back</button>
-                        <h2 className="font-bold my-4">Program details</h2>
-                    </div>
-                    <Link href="/admin/programs/[program]/edit" as={`/admin/programs/${prog}/edit`}>
-                        <a className="btn btn-primary btn-sm">
-                            <i className='fa fa-pencil'></i> &nbsp;
-                            Edit Program
-                        </a>
-                    </Link>
-                </div>
-                <hr/>
+            <div className="container p-0">
                 <div className="row">
-                    <div className="col-md-8">
+                    <div className="d-flex flex-column flex-lg-row justify-content-between align-items-center">
+                        <div className="d-flex w-100 flex-row flex-wrap justify-content-center justify-content-lg-between align-items-center gap-lg-4">
+                            <button className="btn btn-link btn-sm" onClick={() => router.back()}>&larr; Back</button>
+                            <ProgramsNavbar program={programData} router={router} />
+                            <Link href="/admin/programs/[program]/edit" as={`/admin/programs/${prog}/edit`}>
+                                <a className="btn btn-primary btn-sm">
+                                    <i className='fa fa-pencil'></i> &nbsp;
+                                    Edit Program
+                                </a>
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div className="row">
+                    <div className="col-lg-8">
                         <div className="d-flex w-100">
                             {programData && <table className='table table-borderless'>
                                 <tbody>

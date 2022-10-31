@@ -26,7 +26,7 @@ export default function AdminTheme({ children }) {
                         {/* ----<Main---- */}
                         <main className="col-md-9 ms-sm-auto col-lg-9 col-xl-10 p-md-3">
                             <div className='row'>
-                                <div className='col-md-12'>
+                                <div className='col-md-12 d-none d-md-block'>
                                     {/* breadcrumbs */}
                                     <nav aria-label="breadcrumb">
                                         <ol className="breadcrumb">
@@ -35,7 +35,7 @@ export default function AdminTheme({ children }) {
                                                 if (item !== '') {
                                                     return (
                                                         <li key={index} className="breadcrumb-item active"
-                                                        style={{ textTransform: 'capitalize', fontSize: '0.89em'}} aria-current="page">{item}</li>
+                                                        style={{ textTransform: 'capitalize', fontSize: '0.8em'}} aria-current="page">{item}</li>
                                                     )
                                                 }
                                             })}

@@ -10,7 +10,7 @@ function Admin() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <div className="container">
-                <div className="d-flex flex-column flex-md-row justify-content-between align-items-center">
+                <div className="d-flex flex-column flex-lg-row justify-content-between align-items-center">
                     <h1 className="font-bold my-4">Dashboard</h1>
                     <div className="d-flex align-items-center my-2">
                         <form className="input-group">
@@ -20,7 +20,7 @@ function Admin() {
                     </div>
                 </div>
                 <div className="row d-flex">
-                    <div className='col-md-4 col-sm-12'>
+                    <div className='col-lg-4 col-sm-12'>
                         <div className="card">
                             <div className="card-body">
                                 <h3 className="card-title">Users</h3>
@@ -45,7 +45,7 @@ function Admin() {
                             </div>
                         </div>
                     </div>
-                    <div className='col-md-4 col-sm-12'>
+                    <div className='col-lg-4 col-sm-12'>
                         <div className="card">
                             <div className="card-body">
                                 <h3 className="card-title">Programs</h3>
@@ -70,7 +70,7 @@ function Admin() {
                             </div>
                         </div>
                     </div>
-                    <div className='col-md-4 col-sm-12'>
+                    <div className='col-lg-4 col-sm-12'>
                         <div className="card">
                             <div className="card-body">
                                 <h3 className="card-title">Submissions</h3>
@@ -98,7 +98,7 @@ function Admin() {
                 </div>
                 <br />
                 <div className='row'>
-                    <div className='col-md-12 col-sm-12'>
+                    <div className='col-lg-12 col-sm-12'>
                         <div className="card">
                             <div className="card-body">
                                 <h3 className="card-title">Trends in user activity</h3>

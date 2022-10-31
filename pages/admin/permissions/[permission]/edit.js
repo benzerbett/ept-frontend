@@ -59,27 +59,27 @@ function ViewPermission() {
                 <meta charSet="utf-8" />
             </Head>
             <div className="container">
-                <div className="d-flex flex-column flex-md-row justify-content-between align-items-center">
-                    <div className="d-flex flex-column flex-md-row justify-content-between align-items-center gap-4">
+                <div className="d-flex flex-column flex-lg-row justify-content-between align-items-center">
+                    <div className="d-flex flex-column flex-lg-row justify-content-between align-items-center gap-4">
                         <button className="btn btn-link" onClick={() => router.back()}>&larr; Back</button>
                         <h2 className="font-bold my-4">Edit permission</h2>
                     </div>
                 </div>
                 <hr/>
                 <div className="row">
-                    {permissionData && <form className='col-md-12'>
+                    {permissionData && <form className='col-lg-12'>
                         {Object.keys(permissionData).filter(m => (m !== 'uuid' && !m.includes('_at'))).map((key, index) => {
                             return (
                                 <div className='form-group row mb-3 d-flex align-items-center'>
-                                    <label className="col-md-3 mb-0 form-label text-capitalize">{key.split('_').join(' ')}</label>
-                                    <div className='col-md-6'>
+                                    <label className="col-lg-3 mb-0 form-label text-capitalize">{key.split('_').join(' ')}</label>
+                                    <div className='col-lg-6'>
                                         <input className="form-control" value={permissionData[key]} name={key} readOnly type={'text'} />
                                     </div>
                                 </div>
                             )
                         })}
 
-                        <div className='col-md-12 d-flex align-items-center justify-content-center'>
+                        <div className='col-lg-12 d-flex align-items-center justify-content-center'>
                             {/* submit */}
                             <input type="submit" className="btn btn-primary" value="Save changes" />
                         </div>

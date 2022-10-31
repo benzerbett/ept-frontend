@@ -59,8 +59,8 @@ function ViewDictionary() {
                 <meta charSet="utf-8" />
             </Head>
             <div className="container">
-                <div className="d-flex flex-column flex-md-row justify-content-between align-items-center">
-                    <div className="d-flex flex-column flex-md-row justify-content-between align-items-center gap-4">
+                <div className="d-flex flex-column flex-lg-row justify-content-between align-items-center">
+                    <div className="d-flex flex-column flex-lg-row justify-content-between align-items-center gap-4">
                         <button className="btn btn-link" onClick={() => router.back()}>&larr; Back</button>
                         <h2 className="font-bold my-4">Dictionary details</h2>
                     </div>
@@ -73,7 +73,7 @@ function ViewDictionary() {
                 </div>
                 <hr/>
                 <div className="row">
-                    <div className="col-md-8">
+                    <div className="col-lg-8">
                         <div className="d-flex w-100">
                             {dictionaryData && <table className='table table-borderless'>
                                 <tbody>

@@ -40,7 +40,7 @@ function AccountSettings() {
                 </pre> */}
                 <hr/>
                 <div className="row">
-                    <div className='col-md-12'>
+                    <div className='col-lg-12'>
                         <div className='table-responsive'>
                             {user && <table className='table table-striped'>
                                 <thead>

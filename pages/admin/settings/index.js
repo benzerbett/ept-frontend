@@ -37,77 +37,77 @@ function AccountSettings() {
                 <h2>System Settings</h2>
                 <hr/>
                 <div className="row">
-                    <div className='col-md-12 my-3'>
+                    <div className='col-lg-12 my-3'>
                         <form>
-                            <div className="form-group row mb-4 mb-md-5">
-                                <div className='col-md-3 py-1'>
+                            <div className="form-group row mb-4 mb-lg-5">
+                                <div className='col-lg-3 py-1'>
                                     <label className='form-label' htmlFor="systemName">System Name</label>
                                     <small className='d-block text-muted lh-sm mb-1'>Job open plural led child careful interest glass mark political happy worry held .</small>
                                 </div>
-                                <div className='col-md-7'>
+                                <div className='col-lg-7'>
                                     <input type="text" className="form-control" id="systemName" placeholder="Enter system name" />
                                 </div>
                             </div>
-                            <div className="form-group row mb-4 mb-md-5">
-                                <div className='col-md-3 py-1'>
+                            <div className="form-group row mb-4 mb-lg-5">
+                                <div className='col-lg-3 py-1'>
                                     <label className='form-label' htmlFor="systemDescription">System Description</label>
                                     <small className='d-block text-muted lh-sm mb-1'>Anyway fat ready speech famous brass equator needle ruler hurt way moment .</small>
                                 </div>
-                                <div className='col-md-7'>
+                                <div className='col-lg-7'>
                                     <input type="text" className="form-control" id="systemDescription" placeholder="Enter system description" />
                                 </div>
                             </div>
-                            <div className="form-group row mb-4 mb-md-5">
-                                <div className='col-md-3 py-1'>
+                            <div className="form-group row mb-4 mb-lg-5">
+                                <div className='col-lg-3 py-1'>
                                     <label className='form-label' htmlFor="systemAddress">System Address</label>
                                     <small className='d-block text-muted lh-sm mb-1'>Mass dawn bar carefully safety which division fire word receive having spirit movement bre.</small>
                                 </div>
-                                <div className='col-md-7'>
+                                <div className='col-lg-7'>
                                     <input type="text" className="form-control" id="systemAddress" placeholder="Enter system address" />
                                 </div>
                             </div>
-                            <div className="form-group row mb-4 mb-md-5">
-                                <div className='col-md-3 py-1'>
+                            <div className="form-group row mb-4 mb-lg-5">
+                                <div className='col-lg-3 py-1'>
                                     <label className='form-label' htmlFor="systemEmail">System Email</label>
                                     <small className='d-block text-muted lh-sm mb-1'>Earth suggest heart former empty audience seems root bar dress thy variety of.</small>
                                 </div>
-                                <div className='col-md-7'>
+                                <div className='col-lg-7'>
                                     <input type="text" className="form-control" id="systemEmail" placeholder="Enter system email" />
                                 </div>
                             </div>
-                            <div className="form-group row mb-4 mb-md-5">
-                                <div className='col-md-3 py-1'>
+                            <div className="form-group row mb-4 mb-lg-5">
+                                <div className='col-lg-3 py-1'>
                                     <label className='form-label' htmlFor="systemPhone">System Phone</label>
                                     <small className='d-block text-muted lh-sm mb-1'>Time sale capital recognize worried safe noon aid floating surprise general exclaimed reach exampl.</small>
                                 </div>
-                                <div className='col-md-7'>
+                                <div className='col-lg-7'>
                                     <input type="text" className="form-control" id="systemPhone" placeholder="Enter system phone" />
                                 </div>
                             </div>
-                            <div className="form-group row mb-4 mb-md-5">
-                                <div className='col-md-3 py-1'>
+                            <div className="form-group row mb-4 mb-lg-5">
+                                <div className='col-lg-3 py-1'>
                                     <label className='form-label' htmlFor="systemLogo">System Logo</label>
                                     <small className='d-block text-muted lh-sm mb-1'>Volume stood fell primitive shoulder brush high journey chamber follow alive excitin.</small>
                                 </div>
-                                <div className='col-md-7'>
+                                <div className='col-lg-7'>
                                     <input type="file" className="form-control" id="systemLogo" />
                                 </div>
                             </div>
-                            <div className="form-group row mb-4 mb-md-5">
-                                <div className='col-md-3 py-1'>
+                            <div className="form-group row mb-4 mb-lg-5">
+                                <div className='col-lg-3 py-1'>
                                     <label className='form-label' htmlFor="systemFavicon">System Favicon</label>
                                     <small className='d-block text-muted lh-sm mb-1'>Lie very fur possible trade sing since while exact subject examine ha.</small>
                                 </div>
-                                <div className='col-md-7'>
+                                <div className='col-lg-7'>
                                     <input type="file" className="form-control" id="systemFavicon" />
                                 </div>
                             </div>
-                            <div className="form-group row mb-4 mb-md-5">
-                                <div className='col-md-3 py-1'>
+                            <div className="form-group row mb-4 mb-lg-5">
+                                <div className='col-lg-3 py-1'>
                                     <label className='form-label' htmlFor="systemTheme">System Theme</label>
                                     <small className='d-block text-muted lh-sm mb-1'>Feathers gently fifteen gravity circle new baseball mighty being feel block soci.</small>
                                 </div>
-                                <div className='col-md-7'>
+                                <div className='col-lg-7'>
                                     <select className="form-select" id="systemTheme">
                                         <option>Default</option>
                                         <option>Dark</option>
@@ -115,11 +115,11 @@ function AccountSettings() {
                                     </select>
                                 </div>
                             </div>
-                            <div className="form-group row mb-4 mb-md-5">
-                                <div className='col-md-3'>
+                            <div className="form-group row mb-4 mb-lg-5">
+                                <div className='col-lg-3'>
                                     <label className='form-label' htmlFor="systemLanguage">System Language</label>
                                 </div>
-                                <div className='col-md-7'>
+                                <div className='col-lg-7'>
                                     <select className="form-select" id="systemLanguage">
                                         <option>English</option>
                                         <option>French</option>
@@ -127,11 +127,11 @@ function AccountSettings() {
                                     </select>
                                 </div>
                             </div>
-                            <div className="form-group row mb-4 mb-md-5">
-                                <div className='col-md-3'>
+                            <div className="form-group row mb-4 mb-lg-5">
+                                <div className='col-lg-3'>
                                     <label className='form-label' htmlFor="systemCurrency">System Currency</label>
                                 </div>
-                                <div className='col-md-7'>
+                                <div className='col-lg-7'>
                                     <select className="form-select" id="systemCurrency">
                                         <option>USD</option>
                                         <option>EUR</option>
@@ -139,8 +139,8 @@ function AccountSettings() {
                                     </select>
                                 </div>
                             </div>
-                            <div className="form-group row mb-4 mb-md-5">
-                                <div className='col-md-12 d-flex flex-row gap-3 justify-content-center'>
+                            <div className="form-group row mb-4 mb-lg-5">
+                                <div className='col-lg-12 d-flex flex-row gap-3 justify-content-center'>
                                     <input type="submit" className="btn btn-primary px-5" value="Save changes" />
                                     <input type="reset" className="btn btn-link text-muted px-5 ml-3" value="Cancel" />
                                 </div>

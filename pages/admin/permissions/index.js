@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
+import Pagination from '../../../components/common/Pagination'
 import { doGetSession, getResource } from '../../../utilities'
 
 function Permissions() {
@@ -9,7 +10,6 @@ function Permissions() {
 
     const [page, setPage] = useState(1)
     const [lastPage, setLastPage] = useState(1)
-    const [totalPages, setTotalPages] = useState(1)
     const [totalRecords, setTotalRecords] = useState(0)
     const [count, setCount] = useState(0)
     const [perPage, setPerPage] = useState(10)
@@ -29,7 +29,6 @@ function Permissions() {
                 setPermissions(data?.data?.data)
                 // set page
                 setPage(data?.data?.current_page)
-                setTotalPages(data?.data?.last_page)
                 setPerPage(data?.data?.per_page)
                 setTotalRecords(data?.data?.total)
                 setLastPage(data?.data?.last_page)
@@ -85,28 +84,37 @@ function Permissions() {
                 <meta charSet="utf-8" />
             </Head>
             <div className="container">
-                <div className="d-flex flex-column flex-md-row justify-content-between align-items-center">
-                    <h2 className="font-bold my-4">Permissions</h2>
+                <div className="row">
+                    <div className="d-flex flex-column flex-lg-row justify-content-between align-items-center">
+                        <h2 className="font-bold my-4">Permissions</h2>
                         {isSearch && <span>
                             Showing search results for '<strong>{search}</strong>' <button className="btn btn-link text-danger" onClick={() => { setSearch(''); setIsSearch(false); fetchPermissions('permissions?page=' + page) }}>Clear</button>
                         </span>}
-                    <div className="d-flex align-items-center my-2">
-                        <form className="input-group">
-                            <input type="text" className="form-control" value={search} placeholder="Search" onChange={ev => {
-                                setSearch(ev.target.value)
-                            }} />
-                            <button className="btn btn-primary bg-dark" onClick={ev => {
-                                ev.preventDefault();
-                                if (search && search !== '' && search !== null && search.length > 2) {
-                                    fetchPermissions('permissions?search=' + search)
-                                    setIsSearch(true)
-                                }
-                            }}>Search</button>
-                        </form>
+                        <div className="d-flex align-items-center my-2">
+                            <form className="input-group">
+                                <input type="text" className="form-control" value={search} placeholder="Search" onChange={ev => {
+                                    setSearch(ev.target.value)
+                                }} />
+                                <button className="btn btn-primary bg-dark" onClick={ev => {
+                                    ev.preventDefault();
+                                    if (search && search !== '' && search !== null && search.length > 2) {
+                                        fetchPermissions('permissions?search=' + search)
+                                        setIsSearch(true)
+                                    }
+                                }}>Search</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div className='row'>
+                    <div className='col-12'>
+                        {status && status !== '' && <div className={`alert d-flex align-items-center gap-3 alert-${status === 'error' ? 'danger' : 'success'}`} role="alert">
+                            <i className={'fa fa-2x fa-' + (status === 'error' ? 'warning' : 'info-circle')}></i> {message}
+                        </div>}
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-md-12">
+                    <div className="col-lg-12">
                         <div className="d-flex w-100">
                             <div className="table-responsive w-100">
                                 <table className="table table-striped table-hover table-bordered">
@@ -135,7 +143,7 @@ function Permissions() {
                                                 <td>{new Date(permission?.created_at).toLocaleString('en-GB', {
                                                     year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true
                                                 }) || "-"}</td>
-                                                <td className="d-flex flex-column flex-md-row gap-2 justify-content-center">
+                                                <td className="d-flex flex-column flex-lg-row gap-2 justify-content-center">
                                                     <Link href={{ pathname: `/permission/${permission.uuid}/edit` }} >
                                                         <a className='btn btn-primary btn-sm py-0 text-nowrap'>Edit</a>
                                                     </Link>
@@ -143,7 +151,7 @@ function Permissions() {
                                                         ev.preventDefault();
                                                         ev.stopPropagation();
                                                         if (confirm('Are you sure you want to delete this permission?')) {
-                                                            getResource(`permissions/delete/${permission.uuid}`, { uuid: permission.uuid }).then((data) => {
+                                                            getResource(`permission/delete/${permission.uuid}`, { uuid: permission.uuid }).then((data) => {
                                                                 if (data.status === true) {
                                                                     setStatus('success')
                                                                     setMessage('Permission deleted successfully')
@@ -168,30 +176,15 @@ function Permissions() {
                         </div>
                     </div>
                     {/* pagination */}
-                    <div className='col-md-12'>
-                        <div className="d-flex justify-content-between align-items-center">
-                            <nav aria-label='Pagination'>
-                                <ul className="pagination">
-                                    {pageLinks.map((link, index) => (
-                                        <li key={index} className={`page-item ${link.active ? 'active' : ''}`}>
-                                            <button className="page-link" onClick={ev => {
-                                                ev.preventDefault(); ev.stopPropagation();
-                                                if (link.url) {
-                                                    setPage(link.url.split('page=')[1])
-                                                }
-                                            }}>
-                                                {link.label.split(' ').filter(w => !w.includes('&')).join(' ')}
-                                            </button>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </nav>
-                            <div className='d-flex align-items-end flex-column justify-content-center'>
-                                <small>Showing {page} of {totalPages} pages</small>
-                                <small className="text-muted">{count} of {totalRecords} items</small>
-                            </div>
-                        </div>
-                    </div>
+                    <Pagination
+                        page={page}
+                        lastPage={lastPage}
+                        totalRecords={totalRecords}
+                        count={count}
+                        perPage={perPage}
+                        pageLinks={pageLinks}
+                        setPage={setPage}
+                    />
                 </div>
             </div>
         </>
