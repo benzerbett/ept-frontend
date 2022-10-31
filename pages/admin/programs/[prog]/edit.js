@@ -114,7 +114,7 @@ function EditProgram() {
                                 </div>
                                 <div className='col-lg-7'>
                                     <input type="text" className="form-control" id="program_name" defaultValue={newProgramData.name} placeholder="Enter program name" onChange={ev => {
-                                        setProgramData({ ...newProgramData, name: ev.target.value })
+                                        setNewProgramData({ ...newProgramData, name: ev.target.value })
                                     }} />
                                 </div>
                             </div>
@@ -125,7 +125,7 @@ function EditProgram() {
                                 </div>
                                 <div className='col-lg-7'>
                                     <textarea className="form-control" id="program_desc" defaultValue={newProgramData.description} placeholder="Describe the program" onChange={ev => {
-                                        setProgramData({ ...newProgramData, description: ev.target.value })
+                                        setNewProgramData({ ...newProgramData, description: ev.target.value })
                                     }}></textarea>
                                 </div>
                             </div>
@@ -136,7 +136,7 @@ function EditProgram() {
                                 </div>
                                 <div className='col-lg-7'>
                                     <textarea className="form-control" id="program_meta" placeholder="Additional attributes" defaultValue={newProgramData.meta} onChange={ev => {
-                                        setProgramData({ ...newProgramData, meta: ev.target.value })
+                                        setNewProgramData({ ...newProgramData, meta: ev.target.value })
                                     }}></textarea>
                                 </div>
                             </div>
