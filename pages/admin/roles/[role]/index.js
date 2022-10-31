@@ -86,7 +86,7 @@ function ViewRole() {
                                         <td>{roleData.description}</td>
                                     </tr>
                                     <tr>
-                                        <td className='font-bold text-muted'>Permissions</td>
+                                        <td className='font-bold text-muted'>Permissions ({Object.values(roleData.permissions).length})</td>
                                         <td className='d-flex flex-wrap'>{Object.values(roleData.permissions).length > 0 ? Object.values(roleData.permissions).map((p, k) => <Link href={`/admin/permissions/${Object.keys(roleData.permissions)[k]}`}><a key={k} className='badge text-dark m-1' style={{backgroundColor: 'rgb(232, 232, 232)', fontSize: '0.9em', fontWeight: 500}}>{p}</a></Link>) : 'No permissions'}</td>
                                     </tr>
                                     <tr>
