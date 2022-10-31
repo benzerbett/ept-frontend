@@ -122,6 +122,7 @@ function Roles() {
                                         <tr>
                                             <th scope="col">Name</th>
                                             <th scope="col">Description</th>
+                                            <th scope="col">Permissions</th>
                                             <th scope="col">Status</th>
                                             <th scope="col">Created At</th>
                                             <th scope="col">Actions</th>
@@ -138,6 +139,9 @@ function Roles() {
                                                 </td>
                                                 <td>
                                                     {role?.description}
+                                                </td>
+                                                <td>
+                                                    {role?.permissions.length || 0}
                                                 </td>
                                                 <td className='text-capitalize'>{role.deleted_at == null ? <span className='badge bg-success'>Active</span> : <span className='badge bg-warning'>Disabled</span>}</td>
                                                 <td>{new Date(role?.created_at).toLocaleString('en-GB', {

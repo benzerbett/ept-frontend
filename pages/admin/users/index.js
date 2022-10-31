@@ -121,7 +121,8 @@ function Users() {
                                     <thead>
                                         <tr>
                                             <th scope="col">Name</th>
-                                            <th scope="col">Description</th>
+                                            <th scope="col">Role</th>
+                                            {/* <th scope="col">Description</th> */}
                                             <th scope="col">Status</th>
                                             <th scope="col">Created At</th>
                                             <th scope="col">Actions</th>
@@ -136,9 +137,10 @@ function Users() {
                                                         <a className="">{user.name}</a>
                                                     </Link>
                                                 </td>
-                                                <td>
-                                                    {user?.description}
+                                                <td className='text-capitalize'>
+                                                    {user?.role?.name || 'N/A'}
                                                 </td>
+                                                {/* <td> {user?.description} </td> */}
                                                 <td className='text-capitalize'>{user.deleted_at == null ? <span className='badge bg-success'>Active</span> : <span className='badge bg-warning'>Disabled</span>}</td>
                                                 <td>{new Date(user?.created_at).toLocaleString('en-GB', {
                                                     year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true
