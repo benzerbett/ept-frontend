@@ -1,25 +1,198 @@
-/* root colors */
-:root {
-  --color-purple: #5808a3;
-  --color-purple-light: #7d25ce;
-    --color-purple-dark: #3c0073;
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap');
+
+body {
+    font-family: 'Source Sans Pro', sans-serif;
 }
 
-.bg-purple{
+/* root colors */
+:root {
+    --color-purple: #5808a3;
+    --color-purple-light: #7d25ce;
+    --color-purple-dark: #3c0073;
+
+    --color-violet: #4e40aa;
+    --color-violet-light: #6458b5;
+    --color-violet-lighter: #a3a3f0;
+    --color-violet-dark: #392d81;
+    --color-violet-darker: #3a3255;
+    --color-violet-darkest: #2f2c3a;
+}
+
+.bg-purple {
     background-color: var(--color-purple);
 }
-.bg-purple-light{
+
+.bg-purple-light {
     background-color: var(--color-purple-light);
 }
-.bg-purple-dark{
+
+.bg-purple-dark {
     background-color: var(--color-purple-dark);
 }
-.border-purple{
+
+.border-purple {
     border-color: var(--color-purple);
 }
-.border-purple-light{
+
+.border-purple-light {
     border-color: var(--color-purple-light);
 }
-.border-purple-dark{
+
+.border-purple-dark {
     border-color: var(--color-purple-dark);
+}
+
+.text-purple {
+    color: var(--color-purple);
+}
+
+.text-purple-light {
+    color: var(--color-purple-light);
+}
+
+.text-purple-dark {
+    color: var(--color-purple-dark);
+}
+
+
+
+
+.bg-violet {
+    background-color: var(--color-violet);
+}
+
+.bg-violet-light {
+    background-color: var(--color-violet-light);
+}
+
+.bg-violet-lighter {
+    background-color: var(--color-violet-lighter);
+}
+
+.bg-violet-dark {
+    background-color: var(--color-violet-dark);
+}
+
+.bg-violet-darker {
+    background-color: var(--color-violet-darker);
+}
+
+.bg-violet-darkest {
+    background-color: var(--color-violet-darkest);
+}
+
+.text-violet {
+    color: var(--color-violet);
+}
+
+.text-violet-light {
+    color: var(--color-violet-light);
+}
+
+.text-violet-lighter {
+    color: var(--color-violet-lighter);
+}
+
+.text-violet-dark {
+    color: var(--color-violet-dark);
+}
+
+.text-violet-darker {
+    color: var(--color-violet-darker);
+}
+
+.text-violet-darkest {
+    color: var(--color-violet-darkest);
+}
+
+.border-violet {
+    border-color: var(--color-violet);
+}
+
+.border-violet-light {
+    border-color: var(--color-violet-light);
+}
+
+.border-violet-lighter {
+    border-color: var(--color-violet-lighter);
+}
+
+.border-violet-dark {
+    border-color: var(--color-violet-dark);
+}
+
+.border-violet-darker {
+    border-color: var(--color-violet-darker);
+}
+
+.border-violet-darkest {
+    border-color: var(--color-violet-darkest);
+}
+
+
+
+
+.btn-primary,
+.page-link.active,
+.active>.page-link {
+    background-color: var(--color-violet) !important;
+    border-color: var(--color-violet) !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+    background-color: var(--color-violet-light) !important;
+    border-color: var(--color-violet-light) !important;
+}
+
+.bg-primary {
+    background-color: var(--color-violet) !important;
+    border-color: var(--color-violet) !important;
+}
+
+
+/* improved badges & alerts colors */
+.badge {
+    font-weight: 600;
+    letter-spacing: 0.1px;
+}
+.badge-success,
+.badge.bg-success {
+    background-color: #bef9e0 !important;
+    color: #146c2c !important;
+}
+
+.badge-warning,
+.badge.bg-warning {
+    background-color: #f9e8a3 !important;
+    color: #7b640f !important;
+}
+
+.badge-danger,
+.badge.bg-danger {
+    background-color: #fbd5d5 !important;
+    color: #a30000 !important;
+}
+
+
+.alert-success,
+.alert.bg-success {
+    background-color: #bef9e0 !important;
+    color: #146c2c !important;
+    border-color: #7bdd96 !important;
+}
+
+.alert-warning,
+.alert.bg-warning {
+    background-color: #f9e8a3 !important;
+    color: #7b640f !important;
+    border-color: #dfc970 !important;
+}
+
+.alert-danger,
+.alert.bg-danger {
+    background-color: #fbd5d5 !important;
+    color: #a30000 !important;
+    border-color: #ffafaf !important;
 }

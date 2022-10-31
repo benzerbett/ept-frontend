@@ -3,7 +3,7 @@ import React from 'react'
 
 function AdminSidebar({ router }) {
     return (
-        <nav id="sidebarMenu" className="col-xs-12 col-md-3 col-lg-3 col-xl-2 d-md-block bg-light sidebar collapse" style={{ top: '1rem' }}>
+        <nav id="sidebarMenu" className="col-xs-12 col-md-3 col-lg-3 col-xl-2 d-md-block bg-violet-darkest text-light sidebar collapse" style={{ top: '1rem' }}>
             <div className="position-sticky pt-0 w-100 overflow-hidden mt-3">
                 <ul className="list-unstyled ps-0">
                     <li className="mb-1 d-md-none d-flex align-items-start justify-content-end w-100 p-0">

@@ -18,7 +18,7 @@ function AdminNavbar() {
         })
     }, [])
     return (
-        <header className="navbar navbar-dark sticky-top bg-darkz bg-purple flex-md-nowrap p-0 shadow">
+        <header className="navbar navbar-dark sticky-top bg-darkz bg-violet-dark flex-md-nowrap p-0 shadow">
             <div className='w-100 d-flex align-items-center justify-content-between'>
                 <Link href="/"><a className="navbar-brand col-md-3 col-lg-2 me-0 py-3 px-3 bg-transparent border-none" >EPT Administrator</a></Link>
                 <div className="px-3">
