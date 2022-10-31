@@ -12,12 +12,20 @@ function AdminSidebar({ router }) {
                         </button>
                     </li>
                     <li className="mb-1">
+                        <Link href="/admin">
+                            <a className={"btn btn-sm py-2 w-100 fs-6 d-flex btn-toggle align-items-center gap-2 rounded "+(router.asPath === '/admin' ? 'active' : '')}>
+                                <i className='fa fa-dashboard text-muted' />
+                                Overview
+                            </a>
+                        </Link>
+                    </li>
+                    <li className="mb-1">
                         <button className={"btn btn-sm py-2 w-100 fs-6 d-flex btn-toggle align-items-center gap-2 rounded " + (
                             router.asPath.includes('/admin/users') ? 'active' : 'collapsed'
                         )} data-bs-toggle="collapse" data-bs-target="#menu_users" aria-expanded={
                             router.asPath.includes('/admin/users') ? 'true' : 'false'
                         }>
-                            <i className='fa fa-users text-muted'/>
+                            <i className='fa fa-users text-muted' />
                             Users
                         </button>
                         <div className={"collapse " + (
@@ -35,7 +43,7 @@ function AdminSidebar({ router }) {
                         )} data-bs-toggle="collapse" data-bs-target="#menu_pt_programs" aria-expanded={
                             router.pathname.includes('/admin/programs') ? 'true' : 'false'
                         }>
-                            <i className='fa fa-folder text-muted'/>
+                            <i className='fa fa-folder text-muted' />
                             Programs
                         </button>
                         <div className={"collapse " + (
@@ -53,7 +61,7 @@ function AdminSidebar({ router }) {
                         )} data-bs-toggle="collapse" data-bs-target="#menu_dict" aria-expanded={
                             router.pathname.includes('/admin/dictionary') ? 'true' : 'false'
                         }>
-                            <i className='fa fa-file-text text-muted'/>
+                            <i className='fa fa-file-text text-muted' />
                             Dictionary
                         </button>
                         <div className={"collapse " + (
@@ -71,7 +79,7 @@ function AdminSidebar({ router }) {
                         )} data-bs-toggle="collapse" data-bs-target="#menu_access_mgt" aria-expanded={
                             (router.pathname.includes('/admin/roles') || router.pathname.includes('/admin/permissions')) ? 'true' : 'false'
                         }>
-                            <i className='fa fa-lock text-muted'/>
+                            <i className='fa fa-lock text-muted' />
                             Access control
                         </button>
                         <div className={"collapse " + (
