@@ -1,7 +1,8 @@
 import Head from 'next/head'
 import Link from 'next/link';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
+import Pagination from '../../../../../components/common/Pagination';
 import ProgramsNavbar from '../../../../../components/common/ProgramsNavbar';
 import { getResource } from '../../../../../utilities';
 
@@ -9,6 +10,17 @@ function Rounds() {
     const router = useRouter()
     const { prog } = router.query
     const [programData, setProgramData] = useState(null)
+
+
+    const [rounds, setRounds] = useState([])
+    const [page, setPage] = useState(1)
+    const [lastPage, setLastPage] = useState(1)
+    const [totalRecords, setTotalRecords] = useState(0)
+    const [count, setCount] = useState(0)
+    const [perPage, setPerPage] = useState(10)
+    const [pageLinks, setPageLinks] = useState([])
+    const [search, setSearch] = useState('')
+    const [isSearch, setIsSearch] = useState(false)
 
     const [status, setStatus] = useState('')
     const [message, setMessage] = useState('')
@@ -34,11 +46,43 @@ function Rounds() {
         })
     }
 
+
+    const fetchRounds = (resource) => {
+        getResource(resource).then((data) => {
+            if (data.status === true) {
+                setRounds(data?.data?.data)
+                // set page
+                setPage(data?.data?.current_page)
+                setPerPage(data?.data?.per_page)
+                setTotalRecords(data?.data?.total)
+                setLastPage(data?.data?.last_page)
+                setPageLinks(data?.data?.links)
+                setCount(data?.data?.data.length || 0)
+
+                setStatus('')   // ('success')
+                setMessage('')  // ('Rounds fetched successfully')
+            } else {
+                setStatus('error')
+                setMessage(data.message)
+            }
+            setLoading(false)
+        }).catch((err) => {
+            console.log(err)
+            setStatus('error')
+            setMessage('Error fetching rounds: ' + err.message || err)
+            setLoading(false)
+        })
+    }
+
+
     useEffect(() => {
         let mounted = true
         if (mounted) {
-            let rsc = 'program/' + prog
-            fetchProgram(rsc)
+            let prg = 'program/' + prog
+            fetchProgram(prg)
+
+            let rsc = 'rounds?program=' + prog+'&page='+page
+            fetchRounds(rsc)
         }
         return () => mounted = false
     }, [prog])
@@ -59,7 +103,7 @@ function Rounds() {
                     <div className="d-flex flex-column flex-lg-row justify-content-between align-items-center">
                         <div className="d-flex w-100 flex-row flex-wrap justify-content-center justify-content-lg-between align-items-center gap-lg-4">
                             <button className="btn btn-link btn-sm" onClick={() => router.back()}>&larr; Back</button>
-                            <ProgramsNavbar program={programData} router={router} />
+                            <ProgramsNavbar program={programData} router={router} subtitle="Rounds" />
                             <Link href="/admin/programs/[program]/rounds/new" as={`/admin/programs/${prog}/rounds/new`}>
                                 <a className="btn btn-primary btn-sm">
                                     <i className='fa fa-plus'></i> &nbsp;
@@ -70,10 +114,85 @@ function Rounds() {
                     </div>
                 </div>
                 <hr />
-                <div className="row">
-                    <div className='col-lg-12'>
-                        Rounds Program:{prog}
+                <div className='row'>
+                    <div className='col-12'>
+                        {status && status !== '' && <div className={`alert d-flex align-items-center gap-3 alert-${status === 'error' ? 'danger' : 'success'}`} role="alert">
+                            <i className={'fa fa-2x fa-' + (status === 'error' ? 'warning' : 'info-circle')}></i> {message}
+                        </div>}
                     </div>
+                </div>
+                <div className="row">
+                    <div className="col-lg-12">
+                        <div className="d-flex w-100">
+                            <div className="table-responsive w-100">
+                                <table className="table table-striped table-hover table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Description</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Created At</th>
+                                            <th scope="col">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {rounds && rounds.length > 0 ? rounds.map((round) => (
+
+                                            <tr key={round.uuid}>
+                                                <td>
+                                                    <Link href={`/admin/programs/${prog}/rounds/${round.uuid}`}>
+                                                        <a className="">{round.name}</a>
+                                                    </Link>
+                                                </td>
+                                                <td>
+                                                    {round?.description}
+                                                </td>
+                                                <td className='text-capitalize'>{round.deleted_at == null ? <span className='badge bg-success'>Active</span> : <span className='badge bg-warning'>Disabled</span>}</td>
+                                                <td>{new Date(round?.created_at).toLocaleString('en-GB', {
+                                                    year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true
+                                                }) || "-"}</td>
+                                                <td className="d-flex flex-column flex-lg-row gap-2 justify-content-center">
+                                                    <Link href={{ pathname: `/round/${round.uuid}/edit` }} >
+                                                        <a className='btn btn-primary btn-sm py-0 text-nowrap'>Edit</a>
+                                                    </Link>
+                                                    <a className='btn text-danger btn-link btn-sm py-0 text-nowrap' onClick={ev => {
+                                                        ev.preventDefault();
+                                                        ev.stopPropagation();
+                                                        if (confirm('Are you sure you want to delete this round?')) {
+                                                            getResource(`round/delete/${round.uuid}`, { uuid: round.uuid }).then((data) => {
+                                                                if (data.status === true) {
+                                                                    setStatus('success')
+                                                                    setMessage('Round deleted successfully')
+                                                                    setRounds(rounds.filter(u => u.uuid !== round.uuid))
+                                                                } else {
+                                                                    setStatus('error')
+                                                                    setMessage(data.message)
+                                                                }
+                                                            }).catch((err) => {
+                                                                console.log(err)
+                                                                setStatus('error')
+                                                                setMessage('Error deleting round: ' + err.message || err)
+                                                            })
+                                                        }
+                                                    }}>Delete</a>
+                                                </td>
+                                            </tr>
+                                        )) : <tr><td colSpan={7} className="text-center">No rounds found</td></tr>}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    {/* pagination */}
+                    <Pagination
+                        page={page}
+                        lastPage={lastPage}
+                        totalRecords={totalRecords}
+                        count={count}
+                        perPage={perPage}
+                        pageLinks={pageLinks}
+                        setPage={setPage}
+                    />
                 </div>
             </div>
         </>
