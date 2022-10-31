@@ -85,7 +85,7 @@ function Reports() {
             fetchReports(rsc)
         }
         return () => mounted = false
-    }, [prog])
+    }, [prog,page])
 
 
     if (loading) return <main style={{ width: '100%', height: '85vh', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
