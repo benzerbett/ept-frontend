@@ -59,14 +59,18 @@ function ViewPermission() {
                 <meta charSet="utf-8" />
             </Head>
             <div className="container">
-                <div className="d-flex flex-column flex-lg-row justify-content-between align-items-center">
-                    <div className="d-flex flex-column flex-lg-row justify-content-between align-items-center gap-4">
-                        <button className="btn btn-link" onClick={() => router.back()}>&larr; Back</button>
-                        <h2 className="font-bold my-4">Edit permission</h2>
+                <div className="row mb-4 ">
+                    <div className="d-flex flex-column flex-lg-row justify-content-between align-items-center">
+                        <div className="d-flex w-100 flex-row flex-wrap justify-content-center justify-content-lg-between align-items-center gap-lg-4">
+                            <button className="btn btn-link btn-sm" onClick={() => router.back()}>&larr; Back</button>
+                            <h3>New permission</h3>
+                            <Link href="/admin/programs" as={`/admin/permissions`}>
+                                <a className="btn btn-default text-muted btn-sm"> Cancel </a>
+                            </Link>
+                        </div>
                     </div>
                 </div>
-                <hr/>
-                <div className="row">
+                <div className="row bg-light p-3 rounded">
                     {permissionData && <form className='col-lg-12'>
                         {Object.keys(permissionData).filter(m => (m !== 'uuid' && !m.includes('_at'))).map((key, index) => {
                             return (
@@ -81,7 +85,7 @@ function ViewPermission() {
 
                         <div className='col-lg-12 d-flex align-items-center justify-content-center'>
                             {/* submit */}
-                            <input type="submit" className="btn btn-primary" value="Save changes" />
+                            <input type="submit" className="btn btn-primary" value="Update Permission" />
                         </div>
                     </form>}
                 </div>

@@ -90,19 +90,24 @@ function Programs() {
                         {isSearch && <span>
                             Showing search results for '<strong>{search}</strong>' <button className="btn btn-link text-danger" onClick={() => { setSearch(''); setIsSearch(false); fetchPrograms('programs?page=' + page) }}>Clear</button>
                         </span>}
-                        <div className="d-flex align-items-center my-2">
-                            <form className="input-group">
-                                <input type="text" className="form-control" value={search} placeholder="Search" onChange={ev => {
-                                    setSearch(ev.target.value)
-                                }} />
-                                <button className="btn btn-primary bg-dark" onClick={ev => {
-                                    ev.preventDefault();
-                                    if (search && search !== '' && search !== null && search.length > 2) {
-                                        fetchPrograms('programs?search=' + search)
-                                        setIsSearch(true)
-                                    }
-                                }}>Search</button>
-                            </form>
+                        <div className="d-flex align-items-center my-2 flex-wrap gap-3">
+                            <div className="d-flex align-items-center my-2 flex-wrap">
+                                <form className="input-group">
+                                    <input type="text" className="form-control" value={search} placeholder="Search" onChange={ev => {
+                                        setSearch(ev.target.value)
+                                    }} />
+                                    <button className="btn btn-primary bg-dark" onClick={ev => {
+                                        ev.preventDefault();
+                                        if (search && search !== '' && search !== null && search.length > 2) {
+                                            fetchPrograms('programs?search=' + search)
+                                            setIsSearch(true)
+                                        }
+                                    }}><i className='fa fa-search'></i></button>
+                                </form>
+                            </div>
+                            <Link href='/admin/programs/new'>
+                                <a className='btn btn-primary'> <i className='fa fa-plus'></i> &nbsp; Add New </a>
+                            </Link>
                         </div>
                     </div>
                 </div>

@@ -142,7 +142,7 @@ function EditProgram() {
                                 </div>
                             </div>
                             <div className="w-100 d-flex align-items-center justify-content-center">
-                                <button type="submit" className="btn btn-primary">Save program</button>
+                                <button type="submit" className="btn btn-primary">Update program</button>
                             </div>
                         </form>}
                     </div>

@@ -75,24 +75,29 @@ function Dictionary() {
             <div className="container">
                 <div className="row">
                     <div className="d-flex flex-column flex-lg-row justify-content-between align-items-center">
-                        <h2 className="font-bold my-4">Permissions</h2>
+                        <h2 className="font-bold my-4">Dictionary</h2>
                         {isSearch && <span>
                             Showing search results for '<strong>{search}</strong>' <button className="btn btn-link text-danger" onClick={() => { setSearch(''); setIsSearch(false); fetchDictionary('dictionary?page=' + page) }}>Clear</button>
                         </span>}
                         {/* TODO: add program filter */}
-                        <div className="d-flex align-items-center my-2">
-                            <form className="input-group">
-                                <input type="text" className="form-control" value={search} placeholder="Search" onChange={ev => {
-                                    setSearch(ev.target.value)
-                                }} />
-                                <button className="btn btn-primary bg-dark" onClick={ev => {
-                                    ev.preventDefault();
-                                    if (search && search !== '' && search !== null && search.length > 2) {
-                                        fetchDictionary('dictionary?search=' + search)
-                                        setIsSearch(true)
-                                    }
-                                }}>Search</button>
-                            </form>
+                        <div className="d-flex align-items-center my-2 flex-wrap gap-3">
+                            <div className="d-flex align-items-center my-2 flex-wrap">
+                                <form className="input-group">
+                                    <input type="text" className="form-control" value={search} placeholder="Search" onChange={ev => {
+                                        setSearch(ev.target.value)
+                                    }} />
+                                    <button className="btn btn-primary bg-dark" onClick={ev => {
+                                        ev.preventDefault();
+                                        if (search && search !== '' && search !== null && search.length > 2) {
+                                            fetchDictionary('dictionary?search=' + search)
+                                            setIsSearch(true)
+                                        }
+                                    }}><i className='fa fa-search'></i></button>
+                                </form>
+                            </div>
+                            <Link href='/admin/dictionary/new'>
+                                <a className='btn btn-primary'> <i className='fa fa-plus'></i> &nbsp; Add New </a>
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -135,7 +140,7 @@ function Dictionary() {
                                                 }) || "-"}</td>
                                                 <td className="d-flex flex-column flex-lg-row gap-2 justify-content-center">
                                                     <Link href={{ pathname: `/admin/dictionary/${dictionary.uuid}/edit` }} >
-                                                        <a className='btn btn-primary btn-sm py-0 text-nowrap'>Edit Dictionary</a>
+                                                        <a className='btn btn-primary btn-sm py-0 text-nowrap'>Edit</a>
                                                     </Link>
                                                     <a className='btn text-danger btn-link btn-sm py-0 text-nowrap' onClick={ev => {
                                                         ev.preventDefault();
@@ -156,7 +161,7 @@ function Dictionary() {
                                                                 setMessage('Error deleting dictionary: ' + err.message || err)
                                                             })
                                                         }
-                                                    }}>Delete Dictionary</a>
+                                                    }}>Delete</a>
                                                 </td>
                                             </tr>
                                         )) : <tr><td colSpan={7} className="text-center">No dictionary entries found</td></tr>}

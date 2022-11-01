@@ -65,24 +65,26 @@ function EditDictionary() {
                 <meta charSet="utf-8" />
             </Head>
             <div className="container">
-                <div className="d-flex flex-column flex-lg-row justify-content-between align-items-center">
-                    <div className="d-flex flex-column flex-lg-row justify-content-between align-items-center gap-4">
-                        <button className="btn btn-link" onClick={() => router.back()}>&larr; Back</button>
-                        <h2 className="font-bold my-4">Edit Dictionary Entry</h2>
+                <div className="row mb-4 ">
+                    <div className="d-flex flex-column flex-lg-row justify-content-between align-items-center">
+                        <div className="d-flex w-100 flex-row flex-wrap justify-content-center justify-content-lg-between align-items-center gap-lg-4">
+                            <button className="btn btn-link btn-sm" onClick={() => router.back()}>&larr; Back</button>
+                            <h3>Edit dictionary entry</h3>
+                            <Link href="/admin/programs" as={`/admin/programs`}>
+                                <a className="btn btn-default text-muted btn-sm"> Cancel </a>
+                            </Link>
+                        </div>
                     </div>
                 </div>
-                <hr />
-                <div className="row">
-                    {/* form to capture the following fields:
-                        - name (text)
-                        - description (textarea)
-                        - code (text)
-                        - program (select)
-                        - metadata (textarea)
-                        - type (select: string / list_of_items)
-                        - value (list_of_items) (textarea) (key:value pairs)
-                        - value (string) (text)
-                    */}
+                
+                <div className='row'>
+                    <div className='col-12'>
+                        {status && status !== '' && <div className={`alert d-flex align-items-center gap-3 alert-${status === 'error' ? 'danger' : 'success'}`} role="alert">
+                            <i className={'fa fa-2x fa-' + (status === 'error' ? 'warning' : 'info-circle')}></i> {message}
+                        </div>}
+                    </div>
+                </div>
+                <div className="row bg-light p-3 rounded">
                     <form className="col-lg-12">
                         <div className="mb-3 form-group row">
                             <div className='col-lg-3'>
@@ -155,7 +157,9 @@ function EditDictionary() {
                                 {valueType && valueType == 'list_of_items' ? <textarea className="form-control" id="value" placeholder="Value" rows="3" value={JSON.stringify(dictionaryData?.value)} /> : <input type="text" className="form-control" id="value" placeholder="Value" value={JSON.stringify(dictionaryData?.value)} />}
                             </div>
                         </div>
-                        <button type="submit" className="btn btn-primary">Update Entry</button>
+                        <div className='w-100 d-flex align-items-center justify-content-center'>
+                            <button type="submit" className="btn btn-primary">Update Entry</button>
+                        </div>
                     </form>
                 </div >
             </div >

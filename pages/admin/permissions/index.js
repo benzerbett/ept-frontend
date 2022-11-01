@@ -90,19 +90,24 @@ function Permissions() {
                         {isSearch && <span>
                             Showing search results for '<strong>{search}</strong>' <button className="btn btn-link text-danger" onClick={() => { setSearch(''); setIsSearch(false); fetchPermissions('permissions?page=' + page) }}>Clear</button>
                         </span>}
-                        <div className="d-flex align-items-center my-2">
-                            <form className="input-group">
-                                <input type="text" className="form-control" value={search} placeholder="Search" onChange={ev => {
-                                    setSearch(ev.target.value)
-                                }} />
-                                <button className="btn btn-primary bg-dark" onClick={ev => {
-                                    ev.preventDefault();
-                                    if (search && search !== '' && search !== null && search.length > 2) {
-                                        fetchPermissions('permissions?search=' + search)
-                                        setIsSearch(true)
-                                    }
-                                }}>Search</button>
-                            </form>
+                        <div className="d-flex align-items-center my-2 flex-wrap gap-3">
+                            <div className="d-flex align-items-center my-2 flex-wrap">
+                                <form className="input-group">
+                                    <input type="text" className="form-control" value={search} placeholder="Search" onChange={ev => {
+                                        setSearch(ev.target.value)
+                                    }} />
+                                    <button className="btn btn-primary bg-dark" onClick={ev => {
+                                        ev.preventDefault();
+                                        if (search && search !== '' && search !== null && search.length > 2) {
+                                            fetchPermissions('permissions?search=' + search)
+                                            setIsSearch(true)
+                                        }
+                                    }}><i className='fa fa-search'></i></button>
+                                </form>
+                            </div>
+                            {/* <Link href='/admin/permissions/new'>
+                                <a className='btn btn-primary'> <i className='fa fa-plus'></i> &nbsp; Add New </a>
+                            </Link> */}
                         </div>
                     </div>
                 </div>
@@ -124,7 +129,7 @@ function Permissions() {
                                             <th scope="col">Description</th>
                                             <th scope="col">Status</th>
                                             <th scope="col">Created At</th>
-                                            <th scope="col">Actions</th>
+                                            {/* <th scope="col">Actions</th> */}
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -143,7 +148,7 @@ function Permissions() {
                                                 <td>{new Date(permission?.created_at).toLocaleString('en-GB', {
                                                     year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true
                                                 }) || "-"}</td>
-                                                <td className="d-flex flex-column flex-lg-row gap-2 justify-content-center">
+                                                {/* <td className="d-flex flex-column flex-lg-row gap-2 justify-content-center">
                                                     <Link href={{ pathname: `/admin/permissions/${permission.uuid}/edit` }} >
                                                         <a className='btn btn-primary btn-sm py-0 text-nowrap'>Edit</a>
                                                     </Link>
@@ -167,7 +172,7 @@ function Permissions() {
                                                             })
                                                         }
                                                     }}>Delete</a>
-                                                </td>
+                                                </td> */}
                                             </tr>
                                         )) : <tr><td colSpan={7} className="text-center">No permissions found</td></tr>}
                                     </tbody>

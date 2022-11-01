@@ -16,7 +16,6 @@ function NewProgram() {
     })
 
     const saveProgram = () => {
-        console.log('saveProgram')
         setLoading(true)
         getResource('program/new', { method: 'POST', body: programData }).then((data) => {
             if (data.status === true) {

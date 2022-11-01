@@ -141,7 +141,7 @@ function AccountSettings() {
                             </div>
                             <div className="form-group row mb-4 mb-lg-5">
                                 <div className='col-lg-12 d-flex flex-row gap-3 justify-content-center'>
-                                    <input type="submit" className="btn btn-primary px-5" value="Save changes" />
+                                    <input type="submit" className="btn btn-primary px-5" value="Update settings" />
                                     <input type="reset" className="btn btn-link text-muted px-5 ml-3" value="Cancel" />
                                 </div>
                             </div>

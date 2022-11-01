@@ -15,7 +15,7 @@ function Admin() {
                     <div className="d-flex align-items-center my-2">
                         <form className="input-group">
                             <input type="text" className="form-control" placeholder="Search" />
-                            <button className="btn btn-primary bg-dark">Search</button>
+                            <button className="btn btn-primary bg-dark"><i className='fa fa-search'></i></button>
                         </form>
                     </div>
                 </div>
