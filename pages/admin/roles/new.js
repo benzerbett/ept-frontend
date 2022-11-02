@@ -1,10 +1,12 @@
 import Head from 'next/head'
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 import { getResource } from '../../../utilities';
 
 function NewRole() {
 
+    const router = useRouter()
     const [status, setStatus] = useState('')
     const [message, setMessage] = useState('')
     const [loading, setLoading] = useState(true);
@@ -138,7 +140,7 @@ function NewRole() {
                                     <label className='form-label' htmlFor="role_desc">Role Permissions</label>
                                     <small className='d-block text-muted lh-sm mb-1'>&nbsp;</small>
                                 </div>
-                                <div className='col-lg-8 row'>
+                                <div className='col-lg-8 row px-lg-3'>
                                     {/* sorted by domain (word after _) */}
                                     {permissions.sort((a, b) => {
                                         return a.name.split('_')[1] > b.name.split('_')[1] ? 1 : -1

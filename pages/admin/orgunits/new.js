@@ -1,10 +1,12 @@
 import Head from 'next/head'
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 import { getResource } from '../../../utilities';
 
 function NewOrgUnit() {
 
+    const router = useRouter()
     const [status, setStatus] = useState('')
     const [message, setMessage] = useState('')
     const [loading, setLoading] = useState(true);
@@ -34,7 +36,7 @@ function NewOrgUnit() {
         }).catch((err) => {
             console.log(err)
             setStatus('error')
-            setMessage('Error saving role: ' + err.message || err)
+            setMessage('Error saving organization unit: ' + err.message || err)
             setLoading(false)
         })
     }
@@ -136,7 +138,7 @@ function NewOrgUnit() {
                                     <small className='d-block text-muted lh-sm mb-1'>&nbsp;</small>
                                 </div>
                                 <div className='col-lg-8'>
-                                    <input type="text" className="form-control" id="orgunit_name" value={ouData.name} placeholder="Enter role name" onChange={ev => {
+                                    <input type="text" className="form-control" id="orgunit_name" value={ouData.name} placeholder="Enter unit name" onChange={ev => {
                                         setOrgUnitData({ ...ouData, name: ev.target.value })
                                     }} />
                                 </div>
@@ -147,7 +149,7 @@ function NewOrgUnit() {
                                     <small className='d-block text-muted lh-sm mb-1'>&nbsp;</small>
                                 </div>
                                 <div className='col-lg-8'>
-                                    <textarea className="form-control" id="orgunit_desc" value={ouData.description} placeholder="Describe the role" onChange={ev => {
+                                    <textarea className="form-control" id="orgunit_desc" value={ouData.description} placeholder="Describe the unit" onChange={ev => {
                                         setOrgUnitData({ ...ouData, description: ev.target.value })
                                     }}></textarea>
                                 </div>
@@ -157,12 +159,12 @@ function NewOrgUnit() {
                                     <label className='form-label' htmlFor="orgunit_desc">Organization Unit Level</label>
                                     <small className='d-block text-muted lh-sm mb-1'>&nbsp;</small>
                                 </div>
-                                <div className='col-lg-8 row'>
+                                <div className='col-lg-8'>
                                     <select className='form-select' onChange={ev => {
                                         setOrgUnitData({ ...ouData, level: ev.target.value })
                                         setParentOrgUnits([])
                                         // fetch org units with level above selected level
-                                        let selected_level_code = orgUnitLevels.find(l => l.uuid === ev.target.value)?.level
+                                        let selected_level_code = org_unit_levels.find(l => l.uuid === ev.target.value)?.level
                                         if (selected_level_code && selected_level_code > 0) {
                                             fetchOrgUnits(selected_level_code - 1)
                                         }
@@ -172,18 +174,19 @@ function NewOrgUnit() {
                                             return <option key={org_unit_level.uuid} value={org_unit_level.uuid}>{org_unit_level.name}</option>
                                         })}
                                     </select>
+                                    {JSON.stringify(parentOrgUnits)}
                                 </div>
                             </div>
-                            {parentOrgUnits && <div className="form-group row mb-2 mb-lg-3">
+                            {parentOrgUnits && parentOrgUnits.length > 0 && <div className="form-group row mb-2 mb-lg-3">
                                 <div className='col-lg-3 py-1'>
                                     <label className='form-label' htmlFor="orgunit_desc">Parent</label>
                                     <small className='d-block text-muted lh-sm mb-1'>&nbsp;</small>
                                 </div>
-                                <div className='col-lg-8 row'>
+                                <div className='col-lg-8'>
                                     <select className='form-select' onChange={ev => {
                                         setOrgUnitData({ ...ouData, parent: ev.target.value })
                                     }}>
-                                        <option value=''>Select OrgUnit Level</option>
+                                        <option value=''>Select Parent</option>
                                         {parentOrgUnits.map((org_unit, index) => {
                                             return <option key={org_unit.uuid} value={org_unit.uuid}>{org_unit.name}</option>
                                         })}
@@ -202,7 +205,7 @@ function NewOrgUnit() {
                                 </div>
                             </div>
                             <div className="w-100 d-flex align-items-center justify-content-center">
-                                <button type="submit" className="btn btn-primary">Save role</button>
+                                <button type="submit" className="btn btn-primary">Save organization unit</button>
                             </div>
                         </form>
                     </div>

@@ -1,10 +1,11 @@
 import Head from 'next/head'
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 import { getResource } from '../../../utilities';
 
 function NewOrgUnitLevel() {
-
+    const router = useRouter()
     const [status, setStatus] = useState('')
     const [message, setMessage] = useState('')
     const [loading, setLoading] = useState(true);
@@ -33,43 +34,7 @@ function NewOrgUnitLevel() {
         }).catch((err) => {
             console.log(err)
             setStatus('error')
-            setMessage('Error saving role: ' + err.message || err)
-            setLoading(false)
-        })
-    }
-
-
-    const fetchOrgUnitLevels = () => {
-        setLoading(true)
-        getResource('organization_unit_levels?page_size=10000').then((data) => {
-            if (data.status === true) {
-                setOrgUnitLevels(data?.data?.data)
-            } else {
-                setStatus('error')
-                setMessage(data.message)
-            }
-            setLoading(false)
-        }).catch((err) => {
-            console.log(err)
-            setStatus('error')
-            setMessage('Error fetching org_unit_levels: ' + err.message || err)
-            setLoading(false)
-        })
-    }
-    const fetchOrgUnits = (lvl) => {
-        setLoading(true)
-        getResource('organization_units?page_size=10000&level_code='+lvl).then((data) => {
-            if (data.status === true) {
-                setParentOrgUnits(data?.data?.data)
-            } else {
-                setStatus('error')
-                setMessage(data.message)
-            }
-            setLoading(false)
-        }).catch((err) => {
-            console.log(err)
-            setStatus('error')
-            setMessage('Error fetching org_unit_levels: ' + err.message || err)
+            setMessage('Error saving organization unit level: ' + err.message || err)
             setLoading(false)
         })
     }
@@ -80,7 +45,6 @@ function NewOrgUnitLevel() {
             setStatus('')
             setMessage('')
             setLoading(false)
-            fetchOrgUnitLevels()
         }
         return () => mounted = false
     }, [])
@@ -129,13 +93,13 @@ function NewOrgUnitLevel() {
                         }}>
                             <div className="form-group row mb-2 mb-lg-3">
                                 <div className='col-lg-3 py-1'>
-                                    <label className='form-label' htmlFor="orgunit_name">OrgUnit Name
+                                    <label className='form-label' htmlFor="orgunit_name">Level Name
                                         <span className='text-danger'>*</span>
                                     </label>
                                     <small className='d-block text-muted lh-sm mb-1'>&nbsp;</small>
                                 </div>
                                 <div className='col-lg-8'>
-                                    <input type="text" className="form-control" id="orgunit_name" value={ouLevelData.name} placeholder="Enter role name" onChange={ev => {
+                                    <input type="text" className="form-control" id="orgunit_name" value={ouLevelData.name} placeholder="Enter level name" onChange={ev => {
                                         setOrgUnitLevelData({ ...ouLevelData, name: ev.target.value })
                                     }} />
                                 </div>
@@ -146,23 +110,23 @@ function NewOrgUnitLevel() {
                                     <small className='d-block text-muted lh-sm mb-1'>&nbsp;</small>
                                 </div>
                                 <div className='col-lg-8'>
-                                    <textarea className="form-control" id="orgunit_desc" value={ouLevelData.description} placeholder="Describe the role" onChange={ev => {
+                                    <textarea className="form-control" id="orgunit_desc" value={ouLevelData.description} placeholder="Describe the level" onChange={ev => {
                                         setOrgUnitLevelData({ ...ouLevelData, description: ev.target.value })
                                     }}></textarea>
                                 </div>
                             </div>
                             <div className="form-group row mb-2 mb-lg-3">
                                 <div className='col-lg-3 py-1'>
-                                    <label className='form-label' htmlFor="orgunit_desc">Organization Unit Level</label>
+                                    <label className='form-label' htmlFor="orgunit_desc">Level</label>
                                     <small className='d-block text-muted lh-sm mb-1'>&nbsp;</small>
                                 </div>
-                                <div className='col-lg-8 row'>
+                                <div className='col-lg-8'>
                                     <select className='form-select' onChange={ev => {
                                         setOrgUnitLevelData({ ...ouLevelData, level: ev.target.value })
                                     }}>
-                                        <option value=''>Select OrgUnit Level</option>
-                                        {org_unit_levels.map((org_unit_level, index) => {
-                                            return <option key={org_unit_level.uuid} value={org_unit_level.uuid}>{org_unit_level.name}</option>
+                                        <option value=''>Select Level</option>
+                                        {[0,1,2,3,4,5].map((lvl, index) => {
+                                            return <option key={lvl} value={lvl}>{lvl}</option>
                                         })}
                                     </select>
                                 </div>
@@ -179,7 +143,7 @@ function NewOrgUnitLevel() {
                                 </div>
                             </div>
                             <div className="w-100 d-flex align-items-center justify-content-center">
-                                <button type="submit" className="btn btn-primary">Save role</button>
+                                <button type="submit" className="btn btn-primary">Save level</button>
                             </div>
                         </form>
                     </div>

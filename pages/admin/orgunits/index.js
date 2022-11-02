@@ -147,7 +147,7 @@ function OrgUnits() {
                                                     {orgunit?.description}
                                                 </td>
                                                 <td>
-                                                    {orgunit?.level}
+                                                    {orgunit?.level?.name+' ('+orgunit?.level?.level+')' || '-'}
                                                 </td>
                                                 <td>
                                                     {orgunit?.parent?.name || '-'}
