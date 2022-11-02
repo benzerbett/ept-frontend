@@ -16,23 +16,23 @@ function EditDictionary() {
 
 
     const saveEntry = () => {
-      setLoading(true)
-      getResource('dictionary/new', { method: 'POST', body: newDictionary }).then((data) => {
-          if (data.status === true) {
-              setStatus('success')
-              setMessage(data.message)
-          } else {
-              setStatus('error')
-              setMessage(data.message)
-          }
-          setLoading(false)
-      }).catch((err) => {
-          console.log(err)
-          setStatus('error')
-          setMessage('Error saving dictionary entry: ' + err.message || err)
-          setLoading(false)
-      })
-  }
+        setLoading(true)
+        getResource('dictionary/new', { method: 'POST', body: newDictionary }).then((data) => {
+            if (data.status === true) {
+                setStatus('success')
+                setMessage(data.message)
+            } else {
+                setStatus('error')
+                setMessage(data.message)
+            }
+            setLoading(false)
+        }).catch((err) => {
+            console.log(err)
+            setStatus('error')
+            setMessage('Error saving dictionary entry: ' + err.message || err)
+            setLoading(false)
+        })
+    }
 
     useEffect(() => {
         let mounted = true
@@ -70,7 +70,7 @@ function EditDictionary() {
                         </div>
                     </div>
                 </div>
-                
+
                 <div className='row'>
                     <div className='col-12'>
                         {status && status !== '' && <div className={`alert d-flex align-items-center gap-3 alert-${status === 'error' ? 'danger' : 'success'}`} role="alert">
@@ -79,7 +79,10 @@ function EditDictionary() {
                     </div>
                 </div>
                 <div className="row bg-light p-3 rounded">
-                    <form className="col-lg-12">
+                    <form onSubmit={ev => {
+                        ev.preventDefault()
+                        saveEntry()
+                    }}>
                         <div className="mb-3 form-group row">
                             <div className='col-lg-3'>
                                 <label htmlFor="name" className="form-label">Name</label>
@@ -111,7 +114,7 @@ function EditDictionary() {
                             </div>
                             <div className='col-lg-6'>
                                 <select className="form-select" id="program" aria-label="Program">
-                                    <option value="" selected disabled>Select program</option>
+                                    <option value="" disabled>Select program</option>
                                     <option value="EPT">EPT</option>
                                     <option value="HIV">HIV</option>
                                     <option value="TB">TB</option>
@@ -134,10 +137,10 @@ function EditDictionary() {
                                 <label htmlFor="type" className="form-label">Type</label>
                             </div>
                             <div className='col-lg-6'>
-                                <select className="form-select" id="type" aria-label="Type" value={valueType} onChange={ev=>{
+                                <select className="form-select" id="type" aria-label="Type" value={valueType} onChange={ev => {
                                     setValueType(ev.target.value)
                                 }}>
-                                    <option value="" selected disabled>Select type</option>
+                                    <option value="" disabled>Select type</option>
                                     <option value="string">String</option>
                                     <option value="list_of_items">List of Values</option>
                                 </select>

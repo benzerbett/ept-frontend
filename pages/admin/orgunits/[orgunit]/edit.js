@@ -63,7 +63,7 @@ function ViewPermission() {
                     <div className="d-flex flex-column flex-lg-row justify-content-between align-items-center">
                         <div className="d-flex w-100 flex-row flex-wrap justify-content-center justify-content-lg-between align-items-center gap-lg-4">
                             <button className="btn btn-link btn-sm" onClick={() => router.back()}>&larr; Back</button>
-                            <h3>Edit permission</h3>
+                            <h3>New permission</h3>
                             <Link href="/admin/programs" as={`/admin/permissions`}>
                                 <a className="btn btn-default text-muted btn-sm"> Cancel </a>
                             </Link>

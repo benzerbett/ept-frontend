@@ -87,10 +87,29 @@ function AdminSidebar({ router }) {
                         )} id="menu_access_mgt">
                             <ul className="btn-toggle-nav list-unstyled fw-normal pb-2 small">
                                 <li> <Link href="/admin/permissions"><a className={"dropdown-item py-1 fs-6 " + (router.pathname == '/admin/permissions' ? ' active' : '')} aria-current="page">Permissions</a></Link> </li>
-                                <li> <Link href="/admin/permissions/new"><a className={"dropdown-item py-1 fs-6 " + (router.pathname == '/admin/permissions/new' ? ' active' : '')} aria-current="page">Add new permission</a></Link> </li>
+                                {/* <li> <Link href="/admin/permissions/new"><a className={"dropdown-item py-1 fs-6 " + (router.pathname == '/admin/permissions/new' ? ' active' : '')} aria-current="page">Add new permission</a></Link> </li> */}
                                 <li><hr className="dropdown-divider" /></li>
                                 <li> <Link href="/admin/roles"><a className={"dropdown-item py-1 fs-6 " + (router.pathname == '/admin/roles' ? ' active' : '')} aria-current="page">Roles</a></Link> </li>
                                 <li> <Link href="/admin/roles/new"><a className={"dropdown-item py-1 fs-6 " + (router.pathname == '/admin/roles/new' ? ' active' : '')} aria-current="page">Add new role</a></Link> </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li className="mb-1">
+                        <button className={"btn btn-sm py-2 w-100 fs-6 d-flex btn-toggle align-items-center gap-2 rounded " + (
+                            (router.pathname.includes('/admin/orgunits') || router.pathname.includes('/admin/orgunitlevels')) ? 'active' : 'collapsed'
+                        )} data-bs-toggle="collapse" data-bs-target="#menu_access_mgt" aria-expanded={
+                            (router.pathname.includes('/admin/orgunits') || router.pathname.includes('/admin/orgunitlevels')) ? 'true' : 'false'
+                        }>
+                            <i className='fa fa-map text-muted' />
+                            Organization Units
+                        </button>
+                        <div className={"collapse " + (
+                            (router.pathname.includes('/admin/orgunits') || router.pathname.includes('/admin/orgunitlevels')) ? 'show' : ''
+                        )} id="menu_access_mgt">
+                            <ul className="btn-toggle-nav list-unstyled fw-normal pb-2 small">
+                                <li> <Link href="/admin/orgunits"><a className={"dropdown-item py-1 fs-6 " + (router.pathname == '/admin/orgunits' ? ' active' : '')} aria-current="page">Organization Units</a></Link> </li>
+                                <li><hr className="dropdown-divider" /></li>
+                                <li> <Link href="/admin/orgunitlevels"><a className={"dropdown-item py-1 fs-6 " + (router.pathname == '/admin/orgunitlevels' ? ' active' : '')} aria-current="page">Organization Unit Levels</a></Link> </li>
                             </ul>
                         </div>
                     </li>
