@@ -70,7 +70,7 @@ function EditDictionary() {
                         <div className="d-flex w-100 flex-row flex-wrap justify-content-center justify-content-lg-between align-items-center gap-lg-4">
                             <button className="btn btn-link btn-sm" onClick={() => router.back()}>&larr; Back</button>
                             <h3>Edit dictionary entry</h3>
-                            <Link href="/admin/programs" as={`/admin/programs`}>
+                            <Link href="/admin/dictionary" as={`/admin/dictionary`}>
                                 <a className="btn btn-default text-muted btn-sm"> Cancel </a>
                             </Link>
                         </div>
@@ -132,7 +132,7 @@ function EditDictionary() {
                             </div>
                             <div className='col-lg-6'>
 
-                                <textarea className="form-control" id="metadata" placeholder="Metadata" rows="3" value={dictionaryData?.metadata} />
+                                <textarea className="form-control" id="metadata" placeholder="Metadata" rows="3" value={dictionaryData?.meta} />
                             </div>
                         </div>
                         <div className="mb-3 form-group row">

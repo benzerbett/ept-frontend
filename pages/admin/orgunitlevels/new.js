@@ -125,7 +125,7 @@ function NewOrgUnitLevel() {
                                         setOrgUnitLevelData({ ...ouLevelData, level: ev.target.value })
                                     }}>
                                         <option value=''>Select Level</option>
-                                        {[0,1,2,3,4,5].map((lvl, index) => {
+                                        {[0,1,2,3,4,5,6].map((lvl, index) => {
                                             return <option key={lvl} value={lvl}>{lvl}</option>
                                         })}
                                     </select>

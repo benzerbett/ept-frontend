@@ -97,7 +97,7 @@ function AdminSidebar({ router }) {
                     <li className="mb-1">
                         <button className={"btn btn-sm py-2 w-100 fs-6 d-flex btn-toggle align-items-center gap-2 rounded " + (
                             (router.pathname.includes('/admin/orgunits') || router.pathname.includes('/admin/orgunitlevels')) ? 'active' : 'collapsed'
-                        )} data-bs-toggle="collapse" data-bs-target="#menu_access_mgt" aria-expanded={
+                        )} data-bs-toggle="collapse" data-bs-target="#menu_org_units" aria-expanded={
                             (router.pathname.includes('/admin/orgunits') || router.pathname.includes('/admin/orgunitlevels')) ? 'true' : 'false'
                         }>
                             <i className='fa fa-map text-muted' />
@@ -105,7 +105,7 @@ function AdminSidebar({ router }) {
                         </button>
                         <div className={"collapse " + (
                             (router.pathname.includes('/admin/orgunits') || router.pathname.includes('/admin/orgunitlevels')) ? 'show' : ''
-                        )} id="menu_access_mgt">
+                        )} id="menu_org_units">
                             <ul className="btn-toggle-nav list-unstyled fw-normal pb-2 small">
                                 <li> <Link href="/admin/orgunits"><a className={"dropdown-item py-1 fs-6 " + (router.pathname == '/admin/orgunits' ? ' active' : '')} aria-current="page">Organization Units</a></Link> </li>
                                 <li><hr className="dropdown-divider" /></li>

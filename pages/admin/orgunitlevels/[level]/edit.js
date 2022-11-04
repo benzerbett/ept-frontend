@@ -2,26 +2,25 @@ import Head from 'next/head'
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
-import ProgramsNavbar from '../../../../components/common/ProgramsNavbar';
 import { getResource } from '../../../../utilities';
 
-function EditProgram() {
+function EditOrgUnitLevel() {
     const router = useRouter()
-    const { prog } = router.query
+    const { level } = router.query
     const [status, setStatus] = useState('')
     const [message, setMessage] = useState('')
     const [loading, setLoading] = useState(true);
 
-    const [programData, setProgramData] = useState(null);
-    const [newProgramData, setNewProgramData] = useState({
+    const [newOrgUnitLevelData, setNewOrgUnitLevelData] = useState({
         "name": "",
         "description": "",
+        "level": "",
         "meta": ""
     })
 
-    const saveProgram = () => {
+    const saveOrgUnitLevel = () => {
         setLoading(true)
-        getResource('program/edit/'+prog, { method: 'PUT', body: newProgramData }).then((data) => {
+        getResource('organization_unit_level/edit/' + level, { method: 'PUT', body: newOrgUnitLevelData }).then((data) => {
             if (data.status === true) {
                 setStatus('success')
                 setMessage(data.message)
@@ -33,7 +32,7 @@ function EditProgram() {
         }).catch((err) => {
             console.log(err)
             setStatus('error')
-            setMessage('Error saving program: ' + err.message || err)
+            setMessage('Error saving organization unit level: ' + err.message || err)
             setLoading(false)
         })
     }
@@ -44,13 +43,13 @@ function EditProgram() {
             setStatus('')
             setMessage('')
             setLoading(false)
-            // get program
-            getResource(`program/${prog}`).then((data) => {
+            // get org_unit_level
+            getResource(`organization_unit_level/${level}`).then((data) => {
                 if (data.status === true) {
-                    setProgramData(data.data)
-                    setNewProgramData({
+                    setNewOrgUnitLevelData({
                         "name": data.data.name || "",
                         "description": data.data.description || "",
+                        "level": data.data.level || "",
                         "meta": data.data.meta || ""
                     })
                 } else {
@@ -61,7 +60,7 @@ function EditProgram() {
             }).catch((err) => {
                 console.log(err)
                 setStatus('error')
-                setMessage('Error loading program: ' + err.message || err)
+                setMessage('Error loading organization unit level: ' + err.message || err)
                 setLoading(false)
             })
         }
@@ -75,7 +74,7 @@ function EditProgram() {
     return (
         <>
             <Head>
-                <title>EPT | Edit Program</title>
+                <title>EPT | Edit Organization Unit Level</title>
                 <meta name="description" content="EPT" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
@@ -84,8 +83,8 @@ function EditProgram() {
                     <div className="d-flex flex-column flex-lg-row justify-content-between align-items-center">
                         <div className="d-flex w-100 flex-row flex-wrap justify-content-center justify-content-lg-between align-items-center gap-lg-4">
                             <button className="btn btn-link btn-sm" onClick={() => router.back()}>&larr; Back</button>
-                            <ProgramsNavbar program={programData} router={router} />
-                            <Link href="/admin/programs" as={`/admin/programs`}>
+                            <h3>Edit organization unit level</h3>
+                            <Link href="/admin/orgunitlevels" as={`/admin/orgunitlevels`}>
                                 <a className="btn btn-default text-muted btn-sm"> Cancel </a>
                             </Link>
                         </div>
@@ -103,45 +102,58 @@ function EditProgram() {
                     <div className='col-lg-12 my-3'>
                         {status !== 'error' && <form onSubmit={ev => {
                             ev.preventDefault()
-                            saveProgram()
+                            saveOrgUnitLevel()
                         }}>
                             <div className="form-group row mb-2 mb-lg-3">
                                 <div className='col-lg-3 py-1'>
-                                    <label className='form-label' htmlFor="program_name">Program Name
+                                    <label className='form-label' htmlFor="org_unit_level_name">Name
                                         <span className='text-danger'>*</span>
                                     </label>
                                     <small className='d-block text-muted lh-sm mb-1'>&nbsp;</small>
                                 </div>
                                 <div className='col-lg-7'>
-                                    <input type="text" className="form-control" id="program_name" defaultValue={newProgramData.name} placeholder="Enter program name" onChange={ev => {
-                                        setNewProgramData({ ...newProgramData, name: ev.target.value })
+                                    <input type="text" className="form-control" id="org_unit_level_name" defaultValue={newOrgUnitLevelData.name} placeholder="Enter org_unit_level name" onChange={ev => {
+                                        setNewOrgUnitLevelData({ ...newOrgUnitLevelData, name: ev.target.value })
                                     }} />
                                 </div>
                             </div>
                             <div className="form-group row mb-2 mb-lg-3">
                                 <div className='col-lg-3 py-1'>
-                                    <label className='form-label' htmlFor="program_desc">Program Description</label>
+                                    <label className='form-label' htmlFor="org_unit_level_desc">Description</label>
                                     <small className='d-block text-muted lh-sm mb-1'>&nbsp;</small>
                                 </div>
                                 <div className='col-lg-7'>
-                                    <textarea className="form-control" id="program_desc" defaultValue={newProgramData.description} placeholder="Describe the program" onChange={ev => {
-                                        setNewProgramData({ ...newProgramData, description: ev.target.value })
+                                    <textarea className="form-control" id="org_unit_level_desc" defaultValue={newOrgUnitLevelData.description} placeholder="Describe the org_unit_level" onChange={ev => {
+                                        setNewOrgUnitLevelData({ ...newOrgUnitLevelData, description: ev.target.value })
                                     }}></textarea>
                                 </div>
                             </div>
                             <div className="form-group row mb-2 mb-lg-3">
                                 <div className='col-lg-3 py-1'>
-                                    <label className='form-label' htmlFor="program_meta">Program Metadata</label>
+                                    <label className='form-label' htmlFor="org_unit_level_level">Level
+                                        <span className='text-danger'>*</span>
+                                    </label>
                                     <small className='d-block text-muted lh-sm mb-1'>&nbsp;</small>
                                 </div>
                                 <div className='col-lg-7'>
-                                    <textarea className="form-control" id="program_meta" placeholder="Additional attributes" defaultValue={newProgramData.meta} onChange={ev => {
-                                        setNewProgramData({ ...newProgramData, meta: ev.target.value })
+                                    <input type="text" className="form-control" id="org_unit_level_level" defaultValue={newOrgUnitLevelData.level} placeholder="Enter level" onChange={ev => {
+                                        setNewOrgUnitLevelData({ ...newOrgUnitLevelData, level: ev.target.value })
+                                    }} />
+                                </div>
+                            </div>
+                            <div className="form-group row mb-2 mb-lg-3">
+                                <div className='col-lg-3 py-1'>
+                                    <label className='form-label' htmlFor="org_unit_level_meta">Metadata</label>
+                                    <small className='d-block text-muted lh-sm mb-1'>&nbsp;</small>
+                                </div>
+                                <div className='col-lg-7'>
+                                    <textarea className="form-control" id="org_unit_level_meta" placeholder="Additional attributes" defaultValue={typeof newOrgUnitData.meta == 'object' ? JSON.stringify(newOrgUnitData.meta) : newOrgUnitData.meta} onChange={ev => {
+                                        setNewOrgUnitLevelData({ ...newOrgUnitLevelData, meta: ev.target.value })
                                     }}></textarea>
                                 </div>
                             </div>
                             <div className="w-100 d-flex align-items-center justify-content-center">
-                                <button type="submit" className="btn btn-primary">Update program</button>
+                                <button type="submit" className="btn btn-primary">Update level</button>
                             </div>
                         </form>}
                     </div>
@@ -151,4 +163,4 @@ function EditProgram() {
     )
 }
 
-export default EditProgram
+export default EditOrgUnitLevel

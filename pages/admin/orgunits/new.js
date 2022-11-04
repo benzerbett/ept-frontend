@@ -12,7 +12,7 @@ function NewOrgUnit() {
     const [loading, setLoading] = useState(true);
     const [parentOrgUnits, setParentOrgUnits] = useState(null);
 
-    const [org_unit_levels, setOrgUnitLevels] = useState([])
+    const [orgUnitLevels, setOrgUnitLevels] = useState([])
 
     const [ouData, setOrgUnitData] = useState({
         "name": "",
@@ -43,37 +43,42 @@ function NewOrgUnit() {
 
 
     const fetchOrgUnitLevels = () => {
-        setLoading(true)
+        // setLoading(true)
         getResource('organization_unit_levels?page_size=10000').then((data) => {
             if (data.status === true) {
                 setOrgUnitLevels(data?.data?.data)
+                setStatus('')
+                setMessage('')
             } else {
                 setStatus('error')
                 setMessage(data.message)
             }
-            setLoading(false)
+            // setLoading(false)
         }).catch((err) => {
             console.log(err)
             setStatus('error')
-            setMessage('Error fetching org_unit_levels: ' + err.message || err)
-            setLoading(false)
+            setMessage('Error fetching organization unit levels: ' + err.message || err)
+            // setLoading(false)
         })
     }
+    
     const fetchOrgUnits = (lvl) => {
-        setLoading(true)
+        // setLoading(true)
         getResource('organization_units?page_size=10000&level_code='+lvl).then((data) => {
             if (data.status === true) {
                 setParentOrgUnits(data?.data?.data)
+                setStatus('')
+                setMessage('')
             } else {
                 setStatus('error')
                 setMessage(data.message)
             }
-            setLoading(false)
+            // setLoading(false)
         }).catch((err) => {
             console.log(err)
             setStatus('error')
-            setMessage('Error fetching org_unit_levels: ' + err.message || err)
-            setLoading(false)
+            setMessage('Error fetching organization unit levels: ' + err.message || err)
+            // setLoading(false)
         })
     }
 
@@ -164,17 +169,16 @@ function NewOrgUnit() {
                                         setOrgUnitData({ ...ouData, level: ev.target.value })
                                         setParentOrgUnits([])
                                         // fetch org units with level above selected level
-                                        let selected_level_code = org_unit_levels.find(l => l.uuid === ev.target.value)?.level
+                                        let selected_level_code = orgUnitLevels.find(l => l.uuid === ev.target.value)?.level
                                         if (selected_level_code && selected_level_code > 0) {
                                             fetchOrgUnits(selected_level_code - 1)
                                         }
                                     }}>
                                         <option value=''>Select OrgUnit Level</option>
-                                        {org_unit_levels.map((org_unit_level, index) => {
+                                        {orgUnitLevels.map((org_unit_level, index) => {
                                             return <option key={org_unit_level.uuid} value={org_unit_level.uuid}>{org_unit_level.name}</option>
                                         })}
                                     </select>
-                                    {JSON.stringify(parentOrgUnits)}
                                 </div>
                             </div>
                             {parentOrgUnits && parentOrgUnits.length > 0 && <div className="form-group row mb-2 mb-lg-3">
