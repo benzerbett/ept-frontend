@@ -110,7 +110,7 @@ function NewOrgUnit() {
                         <div className="d-flex w-100 flex-row flex-wrap justify-content-center justify-content-lg-between align-items-center gap-lg-4">
                             <button className="btn btn-link btn-sm" onClick={() => router.back()}>&larr; Back</button>
                             <h3>New organization unit</h3>
-                            <Link href="/admin/roles" as={`/admin/roles`}>
+                            <Link href="/admin/orgunits" as={`/admin/orgunits`}>
                                 <a className="btn btn-default text-muted btn-sm"> Cancel </a>
                             </Link>
                         </div>
@@ -136,11 +136,11 @@ function NewOrgUnit() {
                             saveOrgUnit()
                         }}>
                             <div className="form-group row mb-2 mb-lg-3">
-                                <div className='col-lg-3 py-1'>
-                                    <label className='form-label' htmlFor="orgunit_name">OrgUnit Name
+                                <div className='col-lg-3 py-1 d-flex flex-column'>
+                                    <label className='form-label' htmlFor="orgunit_name">Name
                                         <span className='text-danger'>*</span>
                                     </label>
-                                    <small className='d-block text-muted lh-sm mb-1'>&nbsp;</small>
+                                    <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
                                 </div>
                                 <div className='col-lg-8'>
                                     <input type="text" className="form-control" id="orgunit_name" value={ouData.name} placeholder="Enter unit name" onChange={ev => {
@@ -149,9 +149,9 @@ function NewOrgUnit() {
                                 </div>
                             </div>
                             <div className="form-group row mb-2 mb-lg-3">
-                                <div className='col-lg-3 py-1'>
-                                    <label className='form-label' htmlFor="orgunit_desc">OrgUnit Description</label>
-                                    <small className='d-block text-muted lh-sm mb-1'>&nbsp;</small>
+                                <div className='col-lg-3 py-1 d-flex flex-column'>
+                                    <label className='form-label' htmlFor="orgunit_desc">Description</label>
+                                    <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
                                 </div>
                                 <div className='col-lg-8'>
                                     <textarea className="form-control" id="orgunit_desc" value={ouData.description} placeholder="Describe the unit" onChange={ev => {
@@ -160,9 +160,9 @@ function NewOrgUnit() {
                                 </div>
                             </div>
                             <div className="form-group row mb-2 mb-lg-3">
-                                <div className='col-lg-3 py-1'>
+                                <div className='col-lg-3 py-1 d-flex flex-column'>
                                     <label className='form-label' htmlFor="orgunit_desc">Organization Unit Level</label>
-                                    <small className='d-block text-muted lh-sm mb-1'>&nbsp;</small>
+                                    <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
                                 </div>
                                 <div className='col-lg-8'>
                                     <select className='form-select' onChange={ev => {
@@ -182,9 +182,9 @@ function NewOrgUnit() {
                                 </div>
                             </div>
                             {parentOrgUnits && parentOrgUnits.length > 0 && <div className="form-group row mb-2 mb-lg-3">
-                                <div className='col-lg-3 py-1'>
-                                    <label className='form-label' htmlFor="orgunit_desc">Parent</label>
-                                    <small className='d-block text-muted lh-sm mb-1'>&nbsp;</small>
+                                <div className='col-lg-3 py-1 d-flex flex-column'>
+                                    <label className='form-label' htmlFor="orgunit_desc">Parent Organization Unit</label>
+                                    <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
                                 </div>
                                 <div className='col-lg-8'>
                                     <select className='form-select' onChange={ev => {
@@ -198,9 +198,9 @@ function NewOrgUnit() {
                                 </div>
                             </div>}
                             <div className="form-group row mb-2 mb-lg-3">
-                                <div className='col-lg-3 py-1'>
+                                <div className='col-lg-3 py-1 d-flex flex-column'>
                                     <label className='form-label' htmlFor="orgunit_meta">Metadata</label>
-                                    <small className='d-block text-muted lh-sm mb-1'>&nbsp;</small>
+                                    <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
                                 </div>
                                 <div className='col-lg-8'>
                                     <textarea className="form-control" id="orgunit_meta" placeholder="Additional attributes" onChange={ev => {

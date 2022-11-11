@@ -105,11 +105,11 @@ function EditOrgUnitLevel() {
                             saveOrgUnitLevel()
                         }}>
                             <div className="form-group row mb-2 mb-lg-3">
-                                <div className='col-lg-3 py-1'>
+                                <div className='col-lg-3 py-1 d-flex flex-column'>
                                     <label className='form-label' htmlFor="org_unit_level_name">Name
                                         <span className='text-danger'>*</span>
                                     </label>
-                                    <small className='d-block text-muted lh-sm mb-1'>&nbsp;</small>
+                                    <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
                                 </div>
                                 <div className='col-lg-7'>
                                     <input type="text" className="form-control" id="org_unit_level_name" defaultValue={newOrgUnitLevelData.name} placeholder="Enter org_unit_level name" onChange={ev => {
@@ -118,9 +118,9 @@ function EditOrgUnitLevel() {
                                 </div>
                             </div>
                             <div className="form-group row mb-2 mb-lg-3">
-                                <div className='col-lg-3 py-1'>
+                                <div className='col-lg-3 py-1 d-flex flex-column'>
                                     <label className='form-label' htmlFor="org_unit_level_desc">Description</label>
-                                    <small className='d-block text-muted lh-sm mb-1'>&nbsp;</small>
+                                    <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
                                 </div>
                                 <div className='col-lg-7'>
                                     <textarea className="form-control" id="org_unit_level_desc" defaultValue={newOrgUnitLevelData.description} placeholder="Describe the org_unit_level" onChange={ev => {
@@ -129,11 +129,11 @@ function EditOrgUnitLevel() {
                                 </div>
                             </div>
                             <div className="form-group row mb-2 mb-lg-3">
-                                <div className='col-lg-3 py-1'>
+                                <div className='col-lg-3 py-1 d-flex flex-column'>
                                     <label className='form-label' htmlFor="org_unit_level_level">Level
                                         <span className='text-danger'>*</span>
                                     </label>
-                                    <small className='d-block text-muted lh-sm mb-1'>&nbsp;</small>
+                                    <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
                                 </div>
                                 <div className='col-lg-7'>
                                     <input type="text" className="form-control" id="org_unit_level_level" defaultValue={newOrgUnitLevelData.level} placeholder="Enter level" onChange={ev => {
@@ -142,12 +142,12 @@ function EditOrgUnitLevel() {
                                 </div>
                             </div>
                             <div className="form-group row mb-2 mb-lg-3">
-                                <div className='col-lg-3 py-1'>
+                                <div className='col-lg-3 py-1 d-flex flex-column'>
                                     <label className='form-label' htmlFor="org_unit_level_meta">Metadata</label>
-                                    <small className='d-block text-muted lh-sm mb-1'>&nbsp;</small>
+                                    <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
                                 </div>
                                 <div className='col-lg-7'>
-                                    <textarea className="form-control" id="org_unit_level_meta" placeholder="Additional attributes" defaultValue={typeof newOrgUnitData.meta == 'object' ? JSON.stringify(newOrgUnitData.meta) : newOrgUnitData.meta} onChange={ev => {
+                                    <textarea className="form-control" id="org_unit_level_meta" placeholder="Additional attributes" defaultValue={typeof newOrgUnitLevelData.meta == 'object' ? JSON.stringify(newOrgUnitLevelData.meta) : newOrgUnitLevelData.meta} onChange={ev => {
                                         setNewOrgUnitLevelData({ ...newOrgUnitLevelData, meta: ev.target.value })
                                     }}></textarea>
                                 </div>

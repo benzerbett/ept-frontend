@@ -42,7 +42,7 @@ function AccountSettings() {
                             <div className="form-group row mb-4 mb-lg-5">
                                 <div className='col-lg-3 py-1'>
                                     <label className='form-label' htmlFor="systemName">System Name</label>
-                                    <small className='d-block text-muted lh-sm mb-1'>Job open plural led child careful interest glass mark political happy worry held .</small>
+                                    <small className='d-block text-muted lh-sm my-0'>Job open plural led child careful interest glass mark political happy worry held .</small>
                                 </div>
                                 <div className='col-lg-7'>
                                     <input type="text" className="form-control" id="systemName" placeholder="Enter system name" />
@@ -51,7 +51,7 @@ function AccountSettings() {
                             <div className="form-group row mb-4 mb-lg-5">
                                 <div className='col-lg-3 py-1'>
                                     <label className='form-label' htmlFor="systemDescription">System Description</label>
-                                    <small className='d-block text-muted lh-sm mb-1'>Anyway fat ready speech famous brass equator needle ruler hurt way moment .</small>
+                                    <small className='d-block text-muted lh-sm my-0'>Anyway fat ready speech famous brass equator needle ruler hurt way moment .</small>
                                 </div>
                                 <div className='col-lg-7'>
                                     <input type="text" className="form-control" id="systemDescription" placeholder="Enter system description" />
@@ -60,7 +60,7 @@ function AccountSettings() {
                             <div className="form-group row mb-4 mb-lg-5">
                                 <div className='col-lg-3 py-1'>
                                     <label className='form-label' htmlFor="systemAddress">System Address</label>
-                                    <small className='d-block text-muted lh-sm mb-1'>Mass dawn bar carefully safety which division fire word receive having spirit movement bre.</small>
+                                    <small className='d-block text-muted lh-sm my-0'>Mass dawn bar carefully safety which division fire word receive having spirit movement bre.</small>
                                 </div>
                                 <div className='col-lg-7'>
                                     <input type="text" className="form-control" id="systemAddress" placeholder="Enter system address" />
@@ -69,7 +69,7 @@ function AccountSettings() {
                             <div className="form-group row mb-4 mb-lg-5">
                                 <div className='col-lg-3 py-1'>
                                     <label className='form-label' htmlFor="systemEmail">System Email</label>
-                                    <small className='d-block text-muted lh-sm mb-1'>Earth suggest heart former empty audience seems root bar dress thy variety of.</small>
+                                    <small className='d-block text-muted lh-sm my-0'>Earth suggest heart former empty audience seems root bar dress thy variety of.</small>
                                 </div>
                                 <div className='col-lg-7'>
                                     <input type="text" className="form-control" id="systemEmail" placeholder="Enter system email" />
@@ -78,7 +78,7 @@ function AccountSettings() {
                             <div className="form-group row mb-4 mb-lg-5">
                                 <div className='col-lg-3 py-1'>
                                     <label className='form-label' htmlFor="systemPhone">System Phone</label>
-                                    <small className='d-block text-muted lh-sm mb-1'>Time sale capital recognize worried safe noon aid floating surprise general exclaimed reach exampl.</small>
+                                    <small className='d-block text-muted lh-sm my-0'>Time sale capital recognize worried safe noon aid floating surprise general exclaimed reach exampl.</small>
                                 </div>
                                 <div className='col-lg-7'>
                                     <input type="text" className="form-control" id="systemPhone" placeholder="Enter system phone" />
@@ -87,7 +87,7 @@ function AccountSettings() {
                             <div className="form-group row mb-4 mb-lg-5">
                                 <div className='col-lg-3 py-1'>
                                     <label className='form-label' htmlFor="systemLogo">System Logo</label>
-                                    <small className='d-block text-muted lh-sm mb-1'>Volume stood fell primitive shoulder brush high journey chamber follow alive excitin.</small>
+                                    <small className='d-block text-muted lh-sm my-0'>Volume stood fell primitive shoulder brush high journey chamber follow alive excitin.</small>
                                 </div>
                                 <div className='col-lg-7'>
                                     <input type="file" className="form-control" id="systemLogo" />
@@ -96,7 +96,7 @@ function AccountSettings() {
                             <div className="form-group row mb-4 mb-lg-5">
                                 <div className='col-lg-3 py-1'>
                                     <label className='form-label' htmlFor="systemFavicon">System Favicon</label>
-                                    <small className='d-block text-muted lh-sm mb-1'>Lie very fur possible trade sing since while exact subject examine ha.</small>
+                                    <small className='d-block text-muted lh-sm my-0'>Lie very fur possible trade sing since while exact subject examine ha.</small>
                                 </div>
                                 <div className='col-lg-7'>
                                     <input type="file" className="form-control" id="systemFavicon" />
@@ -105,7 +105,7 @@ function AccountSettings() {
                             <div className="form-group row mb-4 mb-lg-5">
                                 <div className='col-lg-3 py-1'>
                                     <label className='form-label' htmlFor="systemTheme">System Theme</label>
-                                    <small className='d-block text-muted lh-sm mb-1'>Feathers gently fifteen gravity circle new baseball mighty being feel block soci.</small>
+                                    <small className='d-block text-muted lh-sm my-0'>Feathers gently fifteen gravity circle new baseball mighty being feel block soci.</small>
                                 </div>
                                 <div className='col-lg-7'>
                                     <select className="form-select" id="systemTheme">

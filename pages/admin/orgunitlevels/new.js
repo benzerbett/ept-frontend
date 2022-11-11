@@ -92,11 +92,11 @@ function NewOrgUnitLevel() {
                             saveOrgUnit()
                         }}>
                             <div className="form-group row mb-2 mb-lg-3">
-                                <div className='col-lg-3 py-1'>
+                                <div className='col-lg-3 py-1 d-flex flex-column'>
                                     <label className='form-label' htmlFor="orgunit_name">Level Name
                                         <span className='text-danger'>*</span>
                                     </label>
-                                    <small className='d-block text-muted lh-sm mb-1'>&nbsp;</small>
+                                    <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
                                 </div>
                                 <div className='col-lg-8'>
                                     <input type="text" className="form-control" id="orgunit_name" value={ouLevelData.name} placeholder="Enter level name" onChange={ev => {
@@ -105,9 +105,9 @@ function NewOrgUnitLevel() {
                                 </div>
                             </div>
                             <div className="form-group row mb-2 mb-lg-3">
-                                <div className='col-lg-3 py-1'>
+                                <div className='col-lg-3 py-1 d-flex flex-column'>
                                     <label className='form-label' htmlFor="orgunit_desc">OrgUnit Description</label>
-                                    <small className='d-block text-muted lh-sm mb-1'>&nbsp;</small>
+                                    <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
                                 </div>
                                 <div className='col-lg-8'>
                                     <textarea className="form-control" id="orgunit_desc" value={ouLevelData.description} placeholder="Describe the level" onChange={ev => {
@@ -116,9 +116,9 @@ function NewOrgUnitLevel() {
                                 </div>
                             </div>
                             <div className="form-group row mb-2 mb-lg-3">
-                                <div className='col-lg-3 py-1'>
+                                <div className='col-lg-3 py-1 d-flex flex-column'>
                                     <label className='form-label' htmlFor="orgunit_desc">Level</label>
-                                    <small className='d-block text-muted lh-sm mb-1'>&nbsp;</small>
+                                    <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
                                 </div>
                                 <div className='col-lg-8'>
                                     <select className='form-select' onChange={ev => {
@@ -132,9 +132,9 @@ function NewOrgUnitLevel() {
                                 </div>
                             </div>
                             <div className="form-group row mb-2 mb-lg-3">
-                                <div className='col-lg-3 py-1'>
+                                <div className='col-lg-3 py-1 d-flex flex-column'>
                                     <label className='form-label' htmlFor="orgunit_meta">Metadata</label>
-                                    <small className='d-block text-muted lh-sm mb-1'>&nbsp;</small>
+                                    <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
                                 </div>
                                 <div className='col-lg-8'>
                                     <textarea className="form-control" id="orgunit_meta" placeholder="Additional attributes" onChange={ev => {

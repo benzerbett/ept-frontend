@@ -82,11 +82,11 @@ function NewProgram() {
                             saveProgram()
                         }}>
                             <div className="form-group row mb-2 mb-lg-3">
-                                <div className='col-lg-3 py-1'>
+                                <div className='col-lg-3 py-1 d-flex flex-column'>
                                     <label className='form-label' htmlFor="program_name">Program Name
                                         <span className='text-danger'>*</span>
                                     </label>
-                                    <small className='d-block text-muted lh-sm mb-1'>&nbsp;</small>
+                                    <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
                                 </div>
                                 <div className='col-lg-7'>
                                     <input type="text" className="form-control" id="program_name" value={programData.name} placeholder="Enter program name" onChange={ev => {
@@ -95,9 +95,9 @@ function NewProgram() {
                                 </div>
                             </div>
                             <div className="form-group row mb-2 mb-lg-3">
-                                <div className='col-lg-3 py-1'>
+                                <div className='col-lg-3 py-1 d-flex flex-column'>
                                     <label className='form-label' htmlFor="program_desc">Program Description</label>
-                                    <small className='d-block text-muted lh-sm mb-1'>&nbsp;</small>
+                                    <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
                                 </div>
                                 <div className='col-lg-7'>
                                     <textarea className="form-control" id="program_desc" value={programData.description} placeholder="Describe the program" onChange={ev => {
@@ -106,9 +106,9 @@ function NewProgram() {
                                 </div>
                             </div>
                             <div className="form-group row mb-2 mb-lg-3">
-                                <div className='col-lg-3 py-1'>
+                                <div className='col-lg-3 py-1 d-flex flex-column'>
                                     <label className='form-label' htmlFor="program_meta">Program Metadata</label>
-                                    <small className='d-block text-muted lh-sm mb-1'>&nbsp;</small>
+                                    <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
                                 </div>
                                 <div className='col-lg-7'>
                                     <textarea className="form-control" id="program_meta" placeholder="Additional attributes" onChange={ev => {

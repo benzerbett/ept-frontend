@@ -126,11 +126,11 @@ function EditRole() {
                             saveRole()
                         }}>
                             <div className="form-group row mb-2 mb-lg-3">
-                                <div className='col-lg-3 py-1'>
+                                <div className='col-lg-3 py-1 d-flex flex-column'>
                                     <label className='form-label' htmlFor="role_name">Name
                                         <span className='text-danger'>*</span>
                                     </label>
-                                    <small className='d-block text-muted lh-sm mb-1'>&nbsp;</small>
+                                    <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
                                 </div>
                                 <div className='col-lg-8'>
                                     <input type="text" className="form-control" id="role_name" defaultValue={newRoleData.name} placeholder="Enter role name" onChange={ev => {
@@ -139,9 +139,9 @@ function EditRole() {
                                 </div>
                             </div>
                             <div className="form-group row mb-2 mb-lg-3">
-                                <div className='col-lg-3 py-1'>
+                                <div className='col-lg-3 py-1 d-flex flex-column'>
                                     <label className='form-label' htmlFor="role_desc">Description</label>
-                                    <small className='d-block text-muted lh-sm mb-1'>&nbsp;</small>
+                                    <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
                                 </div>
                                 <div className='col-lg-8'>
                                     <textarea className="form-control" id="role_desc" defaultValue={newRoleData.description} placeholder="Describe the role" onChange={ev => {
@@ -150,9 +150,9 @@ function EditRole() {
                                 </div>
                             </div>
                             <div className="form-group row mb-2 mb-lg-3">
-                                <div className='col-lg-3 py-1'>
+                                <div className='col-lg-3 py-1 d-flex flex-column'>
                                     <label className='form-label' htmlFor="role_desc">Role Permissions</label>
-                                    <small className='d-block text-muted lh-sm mb-1'>&nbsp;</small>
+                                    <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
                                 </div>
                                 <div className='col-lg-8 row px-lg-3'>
                                     {/* sorted by domain (word after _) */}
@@ -175,9 +175,9 @@ function EditRole() {
                                 </div>
                             </div>
                             <div className="form-group row mb-2 mb-lg-3">
-                                <div className='col-lg-3 py-1'>
+                                <div className='col-lg-3 py-1 d-flex flex-column'>
                                     <label className='form-label' htmlFor="role_meta">Metadata</label>
-                                    <small className='d-block text-muted lh-sm mb-1'>&nbsp;</small>
+                                    <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
                                 </div>
                                 <div className='col-lg-8'>
                                     <textarea className="form-control" id="role_meta" placeholder="Additional attributes" defaultValue={typeof newRoleData.meta == 'object' ? JSON.stringify(newRoleData.meta) : newRoleData.meta} onChange={ev => {

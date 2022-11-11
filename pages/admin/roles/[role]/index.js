@@ -49,6 +49,10 @@ function ViewRole() {
         <h5 className='mb-0'>Loading...</h5>
     </main>
 
+    // return <>
+    //     <pre>{JSON.stringify(roleData,null,2)}</pre>
+    // </>
+
 
     return (
         <>
@@ -86,8 +90,13 @@ function ViewRole() {
                                         <td>{roleData.description}</td>
                                     </tr>
                                     <tr>
-                                        <td className='font-bold text-muted'>Permissions ({Object.values(roleData.permissions).length})</td>
-                                        <td className='d-flex flex-wrap'>{Object.values(roleData.permissions).length > 0 ? Object.values(roleData.permissions).map((p, k) => <Link href={`/admin/permissions/${Object.keys(roleData.permissions)[k]}`}><a key={k} className='badge text-dark m-1' style={{backgroundColor: 'rgb(232, 232, 232)', fontSize: '0.9em', fontWeight: 500}}>{p}</a></Link>) : 'No permissions'}</td>
+                                        <td className='font-bold text-muted'>Permissions ({roleData.permissions.length})</td>
+                                        <td className='d-flex flex-wrap'>
+                                            {roleData.permissions.map((permission, index) => (
+                                                <span key={index} className='badge bg-primary me-2 mb-2'>{permission.name}</span>
+                                            ))}
+                                        </td>
+                                        {/* <td className='d-flex flex-wrap'>{Object.values(roleData.permissions).length > 0 ? Object.values(roleData.permissions).map((p, k) => <Link href={`/admin/permissions/${Object.keys(roleData.permissions)[k]}`}><a key={k} className='badge text-dark m-1' style={{backgroundColor: 'rgb(232, 232, 232)', fontSize: '0.9em', fontWeight: 500}}>{p}</a></Link>) : 'No permissions'}</td> */}
                                     </tr>
                                     <tr>
                                         <td className='font-bold text-muted'>Created at</td>

@@ -146,7 +146,12 @@ function Roles() {
                                                     {role?.description}
                                                 </td>
                                                 <td>
-                                                    {role?.permissions.length || 0}
+                                                    {role?.permissions?.length || 0}
+                                                    {/* <br/> <small>
+                                                        <pre>
+                                                            {JSON.stringify(role?.permissions, null, 1)}
+                                                        </pre>
+                                                    </small> */}
                                                 </td>
                                                 <td className='text-capitalize'>{role.deleted_at == null ? <span className='badge bg-success'>Active</span> : <span className='badge bg-warning'>Disabled</span>}</td>
                                                 <td>{new Date(role?.created_at).toLocaleString('en-GB', {

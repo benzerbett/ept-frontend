@@ -94,7 +94,7 @@ function EditOrgUnit() {
                         "name": data.data.name || "",
                         "description": data.data.description || "",
                         "level": typeof data.data.level == 'object' ? data.data.level.uuid : data.data.level || "",
-                        "parent": typeof data.data.parent == 'object' ? data.data.parent.uuid : data.data.parent || "",
+                        "parent": data.data.parent ? (typeof data.data.parent == 'object' ? data.data.parent.uuid : data.data.parent) : "",
                         "meta": data.data.meta || ""
                     })
                     // fetch parent org_units
@@ -152,11 +152,11 @@ function EditOrgUnit() {
                             saveOrgUnit()
                         }}>
                             <div className="form-group row mb-2 mb-lg-3">
-                                <div className='col-lg-3 py-1'>
+                                <div className='col-lg-3 py-1 d-flex flex-column'>
                                     <label className='form-label' htmlFor="org_unit_name">Name
                                         <span className='text-danger'>*</span>
                                     </label>
-                                    <small className='d-block text-muted lh-sm mb-1'>&nbsp;</small>
+                                    <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
                                 </div>
                                 <div className='col-lg-7'>
                                     <input type="text" className="form-control" id="org_unit_name" defaultValue={newOrgUnitData.name} placeholder="Enter org_unit_level name" onChange={ev => {
@@ -165,9 +165,9 @@ function EditOrgUnit() {
                                 </div>
                             </div>
                             <div className="form-group row mb-2 mb-lg-3">
-                                <div className='col-lg-3 py-1'>
+                                <div className='col-lg-3 py-1 d-flex flex-column'>
                                     <label className='form-label' htmlFor="org_unit_level_desc">Description</label>
-                                    <small className='d-block text-muted lh-sm mb-1'>&nbsp;</small>
+                                    <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
                                 </div>
                                 <div className='col-lg-7'>
                                     <textarea className="form-control" id="org_unit_level_desc" defaultValue={newOrgUnitData.description} placeholder="Describe the org_unit_level" onChange={ev => {
@@ -176,12 +176,12 @@ function EditOrgUnit() {
                                 </div>
                             </div>
                             <div className="form-group row mb-2 mb-lg-3">
-                                <div className='col-lg-3 py-1'>
+                                <div className='col-lg-3 py-1 d-flex flex-column'>
                                     <label className='form-label' htmlFor="orgunit_level">Level</label>
-                                    <small className='d-block text-muted lh-sm mb-1'>&nbsp;</small>
+                                    <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
                                 </div>
                                 <div className='col-lg-7'>
-                                    <select className='form-select' name='orgunit_level' defaultValue={typeof newOrgUnitData.level == "object" ? newOrgUnitData.level.uuid : newOrgUnitData.level} onChange={ev => {
+                                    <select className='form-select' name='orgunit_level' value={typeof newOrgUnitData.level == "object" ? newOrgUnitData.level.uuid : newOrgUnitData.level} onChange={ev => {
                                         setNewOrgUnitData({ ...newOrgUnitData, level: ev.target.value })
                                         setParentOrgUnits([])
                                         // fetch org units with level above selected level
@@ -198,12 +198,12 @@ function EditOrgUnit() {
                                 </div>
                             </div>
                             {parentOrgUnits && parentOrgUnits.length > 0 && <div className="form-group row mb-2 mb-lg-3">
-                                <div className='col-lg-3 py-1'>
+                                <div className='col-lg-3 py-1 d-flex flex-column'>
                                     <label className='form-label' htmlFor="orgunit_parent">Parent</label>
-                                    <small className='d-block text-muted lh-sm mb-1'>&nbsp;</small>
+                                    <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
                                 </div>
                                 <div className='col-lg-7'>
-                                    <select className='form-select' name='orgunit_parent' defaultValue={(newOrgUnitData.parent && typeof newOrgUnitData.parent == "object") ? newOrgUnitData.parent.uuid : newOrgUnitData.parent || null} onChange={ev => {
+                                    <select className='form-select' name='orgunit_parent' value={newOrgUnitData.parent ? (typeof newOrgUnitData.parent == "object" ? newOrgUnitData.parent.uuid : newOrgUnitData.parent) : ""} onChange={ev => {
                                         setNewOrgUnitData({ ...newOrgUnitData, parent: ev.target.value })
                                     }}>
                                         <option value=''>Select Parent</option>
@@ -214,9 +214,9 @@ function EditOrgUnit() {
                                 </div>
                             </div>}
                             <div className="form-group row mb-2 mb-lg-3">
-                                <div className='col-lg-3 py-1'>
+                                <div className='col-lg-3 py-1 d-flex flex-column'>
                                     <label className='form-label' htmlFor="org_unit_level_meta">Metadata</label>
-                                    <small className='d-block text-muted lh-sm mb-1'>&nbsp;</small>
+                                    <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
                                 </div>
                                 <div className='col-lg-7'>
                                     <textarea className="form-control" id="org_unit_level_meta" placeholder="Additional attributes" defaultValue={typeof newOrgUnitData.meta == 'object' ? JSON.stringify(newOrgUnitData.meta) : newOrgUnitData.meta} onChange={ev => {
