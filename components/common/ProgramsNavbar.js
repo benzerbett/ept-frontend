@@ -55,7 +55,7 @@ function ProgramsNavbar({ router, program, subtitle }) {
                                         <a className={"text-nowrap nav-link d-flex align-items-center justify-content-center " + (
                                             router.asPath.includes(`/admin/programs/${prog}/edit`) ? 'active' : ''
                                         )}>
-                                            Settings/Edit
+                                            Edit Program
                                         </a>
                                     </Link>
                                 </nav>

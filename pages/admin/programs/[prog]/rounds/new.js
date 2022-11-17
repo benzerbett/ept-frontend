@@ -9,14 +9,8 @@ function NewRound() {
     const { prog } = router.query
     const [status, setStatus] = useState('')
     const [allPrograms, setAllPrograms] = useState([])
+    const [allForms, setAllForms] = useState([])
     const [allSchemas, setAllSchemas] = useState([])
-    const [allScoring, setAllScoring] = useState([
-        'consensus',
-        'z-score',
-        'majority',
-        'weighted',
-        'custom'
-    ])
     const [message, setMessage] = useState('')
     const [loading, setLoading] = useState(true);
 
@@ -29,6 +23,7 @@ function NewRound() {
         "testing_instructions": "",
         "start_date": "",
         "end_date": "",
+        "forms": [],
         "meta": "",
     })
 
@@ -69,6 +64,24 @@ function NewRound() {
             })
         }
     }
+    const fetchForms = (pr) => {
+        if (pr !== '' && pr != undefined && pr != null) {
+            getResource(`forms?program=${pr}&page_size=10000`).then((data) => {
+                if (data.status === true) {
+                    setAllForms(data?.data?.data)
+                    // setStatus('success')
+                    // setMessage(data.message)
+                } else {
+                    // setStatus('error')
+                    // setMessage('Error fetching schemas: ' + data.message)
+                }
+            }).catch((err) => {
+                console.log(err)
+                // setStatus('error')
+                // setMessage('Error fetching schemas: ' + err.message || err)
+            })
+        }
+    }
 
     useEffect(() => {
         let mounted = true
@@ -79,6 +92,7 @@ function NewRound() {
             if (prog) {
                 setNewRoundData({ ...newRoundData, program: prog })
                 fetchSchemas(prog)
+                fetchForms(prog)
             }
             getResource(`programs?page_size=10000`).then((data) => {
                 if (data.status === true) {
@@ -135,7 +149,7 @@ function NewRound() {
                             ev.preventDefault()
                             saveRound()
                         }}>
-                            <div className="form-group row mb-2 mb-lg-3">
+                            <div className="form-group row my-1 my-lg-3 py-2" style={{borderBottom:'1px solid #ececec'}}>
                                 <div className='col-lg-2 py-1 d-flex flex-column'>
                                     <label className='form-label' htmlFor="round_name">Name
                                         <span className='text-danger'>*</span>
@@ -148,7 +162,7 @@ function NewRound() {
                                     }} />
                                 </div>
                             </div>
-                            <div className="form-group row mb-2 mb-lg-3">
+                            <div className="form-group row my-1 my-lg-3 py-2" style={{borderBottom:'1px solid #ececec'}}>
                                 <div className='col-lg-2 py-1 d-flex flex-column'>
                                     <label className='form-label' htmlFor="round_desc">Description</label>
                                     <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
@@ -159,7 +173,7 @@ function NewRound() {
                                     }}></textarea>
                                 </div>
                             </div>
-                            <div className="form-group row mb-2 mb-lg-3">
+                            <div className="form-group row my-1 my-lg-3 py-2" style={{borderBottom:'1px solid #ececec'}}>
                                 <div className='col-lg-2 py-1 d-flex flex-column'>
                                     <label className='form-label' htmlFor="round_program">Program
                                         <span className='text-danger'>*</span>
@@ -169,8 +183,10 @@ function NewRound() {
                                 <div className='col-lg-8'>
                                     <select className='form-select' name='round_program' value={newRoundData.program} onChange={ev => {
                                         setAllSchemas([])
+                                        setAllForms([])
                                         setNewRoundData({ ...newRoundData, program: ev.target.value })
                                         fetchSchemas(ev.target.value)
+                                        fetchForms(ev.target.value)
                                     }}>
                                         <option value={''}>Select program</option>
                                         {allPrograms && allPrograms.length > 0 && allPrograms.map(prog => (
@@ -179,7 +195,7 @@ function NewRound() {
                                     </select>
                                 </div>
                             </div>
-                            {allSchemas && allSchemas.length > 0 && <div className="form-group row mb-2 mb-lg-3">
+                            {allSchemas && allSchemas.length > 0 && <div className="form-group row my-1 my-lg-3 py-2" style={{borderBottom:'1px solid #ececec'}}>
                                 <div className='col-lg-2 py-1 d-flex flex-column'>
                                     <label className='form-label' htmlFor="round_program">Schema
                                         <span className='text-danger'>*</span>
@@ -189,7 +205,6 @@ function NewRound() {
                                 <div className='col-lg-8'>
                                     <select className='form-select' name='round_program' value={newRoundData.schema} onChange={ev => {
                                         setNewRoundData({ ...newRoundData, schema: ev.target.value })
-                                        fetchSchemas(ev.target.value)
                                     }}>
                                         <option value={''}>Select schema</option>
                                         {allSchemas && allSchemas.length > 0 && allSchemas.map(schm => (
@@ -198,7 +213,7 @@ function NewRound() {
                                     </select>
                                 </div>
                             </div>}
-                            <div className="form-group row mb-2 mb-lg-3">
+                            <div className="form-group row my-1 my-lg-3 py-2" style={{borderBottom:'1px solid #ececec'}}>
                                 <div className='col-lg-2 py-1 d-flex flex-column'>
                                     <label className='form-label' htmlFor="round_active">Is it active
                                         <span className='text-danger'>*</span>
@@ -214,7 +229,73 @@ function NewRound() {
                                     }} /> No
                                 </div>
                             </div>
-                            <div className="form-group row mb-2 mb-lg-3">
+                            <div className="form-group row my-1 my-lg-3 py-2" style={{borderBottom:'1px solid #ececec'}}>
+                                <div className='col-lg-2 py-1 d-flex flex-column'>
+                                    <label className='form-label' htmlFor="round_use_checklist">Use readiness checklist?
+                                        <span className='text-danger'>*</span>
+                                    </label>
+                                    <small className='d-block text-muted lh-sm my-0'>This means that the participants will have to fill a readiness checklist form for approval before proceeding to enter results for this round</small>
+                                </div>
+                                <div className='col-lg-2'>
+                                    <input type="radio" className="form-check-input" id="round_use_checklist" name='round_use_checklist' value={true} checked={newRoundData.use_checklist} onChange={ev => {
+                                        setNewRoundData({ ...newRoundData, use_checklist: true })
+                                    }} /> Yes &nbsp;&nbsp;
+                                    <input type="radio" className="form-check-input" id="round_use_checklist" name='round_use_checklist' value={false} checked={!newRoundData.use_checklist} onChange={ev => {
+                                        setNewRoundData({ ...newRoundData, use_checklist: false })
+                                    }} /> No
+                                </div>
+                                <div className='col-lg-6'>
+                                    {(newRoundData?.use_checklist && newRoundData?.use_checklist === true) && allForms && allForms.length > 0 && <div className="form-group row mb-2 mb-lg-3">
+                                        <div className='col-lg-12 py-1 d-flex flex-column'>
+                                            <label className='form-label' htmlFor="round_program">Checklist form
+                                                <span className='text-danger'>*</span>
+                                            </label>
+                                            <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
+                                        </div>
+                                        <div className='col-lg-12'>
+                                            <select className='form-select' name='round_program' value={newRoundData.checklist_form} onChange={ev => {
+                                                if (newRoundData.forms && !newRoundData.forms.includes(ev.target.value)) setNewRoundData({ ...newRoundData, forms: [...newRoundData.forms, ev.target.value] })
+                                            }}>
+                                                <option value={''}>Select checklist form</option>
+                                                {allForms && allForms.length > 0 && allForms.filter(f => ['survey', 'pre'].includes(f.target_type)).map(frm => (
+                                                    <option key={frm.uuid} value={frm.uuid}>{frm.name}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                    </div>}
+                                </div>
+                            </div>
+
+                            <div className="form-group row my-1 my-lg-3 py-2" style={{borderBottom:'1px solid #ececec'}}>
+                                <div className='col-lg-2 py-1 d-flex flex-column'>
+                                    <label className='form-label' htmlFor="round_multi_panels">Use multiple panels?
+                                        <span className='text-danger'>*</span>
+                                    </label>
+                                    <small className='d-block text-muted lh-sm my-0'>This means that you will use multiple panels for different cohorts/lots of participants.</small>
+                                </div>
+                                <div className='col-lg-4'>
+                                    <input type="radio" className="form-check-input" id="round_multi_panels" name='round_multi_panels' value={true} checked={newRoundData.multi_panels} onChange={ev => {
+                                        setNewRoundData({ ...newRoundData, multi_panels: true })
+                                    }} /> Yes &nbsp;&nbsp;
+                                    <input type="radio" className="form-check-input" id="round_multi_panels" name='round_multi_panels' value={false} checked={!newRoundData.multi_panels} onChange={ev => {
+                                        setNewRoundData({ ...newRoundData, multi_panels: false })
+                                    }} /> No
+                                </div>
+                            </div>
+                            <div className="form-group row my-1 my-lg-3 py-2" style={{borderBottom:'1px solid #ececec'}}>
+                                <div className='col-lg-2 py-1 d-flex flex-column'>
+                                    <label className='form-label' htmlFor="round_multi_panels">Number of lots?
+                                        <span className='text-danger'>*</span>
+                                    </label>
+                                    <small className='d-block text-muted lh-sm my-0'>The number of groups/cohorts to split the users into.</small>
+                                </div>
+                                <div className='col-lg-8'>
+                                    <input type="number" className="form-control" id="round_no_lots" name='round_no_lots' placeholder='Number of lots' value={true} checked={newRoundData.no_lots} onChange={ev => {
+                                        setNewRoundData({ ...newRoundData, no_lots: true })
+                                    }} />
+                                </div>
+                            </div>
+                            <div className="form-group row my-1 my-lg-3 py-2" style={{borderBottom:'1px solid #ececec'}}>
                                 <div className='col-lg-2 py-1 d-flex flex-column'>
                                     <label className='form-label' htmlFor="round_instructions">Testing instructions</label>
                                     <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
@@ -225,7 +306,7 @@ function NewRound() {
                                     }}></textarea>
                                 </div>
                             </div>
-                            <div className="form-group row mb-2 mb-lg-4">
+                            <div className="form-group row my-1 my-lg-3 py-2" style={{borderBottom:'1px solid #ececec'}}>
                                 <div className='col-lg-2 py-1 d-flex flex-column'>
                                     <label className='form-label' htmlFor="round_instructions">Period
                                         <span className='text-danger'>*</span>
@@ -245,7 +326,7 @@ function NewRound() {
                                     }} />
                                 </div>
                             </div>
-                            <div className="form-group row mb-2 mb-lg-3">
+                            <div className="form-group row my-1 my-lg-3 py-2" style={{borderBottom:'1px solid #ececec'}}>
                                 <div className='col-lg-2 py-1 d-flex flex-column'>
                                     <label className='form-label' htmlFor="round_meta">Metadata</label>
                                     <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>

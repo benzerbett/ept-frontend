@@ -10,13 +10,7 @@ function EditRound() {
     const [status, setStatus] = useState('')
     const [allPrograms, setAllPrograms] = useState([])
     const [allSchemas, setAllSchemas] = useState([])
-    const [allScoring, setAllScoring] = useState([
-        'consensus',
-        'z-score',
-        'majority',
-        'weighted',
-        'custom'
-    ])
+    const [allForms, setAllForms] = useState([])
     const [message, setMessage] = useState('')
     const [loading, setLoading] = useState(true);
 
@@ -69,6 +63,24 @@ function EditRound() {
             })
         }
     }
+    const fetchForms = (pr) => {
+        if (pr !== '' && pr != undefined && pr != null) {
+            getResource(`forms?program=${pr}&page_size=10000`).then((data) => {
+                if (data.status === true) {
+                    setAllForms(data?.data?.data)
+                    // setStatus('success')
+                    // setMessage(data.message)
+                } else {
+                    // setStatus('error')
+                    // setMessage('Error fetching schemas: ' + data.message)
+                }
+            }).catch((err) => {
+                console.log(err)
+                // setStatus('error')
+                // setMessage('Error fetching schemas: ' + err.message || err)
+            })
+        }
+    }
 
     useEffect(() => {
         let mounted = true
@@ -79,6 +91,7 @@ function EditRound() {
             if (prog) {
                 setNewRoundData({ ...newRoundData, program: prog })
                 fetchSchemas(prog)
+                fetchForms(prog)
             }
             getResource(`programs?page_size=10000`).then((data) => {
                 if (data.status === true) {
@@ -195,6 +208,7 @@ function EditRound() {
                                         setAllSchemas([])
                                         setNewRoundData({ ...newRoundData, program: ev.target.value })
                                         fetchSchemas(ev.target.value)
+                                        fetchForms(ev.target.value)
                                     }}>
                                         <option value={''}>Select program</option>
                                         {allPrograms && allPrograms.length > 0 && allPrograms.map(prog => (
@@ -213,7 +227,6 @@ function EditRound() {
                                 <div className='col-lg-8'>
                                     <select className='form-select' name='round_program' value={newRoundData.schema} onChange={ev => {
                                         setNewRoundData({ ...newRoundData, schema: ev.target.value })
-                                        fetchSchemas(ev.target.value)
                                     }}>
                                         <option value={''}>Select schema</option>
                                         {allSchemas && allSchemas.length > 0 && allSchemas.map(schm => (
@@ -235,6 +248,22 @@ function EditRound() {
                                     }} /> Yes &nbsp;&nbsp;
                                     <input type="radio" className="form-check-input" id="round_active" name='round_active' value={false} checked={!newRoundData.active} onChange={ev => {
                                         setNewRoundData({ ...newRoundData, active: false })
+                                    }} /> No
+                                </div>
+                            </div>
+                            <div className="form-group row mb-2 mb-lg-3">
+                                <div className='col-lg-2 py-1 d-flex flex-column'>
+                                    <label className='form-label' htmlFor="round_use_checklist">Use readiness checklist?
+                                        <span className='text-danger'>*</span>
+                                    </label>
+                                    <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
+                                </div>
+                                <div className='col-lg-4'>
+                                    <input type="radio" className="form-check-input" id="round_use_checklist" name='round_use_checklist' value={true} checked={newRoundData.use_checklist} onChange={ev => {
+                                        setNewRoundData({ ...newRoundData, use_checklist: true })
+                                    }} /> Yes &nbsp;&nbsp;
+                                    <input type="radio" className="form-check-input" id="round_use_checklist" name='round_use_checklist' value={false} checked={!newRoundData.use_checklist} onChange={ev => {
+                                        setNewRoundData({ ...newRoundData, use_checklist: false })
                                     }} /> No
                                 </div>
                             </div>
