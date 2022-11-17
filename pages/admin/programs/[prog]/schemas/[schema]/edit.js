@@ -9,13 +9,21 @@ function EditSchema() {
     const { schema, prog } = router.query
     const [status, setStatus] = useState('')
     const [allPrograms, setAllPrograms] = useState([])
+    const [allScoring, setAllScoring] = useState([
+        'consensus',
+        'z-score',
+        'majority',
+        'weighted',
+        'custom'
+    ])
     const [message, setMessage] = useState('')
     const [loading, setLoading] = useState(true);
 
     const [newSchemaData, setNewSchemaData] = useState({
         "name": "",
         "description": "",
-        "schema": "",
+        "program": "",
+        "scoringCriteria": "",
         "meta": ""
     })
 
@@ -64,8 +72,8 @@ function EditSchema() {
                     setNewSchemaData({
                         "name": data.data.name || "",
                         "description": data.data.description || "",
-                        "schema": data.data.schema || "",
                         "program": data.data.program || "",
+                        "scoringCriteria": data.data.scoringCriteria || "",
                         "meta": data.data.meta || ""
                     })
                 } else {
@@ -128,7 +136,7 @@ function EditSchema() {
                                     <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
                                 </div>
                                 <div className='col-lg-7'>
-                                    <input type="text" className="form-control" id="schema_name" defaultValue={newSchemaData.name} placeholder="Enter schema name" onChange={ev => {
+                                    <input type="text" className="form-control" id="schema_name" value={newSchemaData.name} placeholder="Enter schema name" onChange={ev => {
                                         setNewSchemaData({ ...newSchemaData, name: ev.target.value })
                                     }} />
                                 </div>
@@ -139,7 +147,7 @@ function EditSchema() {
                                     <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
                                 </div>
                                 <div className='col-lg-7'>
-                                    <textarea className="form-control" id="schema_desc" defaultValue={newSchemaData.description} placeholder="Describe the schema" onChange={ev => {
+                                    <textarea className="form-control" id="schema_desc" value={newSchemaData.description} placeholder="Describe the schema" onChange={ev => {
                                         setNewSchemaData({ ...newSchemaData, description: ev.target.value })
                                     }}></textarea>
                                 </div>
@@ -152,10 +160,30 @@ function EditSchema() {
                                     <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
                                 </div>
                                 <div className='col-lg-7'>
-                                    <select className='form-select' name='schema_program' defaultValue={typeof newSchemaData.program == 'object' ? newSchemaData.program?.uuid : newSchemaData.program}>
+                                    <select className='form-select' name='schema_program' value={newSchemaData.program} onChange={ev => {
+                                        setNewSchemaData({ ...newSchemaData, program: ev.target.value })
+                                    }}>
                                         <option value={''}>Select program</option>
-                                        {allPrograms && allPrograms.length>0 && allPrograms.map(prog=>(
+                                        {allPrograms && allPrograms.length > 0 && allPrograms.map(prog => (
                                             <option key={prog.uuid} value={prog.uuid}>{prog.name}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="form-group row mb-2 mb-lg-3">
+                                <div className='col-lg-3 py-1 d-flex flex-column'>
+                                    <label className='form-label' htmlFor="schema_scoring">Scoring Criteria
+                                        <span className='text-danger'>*</span>
+                                    </label>
+                                    <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
+                                </div>
+                                <div className='col-lg-7'>
+                                    <select className='form-select' style={{ textTransform: 'capitalize' }} name='schema_scoring' value={newSchemaData.scoringCriteria} onChange={ev => {
+                                        setNewSchemaData({ ...newSchemaData, scoringCriteria: ev.target.value })
+                                    }}>
+                                        <option value={''}>Select scoring criteria</option>
+                                        {allScoring && allScoring.length > 0 && allScoring.map(score => (
+                                            <option key={score} value={score}><span style={{ textTransform: 'capitalize' }}>{score}</span></option>
                                         ))}
                                     </select>
                                 </div>
@@ -166,7 +194,7 @@ function EditSchema() {
                                     <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
                                 </div>
                                 <div className='col-lg-7'>
-                                    <textarea className="form-control" id="schema_meta" placeholder="Additional attributes" defaultValue={typeof newSchemaData.meta == 'object' ? JSON.stringify(newSchemaData.meta) : newSchemaData.meta} onChange={ev => {
+                                    <textarea className="form-control" id="schema_meta" placeholder="Additional attributes" value={typeof newSchemaData.meta == 'object' ? JSON.stringify(newSchemaData.meta) : newSchemaData.meta} onChange={ev => {
                                         setNewSchemaData({ ...newSchemaData, meta: ev.target.value })
                                     }}></textarea>
                                 </div>
