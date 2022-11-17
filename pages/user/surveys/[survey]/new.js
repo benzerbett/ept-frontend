@@ -14,6 +14,7 @@ function App() {
     const [loading, setLoading] = useState(true);
 
     const getForm = async (sess, config, form_id) => {
+        console.log('getForm(sess, config, form_id)', sess, config, form_id)
         if (config) {
             let fm = loadConfig(config, sess);
             if (fm) {
@@ -36,7 +37,7 @@ function App() {
                         const { survey } = router.query
                         if (survey) {
                             setFormId(survey);
-                            getForm(session, configuration, survey).then(fm => {
+                            getForm(session, configuration.data, survey).then(fm => {
                                 if (fm) {
                                     setForm(fm);
                                     setLoading(false);

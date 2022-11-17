@@ -6,7 +6,7 @@ import { getResource } from '../../../../utilities'
 
 function ViewOrgUnit() {
     const router = useRouter()
-    const { orgUnit } = router.query
+    const { orgunit } = router.query
 
 
     const [orgUnitData, setOrgUnitData] = useState(null)
@@ -38,11 +38,11 @@ function ViewOrgUnit() {
     useEffect(() => {
         let mounted = true
         if (mounted) {
-            let rsc = 'organization_unit/' + orgUnit
+            let rsc = 'organization_unit/' + orgunit
             fetchOrgUnit(rsc)
         }
         return () => mounted = false
-    }, [orgUnit])
+    }, [orgunit])
 
 
     if (loading) return <main style={{ width: '100%', height: '85vh', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -53,7 +53,7 @@ function ViewOrgUnit() {
     return (
         <>
             <Head>
-                <title>EPT | Organization Unit OrgUnit Details</title>
+                <title>EPT | Organization Unit Details</title>
                 <meta name="description" content="EPT" />
                 <link rel="icon" href="/favicon.ico" />
                 <meta charSet="utf-8" />
@@ -62,16 +62,16 @@ function ViewOrgUnit() {
                 <div className="d-flex flex-column flex-lg-row justify-content-between align-items-center">
                     <div className="d-flex flex-column flex-lg-row justify-content-between align-items-center gap-4">
                         <button className="btn btn-link" onClick={() => router.back()}>&larr; Back</button>
-                        <h2 className="font-bold my-4">Organization Unit OrgUnit details</h2>
+                        <h2 className="font-bold my-4">Organization Unit details</h2>
                     </div>
-                    <Link href="/admin/orgunits/[orgUnit]/edit" as={`/admin/orgunits/${orgUnit}/edit`}>
+                    <Link href="/admin/orgunits/[orgunit]/edit" as={`/admin/orgunits/${orgunit}/edit`}>
                         <a className="btn btn-primary btn-sm">
                             <i className='fa fa-pencil'></i> &nbsp;
-                            Edit OrgUnit
+                            Edit
                         </a>
                     </Link>
                 </div>
-                <hr/>
+                <hr />
                 <div className="row">
                     <div className="col-lg-8">
                         <div className="d-flex w-100">
@@ -81,9 +81,14 @@ function ViewOrgUnit() {
                                         return (
                                             <tr key={index}>
                                                 <td className="font-bold text-capitalize">{key.split('_').join(' ')}</td>
-                                                <td>{key.includes('_at') ? (new Date(orgUnitData[key]).toLocaleString('en-GB', {
-                                                    year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true
-                                                })) : orgUnitData[key]}</td>
+                                                <td>
+                                                    {typeof orgUnitData[key] == 'object' ?
+                                                        <pre className='p-2 br-1 pt-0' style={{whiteSpace: 'pre-wrap', backgroundColor: '#fcfcfc'}}>{JSON.stringify(orgUnitData[key], null, 2).split('"').join('').split('{').join('').split('}').join('')}</pre> :
+                                                        key.includes('_at') ? (new Date(orgUnitData[key]).toLocaleString('en-GB', {
+                                                            year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true
+                                                        })) :
+                                                            orgUnitData[key]}
+                                                </td>
                                             </tr>
                                         )
                                     })}

@@ -172,6 +172,7 @@ export const loadConfig = (json, session) => {
     let dataDictionary = {};
     if (json && json.dataDictionary) {
         dataDictionary = json.dataDictionary;
+        console.log('dataDictionary', dataDictionary);
     } else {
         if (debug) console.log("No dataDictionary found in config");
     }
@@ -271,7 +272,7 @@ export const doGetSession = async () => {
 }
 
 export const getActiveSession = (sessionID) => {
-    console.log("getActiveSession", sessionID)
+    if(debug) console.log("getActiveSession", sessionID)
     if (sessionID) {
         return fetch(`/api/configurations/${sessionID}?details`, {
             method: 'GET',
@@ -282,19 +283,21 @@ export const getActiveSession = (sessionID) => {
         })
             .then((res) => res.json())
             .then((data) => {
-                if (data.uuid) {
+                if (data?.data?.uuid) {
                     if (typeof window !== 'undefined') {
-                        window.sessionStorage.setItem('activeProgramCode', data?.uuid)
+                        window.sessionStorage.setItem('activeProgramCode', data?.data?.uuid)
                     }
-                    return data?.uuid
+                    return data?.data?.uuid
                 }
             })
-    } /*else {
+    } else {
+        if(debug) console.log("getActiveSession(): No sessionID found")
         return null;
-    }*/
+    }
 }
 
 export const getProgramConfig = (id) => {
+    console.log("getProgramConfig", id)
     return fetch(`/api/configurations/${id}?details`, {
         method: 'GET',
         headers: {

@@ -19,13 +19,13 @@ function Evaluations() {
                 if (session && session.activeProgramCode) {
                     const ap = getProgramConfig(session.activeProgramCode)
                     ap.then((data) => {
-                        setActiveConfig(data)
+                        setActiveConfig(data?.data)
                         let svys = []
-                        data.rounds.map(round => {
+                        data?.data.rounds.map(round => {
                             if (round.active) {
                                 // TODO: update to match new form structure i.e. (round.forms.find(f => ['evaluation'].includes(f.type))) ))
                                 // TODO: for mandatory_pre_survey, we need to check if the user has completed the survey & if the survey has been reviewed/approved
-                                let f_m = data.forms.find(f => f.uuid == round.form) 
+                                let f_m = data?.data.forms.find(f => f.uuid == round.form) 
                                 if (f_m) {
                                     svys = Array.from([...svys, f_m], fm => {
                                         return {
