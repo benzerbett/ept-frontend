@@ -38,3 +38,45 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 - [Carbone Reports](https://github.com/carboneio/carbone)
 - [Zustand](https://github.com/pmndrs/zustand)
+
+
+```json
+{
+    "rounds": [
+        {
+            "id": 1,
+            "name": "Round 1",
+            "start": "2018-01-01 00:00:00",
+            "end": "2018-01-01 00:00:00",
+            "checklist": "checklist_1",
+            "groups_number": 3,
+            "participant_level": "lab", // lab, group, individual
+            "participants": [
+                "lab_1", // e.g 9 individuals
+                "lab_2" // e.g 3 individuals
+            ],
+            "sample_sets": [
+                {
+                    "id": 1,
+                    "name": "Sample Set 1",
+                    "samples": [
+                        "sample_1",
+                        "sample_2",
+                        "sample_3"
+                    ]
+                },
+                {
+                    "id": 2,
+                    "name": "Sample Set 2",
+                    "samples": [
+                        "sample_4",
+                        "sample_5",
+                        "sample_6"
+                    ]
+                }
+            ],
+            "panels": []
+        }
+    ]
+}
+```

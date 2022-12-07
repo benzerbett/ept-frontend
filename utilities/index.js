@@ -108,7 +108,7 @@ export const doPasswordReset = async (email, password, password_confirmation, to
         })
     }
 }
-export const doSignup = async (name, email, phone, password,role,rtr) => {
+export const doSignup = async (name, email, phone, password, role, rtr) => {
     if (typeof window !== 'undefined') {
         // clear session storage
         window.sessionStorage.removeItem('user');
@@ -119,7 +119,7 @@ export const doSignup = async (name, email, phone, password,role,rtr) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ name, email, phone, password,role })
+            body: JSON.stringify({ name, email, phone, password, role })
         }).then(res => res.json()).then(data => {
             if (data.status === false) {
                 if (debug) console.log('/auth/register error::', data)
@@ -184,36 +184,38 @@ export const loadConfig = (json, session) => {
         let regexp = /@ref\(([^)]+)\)/gmi
         let matches = json_str.match(regexp);
         // replace the occurences of @ref(dict: with the value of the key in the object
-        for (let i = 0; i < matches.length; i++) {
-            let key = matches[i].replace(regexp, '$1');
-            // remove quotes and spaces
-            key = key.replace(/['"]+/g, '').replace(/\s+/g, '');
-            // for keys with a prefix of dict:, replace with the value of the key in the dictionary
-            if (key.startsWith("dict:")) {
-                let value = (dataDictionary[key.replace("dict:", "")]);
-                if (value) {
-                    // if(debug) console.log("Value for " + key + ": " + JSON.stringify(value));
-                    if (typeof value == "object") {
-                        json_str = json_str.replace('"' + matches[i] + '"', JSON.stringify(value));
+        if (matches && matches.length > 0) {
+            for (let i = 0; i < matches.length; i++) {
+                let key = matches[i].replace(regexp, '$1');
+                // remove quotes and spaces
+                key = key.replace(/['"]+/g, '').replace(/\s+/g, '');
+                // for keys with a prefix of dict:, replace with the value of the key in the dictionary
+                if (key.startsWith("dict:")) {
+                    let value = (dataDictionary[key.replace("dict:", "")]);
+                    if (value) {
+                        // if(debug) console.log("Value for " + key + ": " + JSON.stringify(value));
+                        if (typeof value == "object") {
+                            json_str = json_str.replace('"' + matches[i] + '"', JSON.stringify(value));
+                        } else {
+                            json_str = json_str.replace('"' + matches[i] + '"', value);
+                        }
                     } else {
-                        json_str = json_str.replace('"' + matches[i] + '"', value);
+                        if (debug) console.log("No value found for dict:key: ", key);
+                        json_str = json_str.replace(matches[i], null);
                     }
-                } else {
-                    if (debug) console.log("No value found for dict:key: ", key);
-                    json_str = json_str.replace(matches[i], null);
                 }
-            }
-            // for keys with a prefix of user:, replace with the value of the key in the user object
-            if (key.startsWith("user:")) {
-                json_str = json_str.replace(matches[i], null);
-                json_str = json_str.replace('"' + matches[i] + '"', JSON.stringify(user));
-            }
-            // TODO: for keys without a prefix (probably form fields), replace with the value of the key in the form object from the global zustand state
-            if (!key.startsWith("dict:") && !key.startsWith("user:")) {
-                // check for value in context / state
-                let value = null; //window.zustand.getState()[key];
-                if (debug) console.log("Match: " + matches[i] + " Key: " + key, " Value: ", value);
-                json_str = json_str.replace(matches[i], null); // TODO: replace with value from zustand state
+                // for keys with a prefix of user:, replace with the value of the key in the user object
+                if (key.startsWith("user:")) {
+                    json_str = json_str.replace(matches[i], null);
+                    json_str = json_str.replace('"' + matches[i] + '"', JSON.stringify(user));
+                }
+                // TODO: for keys without a prefix (probably form fields), replace with the value of the key in the form object from the global zustand state
+                if (!key.startsWith("dict:") && !key.startsWith("user:")) {
+                    // check for value in context / state
+                    let value = null; //window.zustand.getState()[key];
+                    if (debug) console.log("Match: " + matches[i] + " Key: " + key, " Value: ", value);
+                    json_str = json_str.replace(matches[i], null); // TODO: replace with value from zustand state
+                }
             }
         }
         return JSON.parse(json_str);
@@ -237,7 +239,7 @@ export const doGetSession = async () => {
             if (debug) console.log("User is not logged in");
             return null;
         }
-        return fetch(api_url+'/auth/user', {
+        return fetch(api_url + '/auth/user', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -251,9 +253,11 @@ export const doGetSession = async () => {
                 // return user info
                 let session = {
                     // user: { ...data.user, type: (data.user.role == 1 ? "admin" : "participant") },
-                    user: { ...data.user, type: data.role?.name, permissions: Array.from(data?.permissions, p=>p?.name), programs: Array.from(data?.programs, p=>{
-                        return {uuid: p?.uuid, name: p?.name}
-                    }) },
+                    user: {
+                        ...data.user, type: data.role?.name, permissions: Array.from(data?.permissions, p => p?.name), programs: Array.from(data?.programs, p => {
+                            return { uuid: p?.uuid, name: p?.name }
+                        })
+                    },
                     isLoggedIn: true,
                     token: window.sessionStorage.getItem('token'),
                     activeProgramCode: window.sessionStorage.getItem('activeProgramCode') || null,
@@ -272,7 +276,7 @@ export const doGetSession = async () => {
 }
 
 export const getActiveSession = (sessionID) => {
-    if(debug) console.log("getActiveSession", sessionID)
+    if (debug) console.log("getActiveSession", sessionID)
     if (sessionID) {
         return fetch(`/api/configurations/${sessionID}?details`, {
             method: 'GET',
@@ -291,7 +295,7 @@ export const getActiveSession = (sessionID) => {
                 }
             })
     } else {
-        if(debug) console.log("getActiveSession(): No sessionID found")
+        if (debug) console.log("getActiveSession(): No sessionID found")
         return null;
     }
 }
@@ -339,7 +343,7 @@ export const getResource = (resource, options) => {
     let url
     if (resource.startsWith("http://") || resource.startsWith("https://")) {
         url = resource
-    }else {
+    } else {
         url = api_url + '/' + resource
     }
     let request_options = {};
