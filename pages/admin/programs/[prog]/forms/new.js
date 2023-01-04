@@ -275,11 +275,11 @@ function NewForm() {
                                                                                 </>
                                                                             ) : (field.type == 'textarea' ? (
                                                                                 <textarea className='form-control' id={'field_' + field.id} placeholder={field.placeholder || field.name} />
-                                                                            ) : (!['select'].includes(field.type) ? <input type={field.type} className={(["checkbox", "radio"].includes(field.type) ? "form-check-input" : 'form-control') + ' '} id={'field_' + field.id} placeholder={field.placeholder || field.name} /> : (
-                                                                                <select className='form-select' id={'field_' + field.id}>
+                                                                            ) : (!['select'].includes(field.type) ? <input multiple={field.meta?.multiple || false} type={field.type} className={(["checkbox", "radio"].includes(field.type) ? "form-check-input" : 'form-control') + ' '} id={'field_' + field.id} placeholder={field.placeholder || field.name} /> : (
+                                                                                <select className='form-select' id={'field_' + field.id} multiple={field.meta?.multiple || false}>
                                                                                     <option value=''>Select</option>
                                                                                     {field.options.map((option, index) => (
-                                                                                        <option key={index} value={option?.value || ""}>{option.name}</option>
+                                                                                        <option key={index} value={option?.value || option || ""}>{option.name}</option>
                                                                                     ))}
                                                                                 </select>
                                                                             )))
@@ -333,13 +333,20 @@ function NewForm() {
                                 </div> */}
 
                                 <div className="w-100 d-flex align-items-center justify-content-center">
-                                    <button type="submit" className="btn btn-primary">Save form</button>
+                                    <button type="submit" className="btn btn-primary" onClick={e => {
+                                        e.preventDefault();
+                                        alert(JSON.stringify(newFormData, null, 2))
+                                    }}>Save form</button>
                                 </div>
                             </div>
                         </form>}
                     </div>
                 </div>
             </div>
+
+
+
+
 
 
 
@@ -432,7 +439,7 @@ function NewForm() {
                                         <option value="text">Text</option>
                                         <option value="radio">Radio</option>
                                         <option value="checkbox">Checkbox</option>
-                                        <option value="dropdown">Dropdown</option>
+                                        <option value="select">Select/Dropdown</option>
                                         <option value="date">Date</option>
                                         <option value="number">Number</option>
                                         <option value="email">Email</option>
@@ -442,7 +449,7 @@ function NewForm() {
                                 </div>
                             </div>
 
-                            {blankField.type && blankField.type === 'radio' || blankField.type === 'checkbox' || blankField.type === 'dropdown' ? (
+                            {blankField.type && blankField.type === 'radio' || blankField.type === 'checkbox' || blankField.type === 'select' ? (
                                 <div className="form-group row my-1 py-1">
                                     <div className='col-lg-3 py-1 d-flex flex-column'>
                                         <label className='form-label' htmlFor="field_name">Options
@@ -450,7 +457,14 @@ function NewForm() {
                                         </label>
                                     </div>
                                     <div className='col-lg-9'>
-                                        <input type="text" className="form-control" id="field_name" placeholder="Enter options separated by comma" value={blankField.options} onChange={ev => {
+                                        <input type="text" className="form-control" id="field_name" placeholder="Enter options separated by comma" value={
+                                            blankField.options
+                                                ? (Array.isArray(blankField.options)
+                                                    ? Array.from(blankField.options, o => o.name).join(',')
+                                                    : blankField.options
+                                                )
+                                                : ''
+                                        } onChange={ev => {
                                             setBlankField({ ...blankField, options: ev.target.value })
                                         }} />
                                     </div>
@@ -458,7 +472,7 @@ function NewForm() {
                             ) : null}
 
                             {/* multiple */}
-                            {blankField.type && blankField.type === 'checkbox' || blankField.type === 'dropdown' ? (
+                            {blankField.type && blankField.type === 'checkbox' || blankField.type === 'select' ? (
                                 <div className="form-group row my-1 py-1">
                                     <div className='col-lg-3 py-1 d-flex flex-column'>
                                         <label className='form-label' htmlFor="field_name">Allow multiple selection?</label>
@@ -508,6 +522,12 @@ function NewForm() {
                                 <button type="button" className="btn btn-light" data-bs-dismiss="modal">Cancel</button>
                                 <button type="button" className="btn btn-primary" onClick={ev => {
                                     blankField.id = Math.random().toString(36).substr(2, 9)
+                                    if (blankField.type === 'select' || blankField.type === 'radio' || blankField.type === 'checkbox') {
+                                        let options = blankField.options.split(',')
+                                        blankField.options = options.map((option, index) => {
+                                            return { id: index, value: option, name: option }
+                                        })
+                                    }
                                     let sections = newFormData.sections
                                     let section = newFormData.sections[blankField.sectionId]
 
