@@ -275,14 +275,24 @@ function NewForm() {
                                                                                 </>
                                                                             ) : (field.type == 'textarea' ? (
                                                                                 <textarea className='form-control' id={'field_' + field.id} placeholder={field.placeholder || field.name} />
-                                                                            ) : (!['select'].includes(field.type) ? <input multiple={field.meta?.multiple || false} type={field.type} className={(["checkbox", "radio"].includes(field.type) ? "form-check-input" : 'form-control') + ' '} id={'field_' + field.id} placeholder={field.placeholder || field.name} /> : (
+                                                                            ) : field.type == 'select' ? (
                                                                                 <select className='form-select' id={'field_' + field.id} multiple={field.meta?.multiple || false}>
                                                                                     <option value=''>Select</option>
                                                                                     {field.options.map((option, index) => (
                                                                                         <option key={index} value={option?.value || option || ""}>{option.name}</option>
                                                                                     ))}
                                                                                 </select>
-                                                                            )))
+                                                                            ) : (["checkbox", "radio"].includes(field.type) ? <div className='d-flex gap-3 flex-wrap'>
+                                                                                {field.options && field.options.map(opt => (
+                                                                                    <div className='form-check' key={opt.id}>
+                                                                                        <input type={field.type} className={(["checkbox", "radio"].includes(field.type) ? "form-check-input" : 'form-control') + ' '} id={'field_' + field.id} placeholder={field.placeholder || field.name} />
+                                                                                        <label className='form-check-label' htmlFor={'field_' + field.id}>{opt.name}</label>
+                                                                                    </div>
+                                                                                ))}
+                                                                            </div> : (
+                                                                                <input type={field.type} className='form-control' id={'field_' + field.id} placeholder={field.placeholder || field.name} />
+                                                                            ))
+                                                                            )
                                                                             }
                                                                         </div>
                                                                         <div className='col-xl-2 d-flex flex-wrap gap-1 align-items-center justify-content-center mt-2 justify-content-xl-end'>
