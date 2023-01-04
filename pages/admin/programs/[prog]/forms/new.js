@@ -216,31 +216,66 @@ function NewForm() {
                             <div className="row my-1 my-lg-3 py-2" style={{ borderBottom: '1px solid #ececec' }}>
                                 <div className='col-lg-12 py-1 d-flex flex-row justify-content-between mb-2'>
                                     <h5>Form sections</h5>
-                                    <button type="button" className="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#sectionModal" id="sectionModalTrigger">
+                                    <button type="button" className="hidden" style={{ display: 'none' }} data-bs-toggle="modal" data-bs-target="#sectionModal" id="sectionModalTrigger"></button>
+                                    <button type="button" className="btn btn-dark btn-sm" onClick={e => {
+                                        e.preventDefault();
+                                        setBlankSection({
+                                            "name": "",
+                                            "description": "",
+                                            "fields": [],
+                                            "meta": ""
+                                        })
+                                        document.getElementById('sectionModalTrigger').click();
+                                    }}>
                                         Add new section
                                     </button>
                                 </div>
                                 <div className='col-lg-12 py-1'>
-                                    {newFormData.sections && newFormData.sections.map((section, index) => (
+                                    {newFormData.sections && newFormData.sections.filter(s => {
+                                        // filter out the deleted sections
+                                        return !s.deleted
+                                    }).map((section, index) => (
                                         <div className='card w-100 mb-3' key={index}>
                                             <div className="card-header">
                                                 <div className="row">
                                                     <div className='col-md-8'>
                                                         <h5 className="card-title mb-0" >{section?.name}</h5>
-                                                        <p className='mb-0 fst-italic'>{section?.description.split(' ').slice(0, 14).join(' ')}...</p>
+                                                        <p className='mb-0 fst-italic'>{section?.description.split(' ').slice(0, 14).join(' ')}{section.description.split(' ').length > 13 && "..."}</p>
                                                     </div>
                                                     <div className='col-md-4'>
                                                         <div className='d-flex gap-3 align-items-center h-100 justify-content-end'>
-                                                            <button type="button" className="btn btn-outline-dark btn-sm" data-bs-toggle="modal" data-bs-target="#addFieldModal" id="addFieldModalTrigger" onClick={e => {
+                                                            <button type="button" className="hidden" style={{ display: 'none' }} data-bs-toggle="modal" data-bs-target="#addFieldModal" id="addFieldModalTrigger"></button>
+                                                            <button type="button" className="btn btn-outline-dark btn-sm" onClick={e => {
+                                                                e.preventDefault()
                                                                 setBlankField({
-                                                                    ...blankField,
-                                                                    sectionId: index
+                                                                    "name": "",
+                                                                    "description": "",
+                                                                    "type": "",
+                                                                    "required": false,
+                                                                    "options": [],
+                                                                    "validations": [],
+                                                                    "meta": {
+                                                                        "placeholder": "",
+                                                                        "multiple": false,
+                                                                    },
+                                                                    "sectionId": index,
                                                                 })
+                                                                document.getElementById('addFieldModalTrigger').click()
                                                             }}> Add Field </button>
-                                                            <button type="button" className="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#sectionModal"> Edit section </button>
+                                                            <button type="button" className="btn btn-outline-primary btn-sm"
+                                                                onClick={e => {
+                                                                    setBlankSection({
+                                                                        ...section,
+                                                                        edit: true,
+                                                                    })
+                                                                    document.getElementById('sectionModalTrigger').click()
+                                                                }}
+                                                            > <i className='fa fa-pencil-alt'></i> Edit section </button>
                                                             <button type="button" className="btn btn-outline-danger btn-sm" onClick={e => {
+                                                                e.preventDefault();
                                                                 if (section?.uuid) {
                                                                     // delete section from database: add delete flag
+                                                                    section.delete = true
                                                                 }
                                                                 window.confirm('Are you sure you want to delete this section?') && setNewFormData({
                                                                     ...newFormData,
@@ -296,10 +331,15 @@ function NewForm() {
                                                                             }
                                                                         </div>
                                                                         <div className='col-xl-2 d-flex flex-wrap gap-1 align-items-center justify-content-center mt-2 justify-content-xl-end'>
-                                                                            <button className='btn btn-outline-primary btn-sm' onClick={() => { }}> <i className='fa fa-pencil-alt'></i> Edit</button>
-                                                                            <button className='btn btn-outline-danger btn-sm' onClick={() => {
+                                                                            <button className='btn btn-outline-primary btn-sm' onClick={e => {
+                                                                                e.preventDefault();
+                                                                                setBlankField({ ...field, edit: true })
+                                                                                document.getElementById('addFieldModalTrigger').click()
+                                                                            }}> <i className='fa fa-pencil-alt'></i> Edit</button>
+                                                                            <button className='btn btn-outline-danger btn-sm' onClick={e => {
+                                                                                e.preventDefault();
                                                                                 if (field?.uuid) {
-                                                                                    // TODO: delete field from database: add delete flag
+                                                                                    // TODO: delete field from database: add delete flag - DONE
                                                                                     field.delete = true;
                                                                                 }
                                                                                 if (window.confirm('Are you sure you want to delete this field?')) {
@@ -367,7 +407,7 @@ function NewForm() {
                 <div className="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered modal-fullscreenz" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="sectionModalTitle">New section</h5>
+                            <h5 className="modal-title" id="sectionModalTitle">{blankSection?.edit ? "Edit" : "New"} section</h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
                         </div>
@@ -403,7 +443,7 @@ function NewForm() {
                                     setNewFormData({ ...newFormData, sections: [...newFormData.sections, blankSection] })
                                     setBlankSection({ name: '', description: '' })
                                     document.getElementById('sectionModalTrigger').click()
-                                }}>Add section</button>
+                                }}>{blankSection?.edit ? "Update" : "Save"} section</button>
                             </div>
                         </div>
                     </div>
@@ -418,7 +458,7 @@ function NewForm() {
                 <div className="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered modal-fullscreenz" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="addFieldModalTitle">New field</h5>
+                            <h5 className="modal-title" id="addFieldModalTitle">{blankField?.edit ? "Edit" : "New"} field</h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
                         </div>
@@ -557,7 +597,7 @@ function NewForm() {
                                         }
                                     })
                                     document.getElementById('addFieldModalTrigger').click()
-                                }}>Add field</button>
+                                }}>{blankField?.edit ? "Update" : "Save"} field</button>
                             </div>
                         </div>
                     </div>
