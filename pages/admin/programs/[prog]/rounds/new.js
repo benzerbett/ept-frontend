@@ -197,13 +197,13 @@ function NewRound() {
                             </div>
                             {allSchemas && allSchemas.length > 0 && <div className="form-group row my-1 my-lg-3 py-2" style={{borderBottom:'1px solid #ececec'}}>
                                 <div className='col-lg-2 py-1 d-flex flex-column'>
-                                    <label className='form-label' htmlFor="round_program">Schema
+                                    <label className='form-label' htmlFor="round_schema">Schema
                                         <span className='text-danger'>*</span>
                                     </label>
                                     <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
                                 </div>
                                 <div className='col-lg-8'>
-                                    <select className='form-select' name='round_program' value={newRoundData.schema} onChange={ev => {
+                                    <select className='form-select' name='round_schema' value={newRoundData.schema} onChange={ev => {
                                         setNewRoundData({ ...newRoundData, schema: ev.target.value })
                                     }}>
                                         <option value={''}>Select schema</option>
@@ -247,13 +247,13 @@ function NewRound() {
                                 <div className='col-lg-6'>
                                     {(newRoundData?.use_checklist && newRoundData?.use_checklist === true) && allForms && allForms.length > 0 && <div className="form-group row mb-2 mb-lg-3">
                                         <div className='col-lg-12 py-1 d-flex flex-column'>
-                                            <label className='form-label' htmlFor="round_program">Checklist form
+                                            <label className='form-label' htmlFor="round_checklist">Checklist form
                                                 <span className='text-danger'>*</span>
                                             </label>
                                             <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
                                         </div>
                                         <div className='col-lg-12'>
-                                            <select className='form-select' name='round_program' value={newRoundData.checklist_form} onChange={ev => {
+                                            <select className='form-select' name='round_checklist' value={newRoundData.checklist_form} onChange={ev => {
                                                 if (newRoundData.forms && !newRoundData.forms.includes(ev.target.value)) setNewRoundData({ ...newRoundData, forms: [...newRoundData.forms, ev.target.value] })
                                             }}>
                                                 <option value={''}>Select checklist form</option>

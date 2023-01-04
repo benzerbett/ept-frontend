@@ -24,7 +24,7 @@ export default function AdminTheme({ children }) {
                     <div className="row">
                         <AdminSidebar router={router} />
                         {/* ----<Main---- */}
-                        <main className="col-md-9 ms-sm-auto col-lg-9 col-xl-10 p-md-3">
+                        <main className="col-md-10 ms-sm-auto col-lg-10 col-xl-10 p-md-3">
                             <div className='row'>
                                 <div className='col-md-12 d-none d-md-block'>
                                     {/* breadcrumbs */}
