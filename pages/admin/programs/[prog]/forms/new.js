@@ -216,7 +216,7 @@ function NewForm() {
                             <div className="row my-1 my-lg-3 py-2" style={{ borderBottom: '1px solid #ececec' }}>
                                 <div className='col-lg-12 py-1 d-flex flex-row justify-content-between mb-2'>
                                     <h5>Form sections</h5>
-                                    <button type="button" class="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#sectionModal" id="sectionModalTrigger">
+                                    <button type="button" className="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#sectionModal" id="sectionModalTrigger">
                                         Add new section
                                     </button>
                                 </div>
@@ -231,14 +231,22 @@ function NewForm() {
                                                     </div>
                                                     <div className='col-md-4'>
                                                         <div className='d-flex gap-3 align-items-center h-100 justify-content-end'>
-                                                            <button type="button" class="btn btn-outline-dark btn-sm" data-bs-toggle="modal" data-bs-target="#addFieldModal" id="addFieldModalTrigger" onClick={e => {
+                                                            <button type="button" className="btn btn-outline-dark btn-sm" data-bs-toggle="modal" data-bs-target="#addFieldModal" id="addFieldModalTrigger" onClick={e => {
                                                                 setBlankField({
                                                                     ...blankField,
                                                                     sectionId: index
                                                                 })
                                                             }}> Add Field </button>
-                                                            <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#sectionModal"> Edit section </button>
-                                                            <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#sectionModal"> <i className='fa fa-trash-alt'></i> Delete </button>
+                                                            <button type="button" className="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#sectionModal"> Edit section </button>
+                                                            <button type="button" className="btn btn-outline-danger btn-sm" onClick={e => {
+                                                                if (section?.uuid) {
+                                                                    // delete section from database: add delete flag
+                                                                }
+                                                                window.confirm('Are you sure you want to delete this section?') && setNewFormData({
+                                                                    ...newFormData,
+                                                                    sections: newFormData.sections.filter((sc, i) => sc.id !== section.id)
+                                                                })
+                                                            }}> <i className='fa fa-trash-alt'></i> Delete </button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -248,7 +256,10 @@ function NewForm() {
                                                     <div className='col-lg-12'>
                                                         <h5 className='mb-2'>Fields</h5>
                                                         <div className='row d-flex flex-column align-items-center'>
-                                                            {section?.fields && section?.fields.map((field, index) => (
+                                                            {section?.fields && section?.fields.filter(f => {
+                                                                // filter out deleted fields
+                                                                return !f.delete
+                                                            }).map((field, index) => (
                                                                 <div className='col-md-11 rounded border shadow-sm border-default py-2 my-3 position-relative' key={index}>
                                                                     <div className='text-muted text-capitalize position-absolute rounded bg-white px-2' style={{ top: '-14px' }}>
                                                                         <small>{field.type}</small>
@@ -275,8 +286,24 @@ function NewForm() {
                                                                             }
                                                                         </div>
                                                                         <div className='col-xl-2 d-flex flex-wrap gap-1 align-items-center justify-content-center mt-2 justify-content-xl-end'>
-                                                                            <button className='btn btn-outline-primary btn-sm' onClick={() => {} }> <i className='fa fa-pencil-alt'></i> Edit</button>
-                                                                            <button className='btn btn-outline-danger btn-sm' onClick={() => {} }><i className='fa fa-trash-alt'></i> Delete</button>
+                                                                            <button className='btn btn-outline-primary btn-sm' onClick={() => { }}> <i className='fa fa-pencil-alt'></i> Edit</button>
+                                                                            <button className='btn btn-outline-danger btn-sm' onClick={() => {
+                                                                                if (field?.uuid) {
+                                                                                    // TODO: delete field from database: add delete flag
+                                                                                    field.delete = true;
+                                                                                }
+                                                                                if (window.confirm('Are you sure you want to delete this field?')) {
+                                                                                    // find field using its id and remove it from the newFormData.sections[sectionId].fields array
+                                                                                    const updatedFormData = { ...newFormData };
+                                                                                    const currentSection = section
+                                                                                    const currentSectionIndex = updatedFormData.sections.findIndex((section) => section.id === currentSection.id);
+                                                                                    const currentSectionFields = currentSection.fields
+                                                                                    const newSectionFields = currentSectionFields.filter((currentField) => currentField.id !== field.id)
+                                                                                    currentSection.fields = newSectionFields;
+                                                                                    updatedFormData.sections[currentSectionIndex] = currentSection;
+                                                                                    setNewFormData(updatedFormData);
+                                                                                }
+                                                                            }}><i className='fa fa-trash-alt'></i> Delete</button>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -319,15 +346,15 @@ function NewForm() {
 
             {/* -----------------------  <MODALS   -------------------------  */}
             {/* --------- <section modal ---------- */}
-            <div class="modal fade" id="sectionModal" tabindex="-1" role="dialog" aria-labelledby="sectionModalTitle" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered modal-fullscreenz" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="sectionModalTitle">New section</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div className="modal fade" id="sectionModal" tabIndex="-1" role="dialog" aria-labelledby="sectionModalTitle" aria-hidden="true">
+                <div className="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered modal-fullscreenz" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="sectionModalTitle">New section</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
                         </div>
-                        <div class="modal-body">
+                        <div className="modal-body">
                             <div className="form-group row my-1 py-1">
                                 <div className='col-lg-3 py-1 d-flex flex-column'>
                                     <label className='form-label' htmlFor="section_name">Section name
@@ -352,9 +379,10 @@ function NewForm() {
                                 </div>
                             </div>
 
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-                                <button type="button" class="btn btn-primary" onClick={ev => {
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" className="btn btn-primary" onClick={ev => {
+                                    blankSection.id = Math.random().toString(36).substr(2, 9);
                                     setNewFormData({ ...newFormData, sections: [...newFormData.sections, blankSection] })
                                     setBlankSection({ name: '', description: '' })
                                     document.getElementById('sectionModalTrigger').click()
@@ -369,15 +397,15 @@ function NewForm() {
 
 
             {/* --------- <field modal ---------- */}
-            <div class="modal fade" id="addFieldModal" tabindex="-1" role="dialog" aria-labelledby="addFieldModalTitle" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered modal-fullscreenz" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="addFieldModalTitle">New field</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div className="modal fade" id="addFieldModal" tabIndex="-1" role="dialog" aria-labelledby="addFieldModalTitle" aria-hidden="true">
+                <div className="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered modal-fullscreenz" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="addFieldModalTitle">New field</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
                         </div>
-                        <div class="modal-body">
+                        <div className="modal-body">
                             <div className="form-group row my-1 py-1">
                                 <div className='col-lg-3 py-1 d-flex flex-column'>
                                     <label className='form-label' htmlFor="field_name">Field name
@@ -476,16 +504,28 @@ function NewForm() {
                                 </div>
                             </div>
 
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-                                <button type="button" class="btn btn-primary" onClick={ev => {
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" className="btn btn-primary" onClick={ev => {
+                                    blankField.id = Math.random().toString(36).substr(2, 9)
                                     let sections = newFormData.sections
                                     let section = newFormData.sections[blankField.sectionId]
 
-                                    section.fields = [...section.fields, blankField]
+                                    section.fields = [...section.fields || [], blankField]
                                     sections[blankField.sectionId] = section
                                     setNewFormData({ ...newFormData, sections: sections })
-                                    setBlankField({ name: '', description: '', type: 'text', options: [], required: false, validations: [], meta: { placeholder: '', multiple: false } })
+                                    setBlankField({
+                                        name: '',
+                                        description: '',
+                                        type: '',
+                                        options: [],
+                                        required: false,
+                                        validations: [],
+                                        meta: {
+                                            placeholder: '',
+                                            multiple: false
+                                        }
+                                    })
                                     document.getElementById('addFieldModalTrigger').click()
                                 }}>Add field</button>
                             </div>
