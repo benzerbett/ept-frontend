@@ -24,14 +24,14 @@ function NewForm() {
         "description": "",
         "type": "",
         "sections": [],
-        "meta": "",
+        "meta": {},
     })
 
     const [blankSection, setBlankSection] = useState({
         "name": "",
         "description": "",
         "fields": [],
-        "meta": "",
+        "meta": {},
     })
 
     const [blankField, setBlankField] = useState({
@@ -245,7 +245,7 @@ function NewForm() {
                                                     <div className='col-md-4'>
                                                         <div className='d-flex gap-3 align-items-center h-100 justify-content-end'>
                                                             <button type="button" className="hidden" style={{ display: 'none' }} data-bs-toggle="modal" data-bs-target="#addFieldModal" id="addFieldModalTrigger"></button>
-                                                            <button type="button" className="btn btn-outline-dark btn-sm" onClick={e => {
+                                                            <button type="button" className="btn btn-dark btn-sm" onClick={e => {
                                                                 e.preventDefault()
                                                                 setBlankField({
                                                                     "name": "",
@@ -258,11 +258,11 @@ function NewForm() {
                                                                         "placeholder": "",
                                                                         "multiple": false,
                                                                     },
-                                                                    "sectionId": index,
+                                                                    "section_id": section.id,
                                                                 })
                                                                 document.getElementById('addFieldModalTrigger').click()
                                                             }}> Add Field </button>
-                                                            <button type="button" className="btn btn-outline-primary btn-sm"
+                                                            <button type="button" className="btn btn-outline-dark btn-sm"
                                                                 onClick={e => {
                                                                     setBlankSection({
                                                                         ...section,
@@ -301,7 +301,7 @@ function NewForm() {
                                                                     </div>
                                                                     <div className='row p-2'>
                                                                         <div className='col-xl-2'>
-                                                                            <label htmlFor={'field_' + field.id} className='form-label'>{field.type != "paragraph" ? field.name : "Information"}</label>
+                                                                            <label htmlFor={'field_' + field.id} className='form-label'>{field.type != "paragraph" ? field.name : "Information"} {field.required && <span className='text-danger'>*</span>}</label>
                                                                         </div>
                                                                         <div className='col-xl-8'>
                                                                             {field.type == 'paragraph' ? (
@@ -309,7 +309,7 @@ function NewForm() {
                                                                                     <p className='form-text fs-6 px-2'>{field.description}</p>
                                                                                 </>
                                                                             ) : (field.type == 'textarea' ? (
-                                                                                <textarea className='form-control' id={'field_' + field.id} placeholder={field.placeholder || field.name} />
+                                                                                <textarea className='form-control' id={'field_' + field.id} placeholder={field.meta?.placeholder || field.name} />
                                                                             ) : field.type == 'select' ? (
                                                                                 <select className='form-select' id={'field_' + field.id} multiple={field.meta?.multiple || false}>
                                                                                     <option value=''>Select</option>
@@ -320,18 +320,18 @@ function NewForm() {
                                                                             ) : (["checkbox", "radio"].includes(field.type) ? <div className='d-flex gap-3 flex-wrap'>
                                                                                 {field.options && field.options.map(opt => (
                                                                                     <div className='form-check' key={opt.id}>
-                                                                                        <input type={field.type} className={(["checkbox", "radio"].includes(field.type) ? "form-check-input" : 'form-control') + ' '} id={'field_' + field.id} placeholder={field.placeholder || field.name} />
+                                                                                        <input type={field.type} className={(["checkbox", "radio"].includes(field.type) ? "form-check-input" : 'form-control') + ' '} id={'field_' + field.id} placeholder={field.meta?.placeholder || field.name} />
                                                                                         <label className='form-check-label' htmlFor={'field_' + field.id}>{opt.name}</label>
                                                                                     </div>
                                                                                 ))}
                                                                             </div> : (
-                                                                                <input type={field.type} className='form-control' id={'field_' + field.id} placeholder={field.placeholder || field.name} />
+                                                                                <input type={field.type} className='form-control' id={'field_' + field.id} placeholder={field.meta?.placeholder || field.name} />
                                                                             ))
                                                                             )
                                                                             }
                                                                         </div>
                                                                         <div className='col-xl-2 d-flex flex-wrap gap-1 align-items-center justify-content-center mt-2 justify-content-xl-end'>
-                                                                            <button className='btn btn-outline-primary btn-sm' onClick={e => {
+                                                                            <button className='btn btn-outline-dark btn-sm' onClick={e => {
                                                                                 e.preventDefault();
                                                                                 setBlankField({ ...field, edit: true })
                                                                                 document.getElementById('addFieldModalTrigger').click()
@@ -339,11 +339,9 @@ function NewForm() {
                                                                             <button className='btn btn-outline-danger btn-sm' onClick={e => {
                                                                                 e.preventDefault();
                                                                                 if (field?.uuid) {
-                                                                                    // TODO: delete field from database: add delete flag - DONE
                                                                                     field.delete = true;
                                                                                 }
                                                                                 if (window.confirm('Are you sure you want to delete this field?')) {
-                                                                                    // find field using its id and remove it from the newFormData.sections[sectionId].fields array
                                                                                     const updatedFormData = { ...newFormData };
                                                                                     const currentSection = section
                                                                                     const currentSectionIndex = updatedFormData.sections.findIndex((section) => section.id === currentSection.id);
@@ -439,9 +437,17 @@ function NewForm() {
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-light" data-bs-dismiss="modal">Cancel</button>
                                 <button type="button" className="btn btn-primary" onClick={ev => {
-                                    blankSection.id = Math.random().toString(36).substr(2, 9);
-                                    setNewFormData({ ...newFormData, sections: [...newFormData.sections, blankSection] })
-                                    setBlankSection({ name: '', description: '' })
+                                    if (!blankSection?.edit) {
+                                        blankSection.id = Math.random().toString(36).substr(2, 9);
+                                        setNewFormData({ ...newFormData, sections: [...newFormData.sections, blankSection] })
+                                        setBlankSection({ name: '', description: '', meta: {} })
+                                    } else {
+                                        // update section
+                                        let sections = newFormData.sections;
+                                        sections[sections.findIndex(sec => sec.id === blankSection.id)] = blankSection;
+                                        setNewFormData({ ...newFormData, sections: sections })
+                                        setBlankSection({ name: '', description: '', meta: {} })
+                                    }
                                     document.getElementById('sectionModalTrigger').click()
                                 }}>{blankSection?.edit ? "Update" : "Save"} section</button>
                             </div>
@@ -484,6 +490,7 @@ function NewForm() {
                                 <div className='col-lg-9'>
                                     <select className="form-select" id="input_type" aria-label="Input type" value={blankField.type} onChange={ev => {
                                         setBlankField({ ...blankField, type: ev.target.value })
+                                        // disable multiple select for non-select fields
                                     }}>
                                         <option value="" disabled> Select type </option>
                                         <option value="text">Text</option>
@@ -496,6 +503,20 @@ function NewForm() {
                                         <option value="phone">Phone</option>
                                         <option value="textarea">Textarea</option>
                                     </select>
+                                </div>
+                            </div>
+                            <div className="form-group row my-1 py-1">
+                                <div className='col-lg-3 py-1 d-flex flex-column'>
+                                    <label className='form-label' htmlFor="field_name">Is it required?</label>
+                                </div>
+                                <div className='col-lg-9'>
+                                    <div className="form-check form-switch">
+                                        <input className="form-check-input" type="checkbox" id="blankFieldRequiredBool" checked={blankField.required} onChange={ev => {
+                                            setBlankField({
+                                                ...blankField, required: ev.target.checked
+                                            })
+                                        }} />
+                                    </div>
                                 </div>
                             </div>
 
@@ -522,14 +543,14 @@ function NewForm() {
                             ) : null}
 
                             {/* multiple */}
-                            {blankField.type && blankField.type === 'checkbox' || blankField.type === 'select' ? (
+                            {blankField.type && blankField.type === 'select' ? (
                                 <div className="form-group row my-1 py-1">
                                     <div className='col-lg-3 py-1 d-flex flex-column'>
                                         <label className='form-label' htmlFor="field_name">Allow multiple selection?</label>
                                     </div>
                                     <div className='col-lg-9'>
                                         <div className="form-check form-switch">
-                                            <input className="form-check-input" type="checkbox" id="flexSwitchCheckDefault" checked={blankField.multiple} onChange={ev => {
+                                            <input className="form-check-input" type="checkbox" id="blankFieldMultipleBool" checked={blankField.multiple} onChange={ev => {
                                                 setBlankField({
                                                     ...blankField, meta: {
                                                         ...blankField.meta,
@@ -571,31 +592,57 @@ function NewForm() {
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-light" data-bs-dismiss="modal">Cancel</button>
                                 <button type="button" className="btn btn-primary" onClick={ev => {
-                                    blankField.id = Math.random().toString(36).substr(2, 9)
-                                    if (blankField.type === 'select' || blankField.type === 'radio' || blankField.type === 'checkbox') {
-                                        let options = blankField.options.split(',')
-                                        blankField.options = options.map((option, index) => {
-                                            return { id: index, value: option, name: option }
+                                    ev.preventDefault()
+                                    if (!blankField?.edit) {
+                                        blankField.id = Math.random().toString(36).substr(2, 9)
+                                        if (blankField.type === 'select' || blankField.type === 'radio' || blankField.type === 'checkbox') {
+                                            let options = blankField.options.split(',')
+                                            blankField.options = options.map((option, index) => {
+                                                return { id: index, value: option, name: option }
+                                            })
+                                        }
+                                        let sections = newFormData.sections
+                                        let section = newFormData.sections.find(section => section.id === blankField.section_id)
+                                        let section_index = newFormData.sections.findIndex(section => section.id === blankField.section_id)
+
+                                        section.fields = [...section.fields || [], blankField]
+                                        sections[section_index] = section
+                                        setNewFormData({ ...newFormData, sections: sections })
+                                        setBlankField({
+                                            name: '',
+                                            description: '',
+                                            type: '',
+                                            options: [],
+                                            required: false,
+                                            validations: [],
+                                            meta: {
+                                                placeholder: '',
+                                                multiple: false
+                                            }
+                                        })
+                                    } else {
+                                        let sections = newFormData.sections
+                                        let section = sections.find(section => section.id === blankField.section_id)
+                                        let section_index = sections.findIndex(section => section.id === blankField.section_id)
+                                        let fields = section.fields
+                                        let old_field_index = section.fields.findIndex(field => field.id === blankField.id)
+                                        fields[old_field_index] = blankField
+                                        section.fields = fields
+                                        sections[section_index] = section
+                                        setNewFormData({ ...newFormData, sections: sections })
+                                        setBlankField({
+                                            name: '',
+                                            description: '',
+                                            type: '',
+                                            options: [],
+                                            required: false,
+                                            validations: [],
+                                            meta: {
+                                                placeholder: '',
+                                                multiple: false
+                                            }
                                         })
                                     }
-                                    let sections = newFormData.sections
-                                    let section = newFormData.sections[blankField.sectionId]
-
-                                    section.fields = [...section.fields || [], blankField]
-                                    sections[blankField.sectionId] = section
-                                    setNewFormData({ ...newFormData, sections: sections })
-                                    setBlankField({
-                                        name: '',
-                                        description: '',
-                                        type: '',
-                                        options: [],
-                                        required: false,
-                                        validations: [],
-                                        meta: {
-                                            placeholder: '',
-                                            multiple: false
-                                        }
-                                    })
                                     document.getElementById('addFieldModalTrigger').click()
                                 }}>{blankField?.edit ? "Update" : "Save"} field</button>
                             </div>
