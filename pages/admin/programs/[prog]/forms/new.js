@@ -22,7 +22,7 @@ function NewForm() {
     const [newFormData, setNewFormData] = useState({
         "name": "",
         "description": "",
-        "type": "",
+        "target_type": "",
         "sections": [],
         "meta": {},
     })
@@ -53,16 +53,43 @@ function NewForm() {
             if (data.status === true) {
                 setStatus('success')
                 setMessage(data.message)
+                setBlankField({
+                    "name": "",
+                    "description": "",
+                    "type": "",
+                    "required": false,
+                    "options": [],
+                    "validations": [],
+                    "meta": {
+                        placeholder: '',
+                        multiple: false
+                    }
+                })
+                setBlankSection({
+                    "name": "",
+                    "description": "",
+                    "fields": [],
+                    "meta": {},
+                })
+                setNewFormData({
+                    "name": "",
+                    "description": "",
+                    "target_type": "",
+                    "sections": [],
+                    "meta": {},
+                })
             } else {
                 setStatus('error')
                 setMessage(data.message)
             }
             setLoading(false)
+            window.scrollTo(0, 0)
         }).catch((err) => {
             console.log(err)
             setStatus('error')
             setMessage('Error saving form: ' + err.message || err)
             setLoading(false)
+            window.scrollTo(0, 0)
         })
     }
 
@@ -165,7 +192,9 @@ function NewForm() {
                 </div>
                 <div className="row bg-light p-3 formed">
                     <div className='col-lg-12 my-3'>
-                        {status !== 'error' && <form onSubmit={ev => {
+                        {
+                        true// status !== 'error' 
+                        && <form onSubmit={ev => {
                             ev.preventDefault()
                             saveForm()
                         }}>
@@ -195,14 +224,14 @@ function NewForm() {
                             </div>
                             <div className="form-group row my-1 my-lg-3 py-2" style={{ borderBottom: '1px solid #ececec' }}>
                                 <div className='col-lg-2 py-1 d-flex flex-column'>
-                                    <label className='form-label' htmlFor="form_type">Type
+                                    <label className='form-label' htmlFor="target_type">Type
                                         <span className='text-danger'>*</span>
                                     </label>
                                     <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
                                 </div>
                                 <div className='col-lg-8 text-capitalize'>
-                                    <select className='form-select' name='form_type' value={newFormData.type} onChange={ev => {
-                                        setNewFormData({ ...newFormData, type: ev.target.value })
+                                    <select className='form-select' name='target_type' value={newFormData.target_type} onChange={ev => {
+                                        setNewFormData({ ...newFormData, target_type: ev.target.value })
                                     }}>
                                         <option value={''}>Select form type</option>
                                         {formTypes && formTypes.map(ft => (
@@ -300,8 +329,9 @@ function NewForm() {
                                                                         <small>{field.type}</small>
                                                                     </div>
                                                                     <div className='row p-2'>
-                                                                        <div className='col-xl-2'>
-                                                                            <label htmlFor={'field_' + field.id} className='form-label'>{field.type != "paragraph" ? field.name : "Information"} {field.required && <span className='text-danger'>*</span>}</label>
+                                                                        <div className='col-xl-2 d-flex flex-column'>
+                                                                            <label htmlFor={'field_' + field.id} className='form-label mb-0'>{field.type != "paragraph" ? field.name : "Information"} {field.required && <span className='text-danger'>*</span>}</label>
+                                                                            {field.required && <small className='fst-italic text-muted'>Required</small>}
                                                                         </div>
                                                                         <div className='col-xl-8'>
                                                                             {field.type == 'paragraph' ? (
@@ -383,7 +413,8 @@ function NewForm() {
                                 <div className="w-100 d-flex align-items-center justify-content-center">
                                     <button type="submit" className="btn btn-primary" onClick={e => {
                                         e.preventDefault();
-                                        alert(JSON.stringify(newFormData, null, 2))
+                                        // alert(JSON.stringify(newFormData, null, 2))
+                                        saveForm()
                                     }}>Save form</button>
                                 </div>
                             </div>
@@ -449,7 +480,9 @@ function NewForm() {
                                         setBlankSection({ name: '', description: '', meta: {} })
                                     }
                                     document.getElementById('sectionModalTrigger').click()
-                                }}>{blankSection?.edit ? "Update" : "Save"} section</button>
+                                }} disabled={
+                                    !blankSection.name || blankSection.name.length < 1
+                                }>{blankSection?.edit ? "Update" : "Save"} section</button>
                             </div>
                         </div>
                     </div>
@@ -491,6 +524,9 @@ function NewForm() {
                                     <select className="form-select" id="input_type" aria-label="Input type" value={blankField.type} onChange={ev => {
                                         setBlankField({ ...blankField, type: ev.target.value })
                                         // disable multiple select for non-select fields
+                                        if (ev.target.value !== 'select') {
+                                            setBlankField({ ...blankField, type: ev.target.value, meta: { ...blankField.meta, multiple: false } })
+                                        }
                                     }}>
                                         <option value="" disabled> Select type </option>
                                         <option value="text">Text</option>
@@ -626,6 +662,8 @@ function NewForm() {
                                         let section_index = sections.findIndex(section => section.id === blankField.section_id)
                                         let fields = section.fields
                                         let old_field_index = section.fields.findIndex(field => field.id === blankField.id)
+                                        // remove edit flag
+                                        delete blankField.edit
                                         fields[old_field_index] = blankField
                                         section.fields = fields
                                         sections[section_index] = section
@@ -644,7 +682,9 @@ function NewForm() {
                                         })
                                     }
                                     document.getElementById('addFieldModalTrigger').click()
-                                }}>{blankField?.edit ? "Update" : "Save"} field</button>
+                                }} disabled={
+                                    blankField.name === '' || blankField.type === ''  || blankField.name === null || blankField.type === null || blankField.name === undefined || blankField.type === undefined
+                                }>{blankField?.edit ? "Update" : "Save"} field</button>
                             </div>
                         </div>
                     </div>
