@@ -22,7 +22,7 @@ function Surveys() {
                         setActiveConfig(data)
                         let svys = Array.from(data?.data.rounds, round => {
                             if (round.active) {
-                                return round.forms.find(f => ['pre', 'post'].includes(f.type))
+                                return round.forms.find(f => ['pre', 'post', 'survey', 'checklist'].includes(f.type))
                             }
                         })
                         if (svys && svys.length > 0 && !svys.includes(undefined)) {
