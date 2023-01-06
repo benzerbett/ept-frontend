@@ -22,10 +22,12 @@ function Surveys() {
                         setActiveConfig(data)
                         let svys = Array.from(data?.data.rounds, round => {
                             if (round.active) {
-                                return round.forms.find(f => ['pre','post'].includes(f.type))
+                                return round.forms.find(f => ['pre', 'post'].includes(f.type))
                             }
                         })
-                        setSurveys(svys)
+                        if (svys && svys.length > 0 && !svys.includes(undefined)) {
+                            setSurveys(svys)
+                        }
                         // data?.data.rounds.map(round => {
                         //     if (round?.active) {
                         //         // TODO: update to match new form structure i.e. (round.forms.find(f => ['checklist','survey'].includes(f.type))) ))
@@ -59,7 +61,7 @@ function Surveys() {
                         </form>
                     </div>
                 </div>
-                    {/* {<pre>{JSON.stringify(surveys,null,2)}</pre>} */}
+                {/* {<pre>{JSON.stringify(surveys,null,2)}</pre>} */}
                 <div className="d-flex w-100">
                     <div className="table-responsive w-100">
                         <table className="table table-striped table-hover table-bordered">

@@ -19,26 +19,35 @@ function Evaluations() {
                 if (session && session.activeProgramCode) {
                     const ap = getProgramConfig(session.activeProgramCode)
                     ap.then((data) => {
-                        setActiveConfig(data?.data)
-                        let svys = []
-                        data?.data.rounds.map(round => {
+                        setActiveConfig(data)
+                        let evals = Array.from(data?.data.rounds, round => {
                             if (round.active) {
-                                // TODO: update to match new form structure i.e. (round.forms.find(f => ['evaluation'].includes(f.type))) ))
-                                // TODO: for mandatory_pre_survey, we need to check if the user has completed the survey & if the survey has been reviewed/approved
-                                let f_m = data?.data.forms.find(f => f.uuid == round.form) 
-                                if (f_m) {
-                                    svys = Array.from([...svys, f_m], fm => {
-                                        return {
-                                            uuid: fm.uuid,
-                                            name: fm.name,
-                                            description: fm.description,
-                                            metadata: fm.metadata,
-                                        }
-                                    })
-                                }
+                                return round.forms.find(f => ['results'].includes(f.type))
                             }
                         })
-                        setEvaluations(svys)
+                        if (evals && evals.length > 0 && !evals.includes(undefined)) {
+                            setEvaluations(evals)
+                        }
+                        // setActiveConfig(data?.data)
+                        // let svys = []
+                        // data?.data.rounds.map(round => {
+                        //     if (round.active) {
+                        //         // TODO: update to match new form structure i.e. (round.forms.find(f => ['evaluation'].includes(f.type))) ))
+                        //         // TODO: for mandatory_pre_survey, we need to check if the user has completed the survey & if the survey has been reviewed/approved
+                        //         let f_m = data?.data.forms.find(f => f.uuid == round.form) 
+                        //         if (f_m) {
+                        //             svys = Array.from([...svys, f_m], fm => {
+                        //                 return {
+                        //                     uuid: fm.uuid,
+                        //                     name: fm.name,
+                        //                     description: fm.description,
+                        //                     metadata: fm.metadata,
+                        //                 }
+                        //             })
+                        //         }
+                        //     }
+                        // })
+                        // setEvaluations(svys)
                     })
                 } else {
                     router.push('/user')
@@ -71,8 +80,8 @@ function Evaluations() {
                                 <tr>
                                     <th scope="col">Title</th>
                                     <th scope="col">Status</th>
-                                    <th scope="col">Created At</th>
-                                    <th scope="col">Due Date</th>
+                                    {/* <th scope="col">Created At</th>
+                                    <th scope="col">Due Date</th> */}
                                     <th scope="col">Submitted?</th>
                                     <th scope="col">Actions</th>
                                 </tr>
@@ -86,8 +95,8 @@ function Evaluations() {
                                             {/* <Link href={`/user/evaluations/${evaluation.uuid}`}><a>{survey.name}</a></Link> */}
                                         </td>
                                         <td className='text-capitalize'>{evaluation.status == 'open' ? <span className='badge bg-success'>Open</span> : evaluation.status || "-"}</td>
-                                        <td>{new Date(evaluation.metadata.created).toDateString('en-GB') || "-"}</td>
-                                        <td>{new Date(evaluation.metadata.due_date).toDateString('en-GB') || "-"}</td>
+                                        {/* <td>{new Date(evaluation?.metadata?.created).toDateString('en-GB') || "-"}</td>
+                                        <td>{new Date(evaluation?.metadata?.due_date).toDateString('en-GB') || "-"}</td> */}
                                         <td>No</td>
                                         <td className="d-flex flex-column flex-md-row gap-2 justify-content-center">
                                             <Link href={{
