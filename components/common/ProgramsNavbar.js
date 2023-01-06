@@ -30,6 +30,20 @@ function ProgramsNavbar({ router, program, subtitle }) {
                                             Schemas
                                         </a>
                                     </Link>
+                                    <Link href={`/admin/programs/${prog}/samples`}>
+                                        <a className={"text-nowrap nav-link d-flex align-items-center justify-content-center " + (
+                                            router.asPath.includes(`/admin/programs/${prog}/samples`) ? 'active' : ''
+                                        )}>
+                                            Samples
+                                        </a>
+                                    </Link>
+                                    <Link href={`/admin/programs/${prog}/panels`}>
+                                        <a className={"text-nowrap nav-link d-flex align-items-center justify-content-center " + (
+                                            router.asPath.includes(`/admin/programs/${prog}/panels`) ? 'active' : ''
+                                        )}>
+                                            Panels
+                                        </a>
+                                    </Link>
                                     <Link href={`/admin/programs/${prog}/forms`}>
                                         <a className={"text-nowrap nav-link d-flex align-items-center justify-content-center " + (
                                             router.asPath.includes(`/admin/programs/${prog}/forms`) ? 'active' : ''
