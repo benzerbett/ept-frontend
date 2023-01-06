@@ -246,11 +246,7 @@ function NewForm() {
                                                             name: 'Results',
                                                             description: 'The questions set in this section will be posed for each sample',
                                                             fields: [
-                                                                {
-                                                                    type: 'paragraph',
-                                                                    description: 'The questions set in this section will be posed for each sample',
-                                                                    required: false,
-                                                                }
+                                                                
                                                             ],
                                                             meta: {
                                                                 'isResultSection': true
@@ -451,9 +447,13 @@ function NewForm() {
                                     <div className="w-100 d-flex align-items-center justify-content-center">
                                         <button type="submit" className="btn btn-primary" onClick={e => {
                                             e.preventDefault();
-                                            // alert(JSON.stringify(newFormData, null, 2))
                                             saveForm()
                                         }}>Save form</button>
+
+                                        {window && window?.location?.hostname=="localhost"&&<button className="btn btn-link text-muted mx-3 btn-sm" onClick={e => {
+                                            e.preventDefault();
+                                            alert(JSON.stringify(newFormData, null, 4))
+                                        }}>Preview</button>}
                                     </div>
                                 </div>
                             </form>}
@@ -703,7 +703,13 @@ function NewForm() {
                                         let sections = newFormData.sections
                                         let section = newFormData.sections.find(section => section.id === blankField.section_id)
                                         let section_index = newFormData.sections.findIndex(section => section.id === blankField.section_id)
-
+                                        // sample fields
+                                        if(section.meta?.isResultSection === true){
+                                            blankField.meta = {
+                                                ...blankField.meta,
+                                                isResultField: true
+                                            }
+                                        }
                                         section.fields = [...section.fields || [], blankField]
                                         sections[section_index] = section
                                         setNewFormData({ ...newFormData, sections: sections })
@@ -727,6 +733,13 @@ function NewForm() {
                                         let old_field_index = section.fields.findIndex(field => field.id === blankField.id)
                                         // remove edit flag
                                         delete blankField.edit
+                                        // sample fields
+                                        if(section.meta?.isResultSection === true){
+                                            blankField.meta = {
+                                                ...blankField.meta,
+                                                isResultField: true
+                                            }
+                                        }
                                         fields[old_field_index] = blankField
                                         section.fields = fields
                                         sections[section_index] = section
