@@ -8,9 +8,6 @@ function NewForm() {
     const router = useRouter()
     const { prog } = router.query
     const [status, setStatus] = useState('')
-    const [allPrograms, setAllPrograms] = useState([])
-    const [allForms, setAllForms] = useState([])
-    const [allSchemas, setAllSchemas] = useState([])
     const [message, setMessage] = useState('')
     const [loading, setLoading] = useState(true);
     const [formTypes, setFormTypes] = useState([
@@ -97,43 +94,6 @@ function NewForm() {
         })
     }
 
-    const fetchSchemas = (pr) => {
-        if (pr !== '' && pr != undefined && pr != null) {
-            getResource(`schemas?program=${pr}&page_size=10000`).then((data) => {
-                if (data.status === true) {
-                    setAllSchemas(data?.data?.data)
-                    // setStatus('success')
-                    // setMessage(data.message)
-                } else {
-                    // setStatus('error')
-                    // setMessage('Error fetching schemas: ' + data.message)
-                }
-            }).catch((err) => {
-                console.log(err)
-                // setStatus('error')
-                // setMessage('Error fetching schemas: ' + err.message || err)
-            })
-        }
-    }
-    const fetchForms = (pr) => {
-        if (pr !== '' && pr != undefined && pr != null) {
-            getResource(`forms?program=${pr}&page_size=10000`).then((data) => {
-                if (data.status === true) {
-                    setAllForms(data?.data?.data)
-                    // setStatus('success')
-                    // setMessage(data.message)
-                } else {
-                    // setStatus('error')
-                    // setMessage('Error fetching schemas: ' + data.message)
-                }
-            }).catch((err) => {
-                console.log(err)
-                // setStatus('error')
-                // setMessage('Error fetching schemas: ' + err.message || err)
-            })
-        }
-    }
-
     useEffect(() => {
         let mounted = true
         if (mounted) {
@@ -145,20 +105,6 @@ function NewForm() {
                 fetchSchemas(prog)
                 fetchForms(prog)
             }
-            getResource(`programs?page_size=10000`).then((data) => {
-                if (data.status === true) {
-                    setAllPrograms(data.data?.data)
-                } else {
-                    setStatus('error')
-                    setMessage(data.message)
-                }
-                setLoading(false)
-            }).catch((err) => {
-                console.log(err)
-                setStatus('error')
-                setMessage('Error fetching programs: ' + err.message || err)
-                setLoading(false)
-            })
         }
         return () => mounted = false
     }, [])
@@ -241,6 +187,7 @@ function NewForm() {
                                             // 2. create a new section for results
                                             // 3. in the new section, add a 'paragraph' field with the following text:
                                             // "The questions set in this section will be posed for each sample"
+                                            // DONE
 
                                             if (ev.target.value === 'results') {
                                                 setNewFormData({
@@ -366,11 +313,11 @@ function NewForm() {
                                                                             <small>{field.type}</small>
                                                                         </div>
                                                                         <div className='row p-2'>
-                                                                            <div className='col-xl-2 d-flex flex-column'>
+                                                                            <div className='col-xl-4 d-flex flex-column'>
                                                                                 <label htmlFor={'field_' + field.id} className='form-label mb-0'>{field.type != "paragraph" ? field.name : "Information"} {field.meta?.required && <span className='text-danger'>*</span>}</label>
                                                                                 {field.meta?.required && <small className='fst-italic text-muted'>Required</small>}
                                                                             </div>
-                                                                            <div className='col-xl-8'>
+                                                                            <div className='col-xl-6'>
                                                                                 {field.type == 'paragraph' ? (
                                                                                     <>
                                                                                         <p className='form-text fs-6 px-2'>{field.description}</p>
@@ -378,7 +325,7 @@ function NewForm() {
                                                                                 ) : (field.type == 'textarea' ? (
                                                                                     <textarea className='form-control' id={'field_' + field.id} placeholder={field.meta?.placeholder || field.name} />
                                                                                 ) : field.type == 'select' ? (
-                                                                                    // TODO: support multiple select properly
+                                                                                    // TODO: support multiple select properly (e.g. react-select)
                                                                                     <select className='form-select' id={'field_' + field.id} multiple={field.meta?.multiple || false}>
                                                                                         <option value=''>Select</option>
                                                                                         {field.options.map((option, index) => (
@@ -508,8 +455,8 @@ function NewForm() {
                             </div>
 
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-light" data-bs-dismiss="modal" onClick={e=>{
-                                    setBlankSection({name: '', description: ''});
+                                <button type="button" className="btn btn-light" data-bs-dismiss="modal" onClick={e => {
+                                    setBlankSection({ name: '', description: '' });
                                 }}>Cancel</button>
                                 <button type="button" className="btn btn-primary" onClick={ev => {
                                     if (!blankSection?.edit) {
@@ -575,7 +522,7 @@ function NewForm() {
                                         <option value="" disabled> Select type </option>
                                         <option value="text">Text</option>
                                         <option value="radio">Radio</option>
-                                        <option value="checkbox">Checkbox</option>
+                                        {/* <option value="checkbox">Checkbox</option> */} {/*TODO: show one input here, despite the options. Values are always true/false */}
                                         <option value="select">Select/Dropdown</option>
                                         <option value="date">Date</option>
                                         <option value="number">Number</option>
@@ -612,29 +559,34 @@ function NewForm() {
                                     </div>
                                     <div className='col-lg-9'>
                                         <div className="row">
+                                            <div className="col-md-12 d-flex flex-wrap">
+                                                {(blankField && blankField?.options && blankField?.options.length > 0) ? blankField?.options
+                                                    .slice(0, 7)
+                                                    .map((opt, index) => (
+                                                        <span key={index} className='badge bg-success me-2 mb-2'>
+                                                            <span onClick={ev => {
+                                                                if (opt && opt?.id) {
+                                                                    setBlankOption(opt)
+                                                                    document.getElementById('addOptModalTrigger').click()
+                                                                }
+                                                            }}>{opt.name}</span> &nbsp; <i className='fa fa-times' onClick={ev => {
+                                                                setBlankField({
+                                                                    ...blankField,
+                                                                    options: blankField.options.filter((o, i) => i !== index)
+                                                                })
+                                                            }}></i>
+                                                        </span>
+                                                    )) : <i className='text-muted fs-6'>No options added</i>}
+                                                &nbsp;
+                                                {(blankField && blankField?.options && blankField?.options.length > 7) && <button type="button" className="btn btn-link p-0" style={{ fontSize: '0.89em' }} data-bs-toggle="modal" data-bs-target="#viewalloptsmodal" id="viewAllOptModalTrigger">View all</button>}
+                                            </div>
                                             <div className="col-md-12">
-                                                {(blankField && blankField?.options && blankField?.options.length > 0) ? blankField?.options.map((opt, index) => (
-                                                    <span key={index} className='badge bg-success me-2 mb-2'>
-                                                        <span onClick={ev => {
-                                                            if (opt && opt?.id) {
-                                                                setBlankOption(opt)
-                                                                document.getElementById('addOptModalTrigger').click()
-                                                            }
-                                                        }}>{opt.name}</span> &nbsp; <i className='fa fa-times' onClick={ev => {
-                                                            setBlankField({
-                                                                ...blankField,
-                                                                options: blankField.options.filter((o, i) => i !== index)
-                                                            })
-                                                        }}></i>
-                                                    </span>
-                                                )) : <i className='text-muted fs-6'>No options added</i>}
-                                                {(blankField && blankField?.options && blankField?.options.length > 1) && <>
-                                                    <button type="button" className="btn btn-link" style={{ fontSize: '0.8em' }} data-bs-toggle="modal" data-bs-target="#viewalloptsmodal" id="viewAllOptModalTrigger">View all</button>
+                                                {(blankField && blankField?.options && blankField?.options.length > 7) && <>
                                                     <div className="modal fade" id="viewalloptsmodal" tabIndex="-1" role="dialog" aria-labelledby="viewalloptsmdltitle" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-                                                        <div className="modal-dialog modal-md" role="document">
+                                                        <div className="modal-dialog modal-md modal-dialog-scrollable" role="document">
                                                             <div className="modal-content" style={{ backgroundColor: '#f6f7ff' }}>
                                                                 <div className="modal-header">
-                                                                    <h5 className="modal-title" id="viewalloptsmdltitle">All options</h5>
+                                                                    <h5 className="modal-title" id="viewalloptsmdltitle">All options ({blankField?.options.length})</h5>
                                                                     <button type="button" className="btn-close" data-bs-toggle="modal" aria-label="Close" data-bs-target="#viewalloptsmodal"></button>
                                                                 </div>
                                                                 <div className="modal-body">
@@ -648,7 +600,15 @@ function NewForm() {
                                                                             </thead>
                                                                             <tbody>
                                                                                 {blankField?.options && blankField?.options.length > 0 ? blankField?.options.map((opt, i) => <tr key={opt.id}>
-                                                                                    <td className='text-center'>{opt.name}</td>
+                                                                                    <td className='text-center'>
+                                                                                        <button className='btn btn-link' onClick={e => {
+                                                                                            e.preventDefault();
+                                                                                            if (opt && opt?.id) {
+                                                                                                setBlankOption(opt)
+                                                                                                document.getElementById('addOptModalTrigger').click()
+                                                                                            }
+                                                                                        }}>{opt.name}</button>
+                                                                                    </td>
                                                                                     <td className='text-center'>{opt.value}</td>
                                                                                 </tr>) : <tr><td colSpan={2}>No options</td></tr>}
                                                                             </tbody>
