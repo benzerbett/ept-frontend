@@ -258,14 +258,6 @@ function NewForm() {
                                                         }
                                                     ]
                                                 });
-                                                // add an alert after this input to prompt the user to add a result section with the above text. Use a button to add the section
-                                                // document.getElementById('form_type_container').innerHTML += `
-                                                //     <div class="alert alert-warning alert-dismissible fade show" style="margin-top: 3px;" role="alert">
-                                                //         <strong>Action required</strong> <br/>
-                                                //         You have selected "Results" as the target type. Please add a section with the name "Results" and the description "The questions set in this section will be posed for each sample".
-                                                //         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                                //     </div>
-                                                // `;
                                             } else {
                                                 if (newFormData.sections.filter(s => s.meta?.isResultSection).length > 0) {
                                                     setNewFormData({ ...newFormData, target_type: ev.target.value, sections: newFormData.sections.filter(s => !s.meta?.isResultSection) });
@@ -487,7 +479,7 @@ function NewForm() {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title" id="sectionModalTitle">{blankSection?.edit ? "Edit" : "New"} section</h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" className="btn-close" data-bs-toggle="modal" aria-label="Close" data-bs-target="#sectionModal"></button>
 
                         </div>
                         <div className="modal-body">
@@ -516,7 +508,9 @@ function NewForm() {
                             </div>
 
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" className="btn btn-light" data-bs-dismiss="modal" onClick={e=>{
+                                    setBlankSection({name: '', description: ''});
+                                }}>Cancel</button>
                                 <button type="button" className="btn btn-primary" onClick={ev => {
                                     if (!blankSection?.edit) {
                                         blankSection.id = Math.random().toString(36).substr(2, 9);
@@ -548,7 +542,7 @@ function NewForm() {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title" id="addFieldModalTitle">{blankField?.edit ? "Edit" : "New"} field</h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" className="btn-close" data-bs-toggle="modal" aria-label="Close" data-bs-target="#addFieldModal"></button>
 
                         </div>
                         <div className="modal-body">
@@ -634,6 +628,37 @@ function NewForm() {
                                                         }}></i>
                                                     </span>
                                                 )) : <i className='text-muted fs-6'>No options added</i>}
+                                                {(blankField && blankField?.options && blankField?.options.length > 1) && <>
+                                                    <button type="button" className="btn btn-link" style={{ fontSize: '0.8em' }} data-bs-toggle="modal" data-bs-target="#viewalloptsmodal" id="viewAllOptModalTrigger">View all</button>
+                                                    <div className="modal fade" id="viewalloptsmodal" tabIndex="-1" role="dialog" aria-labelledby="viewalloptsmdltitle" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                                                        <div className="modal-dialog modal-md" role="document">
+                                                            <div className="modal-content" style={{ backgroundColor: '#f6f7ff' }}>
+                                                                <div className="modal-header">
+                                                                    <h5 className="modal-title" id="viewalloptsmdltitle">All options</h5>
+                                                                    <button type="button" className="btn-close" data-bs-toggle="modal" aria-label="Close" data-bs-target="#viewalloptsmodal"></button>
+                                                                </div>
+                                                                <div className="modal-body">
+                                                                    <div className="row">
+                                                                        <table className='table table-striped table-hover table-sm'>
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th className='text-center'>Option</th>
+                                                                                    <th className='text-center'>Value</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                {blankField?.options && blankField?.options.length > 0 ? blankField?.options.map((opt, i) => <tr key={opt.id}>
+                                                                                    <td className='text-center'>{opt.name}</td>
+                                                                                    <td className='text-center'>{opt.value}</td>
+                                                                                </tr>) : <tr><td colSpan={2}>No options</td></tr>}
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </>}
                                             </div>
                                             <div className="col-md-12">
                                                 {/* TODO: switch to modal - DONE */}
@@ -645,7 +670,7 @@ function NewForm() {
                                                         <div className="modal-content" style={{ backgroundColor: 'azure' }}>
                                                             <div className="modal-header">
                                                                 <h5 className="modal-title" id="addoptionmdltitle">{blankOption?.id ? "Update" : "Add"} option</h5>
-                                                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                <button type="button" className="btn-close" data-bs-toggle="modal" aria-label="Close" data-bs-target="#addoptionmdl"></button>
                                                             </div>
                                                             <div className="modal-body">
                                                                 <div className="row">
@@ -656,9 +681,9 @@ function NewForm() {
                                                                                 ...blankOption
                                                                             }
                                                                             newOpt.name = ev.target.value
-                                                                            if (!newOpt?.value || newOpt?.value === '') {
-                                                                                newOpt.value = ev.target.value.trim().toLocaleLowerCase()//.replace(/ /g, '_')
-                                                                            }
+                                                                            // if (!newOpt?.value || newOpt?.value === '') {
+                                                                            //     newOpt.value = ev.target.value.trim().toLocaleLowerCase()//.replace(/ /g, '_')
+                                                                            // }
                                                                             setBlankOption({ ...newOpt })
                                                                         }} />
                                                                     </div>
@@ -694,7 +719,7 @@ function NewForm() {
                                                                             curr_options.push(newOpt)
                                                                             setBlankOption({ name: '', value: '' })
                                                                         } else {
-                                                                            alert('A similar option already exists')
+                                                                            // alert('A similar option already exists')
                                                                         }
                                                                     }
                                                                     if (!['select', 'radio', 'checkbox'].includes(blankField.type)) {
@@ -763,7 +788,21 @@ function NewForm() {
                             </div>
 
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" className="btn btn-light" data-bs-dismiss="modal" onClick={e => {
+                                    e.preventDefault()
+                                    setBlankField({
+                                        "name": "",
+                                        "description": "",
+                                        "type": "",
+                                        "options": [],
+                                        "validations": [],
+                                        "meta": {
+                                            "required": false,
+                                            "placeholder": '',
+                                            "multiple": false
+                                        }
+                                    })
+                                }}>Cancel</button>
                                 <button type="button" className="btn btn-primary" onClick={ev => {
                                     ev.preventDefault()
                                     if (!blankField?.edit) {
