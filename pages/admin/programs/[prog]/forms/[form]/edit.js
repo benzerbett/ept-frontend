@@ -98,7 +98,24 @@ function EditForm() {
     const fetchForm = () => {
         getResource(`form/${form}`).then((data) => {
             if (data.status === true) {
-                setNewFormData({ ...data?.data })
+                let new_data = data?.data
+                delete new_data?.created_at
+                delete new_data?.updated_at
+                new_data?.sections?.map((section, index) => {
+                    delete section?.created_at
+                    delete section?.updated_at
+                    section?.fields?.map((field, index) => {
+                        delete field?.created_at
+                        delete field?.updated_at
+                        if (field?.options?.length > 0) {
+                            field.options.map((option, index) => {
+                                delete option?.created_at
+                                delete option?.updated_at
+                            })
+                        }
+                    })
+                })
+                setNewFormData({ ...new_data })
                 setStatus('')   // ('success')
                 setMessage('')  // ('Form fetched successfully')
             } else {
@@ -265,7 +282,7 @@ function EditForm() {
                                     <div className='col-lg-12 py-1'>
                                         {newFormData.sections && newFormData.sections.filter(s => {
                                             // filter out the deleted sections
-                                            return !s.deleted
+                                            return !s.delete
                                         }).map((section, index) => (
                                             <div className='card w-100 mb-3' key={index}>
                                                 <div className="card-header">
@@ -305,14 +322,28 @@ function EditForm() {
                                                                 > <i className='fa fa-pencil-alt'></i> Edit section </button>
                                                                 <button type="button" className="btn btn-outline-danger btn-sm" onClick={e => {
                                                                     e.preventDefault();
-                                                                    if (section?.uuid) {
-                                                                        // delete section from database: add delete flag
-                                                                        section.delete = true
+                                                                    if (window.confirm('Are you sure you want to delete this section?')) {
+                                                                        if (section?.uuid) {
+                                                                            // delete section from database: add delete flag
+                                                                            section.delete = true
+                                                                            setNewFormData({
+                                                                                ...newFormData,
+                                                                                sections: newFormData.sections.map((sc, i) => {
+                                                                                    if (sc?.uuid && sc.uuid === section.uuid) {
+                                                                                        return section
+                                                                                    }
+                                                                                    return sc
+                                                                                })
+                                                                            })
+                                                                        } else {
+                                                                            setNewFormData({
+                                                                                ...newFormData,
+                                                                                sections: newFormData.sections.filter((sc, i) => {
+                                                                                    sc.id !== section.id
+                                                                                })
+                                                                            })
+                                                                        }
                                                                     }
-                                                                    window.confirm('Are you sure you want to delete this section?') && setNewFormData({
-                                                                        ...newFormData,
-                                                                        sections: newFormData.sections.filter((sc, i) => sc.id !== section.id)
-                                                                    })
                                                                 }}> <i className='fa fa-trash-alt'></i> Delete </button>
                                                             </div>
                                                         </div>
@@ -372,15 +403,17 @@ function EditForm() {
                                                                                 }}> <i className='fa fa-pencil-alt'></i> Edit</button>
                                                                                 <button className='btn btn-outline-danger btn-sm' onClick={e => {
                                                                                     e.preventDefault();
-                                                                                    if (field?.uuid) {
-                                                                                        field.delete = true;
-                                                                                    }
                                                                                     if (window.confirm('Are you sure you want to delete this field?')) {
                                                                                         const updatedFormData = { ...newFormData };
                                                                                         const currentSection = section
                                                                                         const currentSectionIndex = updatedFormData.sections.findIndex((section) => section.id === currentSection.id);
                                                                                         const currentSectionFields = currentSection.fields
-                                                                                        const newSectionFields = currentSectionFields.filter((currentField) => currentField.id !== field.id)
+                                                                                        let newSectionFields = currentSectionFields
+                                                                                        if (field?.uuid) {
+                                                                                            field.delete = true;
+                                                                                        } else {
+                                                                                            newSectionFields = currentSectionFields.filter((currentField) => currentField.id !== field.id)
+                                                                                        }
                                                                                         currentSection.fields = newSectionFields;
                                                                                         updatedFormData.sections[currentSectionIndex] = currentSection;
                                                                                         setNewFormData(updatedFormData);

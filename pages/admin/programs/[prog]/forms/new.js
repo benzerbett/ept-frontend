@@ -286,14 +286,12 @@ function NewForm() {
                                                                 > <i className='fa fa-pencil-alt'></i> Edit section </button>
                                                                 <button type="button" className="btn btn-outline-danger btn-sm" onClick={e => {
                                                                     e.preventDefault();
-                                                                    if (section?.uuid) {
-                                                                        // delete section from database: add delete flag
-                                                                        section.delete = true
+                                                                    if (window.confirm('Are you sure you want to delete this section?')) {
+                                                                        setNewFormData({
+                                                                            ...newFormData,
+                                                                            sections: newFormData.sections.filter((sc, i) => sc.id !== section.id)
+                                                                        })
                                                                     }
-                                                                    window.confirm('Are you sure you want to delete this section?') && setNewFormData({
-                                                                        ...newFormData,
-                                                                        sections: newFormData.sections.filter((sc, i) => sc.id !== section.id)
-                                                                    })
                                                                 }}> <i className='fa fa-trash-alt'></i> Delete </button>
                                                             </div>
                                                         </div>
@@ -353,9 +351,6 @@ function NewForm() {
                                                                                 }}> <i className='fa fa-pencil-alt'></i> Edit</button>
                                                                                 <button className='btn btn-outline-danger btn-sm' onClick={e => {
                                                                                     e.preventDefault();
-                                                                                    if (field?.uuid) {
-                                                                                        field.delete = true;
-                                                                                    }
                                                                                     if (window.confirm('Are you sure you want to delete this field?')) {
                                                                                         const updatedFormData = { ...newFormData };
                                                                                         const currentSection = section
