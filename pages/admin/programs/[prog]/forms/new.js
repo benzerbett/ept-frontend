@@ -33,6 +33,10 @@ function NewForm() {
         "fields": [],
         "meta": {},
     })
+    const [blankOption, setBlankOption] = useState({
+        "name": "",
+        "value": "",
+    })
 
     const [blankField, setBlankField] = useState({
         "name": "",
@@ -229,8 +233,8 @@ function NewForm() {
                                         </label>
                                         <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
                                     </div>
-                                    <div className='col-lg-8 text-capitalize'>
-                                        <select className='form-select' style={{ textTransform: 'capitalize' }} name='target_type' value={newFormData.target_type} onChange={ev => {
+                                    <div className='col-lg-8' id="form_type_container">
+                                        <select className='form-select mb-1 text-capitalize' style={{ textTransform: 'capitalize' }} name='target_type' value={newFormData.target_type} onChange={ev => {
 
                                             // TODO: if target_type is 'results' then:
                                             // 1. set target_type to 'results'
@@ -246,7 +250,7 @@ function NewForm() {
                                                             name: 'Results',
                                                             description: 'The questions set in this section will be posed for each sample',
                                                             fields: [
-                                                                
+
                                                             ],
                                                             meta: {
                                                                 'isResultSection': true
@@ -254,10 +258,18 @@ function NewForm() {
                                                         }
                                                     ]
                                                 });
+                                                // add an alert after this input to prompt the user to add a result section with the above text. Use a button to add the section
+                                                // document.getElementById('form_type_container').innerHTML += `
+                                                //     <div class="alert alert-warning alert-dismissible fade show" style="margin-top: 3px;" role="alert">
+                                                //         <strong>Action required</strong> <br/>
+                                                //         You have selected "Results" as the target type. Please add a section with the name "Results" and the description "The questions set in this section will be posed for each sample".
+                                                //         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                //     </div>
+                                                // `;
                                             } else {
                                                 if (newFormData.sections.filter(s => s.meta?.isResultSection).length > 0) {
                                                     setNewFormData({ ...newFormData, target_type: ev.target.value, sections: newFormData.sections.filter(s => !s.meta?.isResultSection) });
-                                                }else{
+                                                } else {
                                                     setNewFormData({ ...newFormData, target_type: ev.target.value });
                                                 }
                                             }
@@ -450,7 +462,7 @@ function NewForm() {
                                             saveForm()
                                         }}>Save form</button>
 
-                                        {window && window?.location?.hostname=="localhost"&&<button className="btn btn-link text-muted mx-3 btn-sm" onClick={e => {
+                                        {window && window?.location?.hostname == "localhost" && <button className="btn btn-link text-muted mx-3 btn-sm" onClick={e => {
                                             e.preventDefault();
                                             alert(JSON.stringify(newFormData, null, 4))
                                         }}>Preview</button>}
@@ -605,38 +617,100 @@ function NewForm() {
                                         </label>
                                     </div>
                                     <div className='col-lg-9'>
-                                        <input type="text" className="form-control" id="field_name" placeholder="Enter options separated by comma" value={
-                                            blankField.options
-                                                ? (Array.isArray(blankField.options)
-                                                    ? Array.from(blankField.options, o => o.name).join(',')
-                                                    : blankField.options
-                                                )
-                                                : ''
-                                        } onChange={ev => {
-                                            setBlankField({ ...blankField, options: ev.target.value })
-                                        }} />
-                                        {/* TODO: switch to modal
-                                        <button type="button" className="btn btn-link" data-bs-toggle="modal" data-bs-target="#addoptionmdl">
-                                          <i className='fa fa-plus'></i> Add
-                                        </button>
-                                        <div className="modal fade" id="addoptionmdl" tabIndex="-1" role="dialog" aria-labelledby="addoptionmdltitle" aria-hidden="true">
-                                            <div className="modal-dialog" role="document">
-                                                <div className="modal-content" style={{backgroundColor: 'wheat'}}>
-                                                    <div className="modal-header">
-                                                        <h5 className="modal-title" id="addoptionmdltitle">Add option</h5>
-                                                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        
-                                                    </div>
-                                                    <div className="modal-body">
-                                                        Body
-                                                    </div>
-                                                    <div className="modal-footer">
-                                                        <button type="button" className="btn btn-link text-muted" data-bs-toggle="modal" data-bs-target="#addoptionmdl">Cancel</button>
-                                                        <button type="button" className="btn btn-primary">Add</button>
+                                        <div className="row">
+                                            <div className="col-md-12">
+                                                {(blankField && blankField?.options && blankField?.options.length > 0) ? blankField?.options.map((opt, index) => (
+                                                    <span key={index} className='badge bg-success me-2 mb-2'>
+                                                        <span onClick={ev => {
+                                                            if (opt && opt?.id) {
+                                                                setBlankOption(opt)
+                                                                document.getElementById('addOptModalTrigger').click()
+                                                            }
+                                                        }}>{opt.name}</span> &nbsp; <i className='fa fa-times' onClick={ev => {
+                                                            setBlankField({
+                                                                ...blankField,
+                                                                options: blankField.options.filter((o, i) => i !== index)
+                                                            })
+                                                        }}></i>
+                                                    </span>
+                                                )) : <i className='text-muted fs-6'>No options added</i>}
+                                            </div>
+                                            <div className="col-md-12">
+                                                {/* TODO: switch to modal - DONE */}
+                                                <button type="button" className="btn btn-link" data-bs-toggle="modal" data-bs-target="#addoptionmdl" id="addOptModalTrigger">
+                                                    <i className='fa fa-plus'></i> Add
+                                                </button>
+                                                <div className="modal fade" id="addoptionmdl" tabIndex="-1" role="dialog" aria-labelledby="addoptionmdltitle" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                                                    <div className="modal-dialog" role="document">
+                                                        <div className="modal-content" style={{ backgroundColor: 'azure' }}>
+                                                            <div className="modal-header">
+                                                                <h5 className="modal-title" id="addoptionmdltitle">{blankOption?.id ? "Update" : "Add"} option</h5>
+                                                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div className="modal-body">
+                                                                <div className="row">
+                                                                    <div className="col-md-12 form-group">
+                                                                        <label htmlFor="field_name">Option Name <span className='text-danger'>*</span></label>
+                                                                        <input type="text" className="form-control" id="field_name" placeholder="Option name" value={blankOption?.name} onChange={ev => {
+                                                                            let newOpt = {
+                                                                                ...blankOption
+                                                                            }
+                                                                            newOpt.name = ev.target.value
+                                                                            if (!newOpt?.value || newOpt?.value === '') {
+                                                                                newOpt.value = ev.target.value.trim().toLocaleLowerCase()//.replace(/ /g, '_')
+                                                                            }
+                                                                            setBlankOption({ ...newOpt })
+                                                                        }} />
+                                                                    </div>
+                                                                    <div className="col-md-12 form-group">
+                                                                        <label htmlFor="field_name">Option Value</label>
+                                                                        <input type="text" className="form-control" id="field_name" placeholder="Option value" value={blankOption?.value} onChange={ev => {
+                                                                            setBlankOption({ ...blankOption, value: ev.target.value })
+                                                                        }} />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="modal-footer">
+                                                                <button type="button" className="btn btn-link text-muted" data-bs-toggle="modal" data-bs-target="#addoptionmdl" onClick={e => {
+                                                                    setBlankOption({ name: '', value: '' })
+                                                                }}>Cancel</button>
+                                                                <button type="button" className="btn btn-primary" onClick={e => {
+                                                                    e.preventDefault();
+                                                                    let newOpt = {
+                                                                        ...blankOption
+                                                                    }
+                                                                    let curr_options = blankField.options || []
+                                                                    if (newOpt?.id && curr_options.findIndex(opt => opt.id === newOpt.id) !== -1) {
+                                                                        // existing option
+                                                                        curr_options[curr_options.findIndex(opt => opt.id === newOpt.id)] = newOpt
+                                                                        setBlankOption({ name: '', value: '' })
+                                                                    } else {
+                                                                        // new option
+                                                                        newOpt.id = Math.random().toString(36).substr(2, 9)
+                                                                        if (!newOpt.value || newOpt.value == '') {
+                                                                            newOpt.value = newOpt.name.trim().toLocaleLowerCase()//.replace(/ /g, '_') 
+                                                                        }
+                                                                        if (curr_options.findIndex(opt => opt.value === newOpt.value) === -1) {
+                                                                            curr_options.push(newOpt)
+                                                                            setBlankOption({ name: '', value: '' })
+                                                                        } else {
+                                                                            alert('A similar option already exists')
+                                                                        }
+                                                                    }
+                                                                    if (!['select', 'radio', 'checkbox'].includes(blankField.type)) {
+                                                                        curr_options = []
+                                                                    }
+                                                                    setBlankField({ ...blankField, options: curr_options })
+                                                                    document.getElementById('addOptModalTrigger').click()
+                                                                }}
+                                                                // disabled={!blankOption || !blankOption?.name}
+                                                                >{blankOption?.id ? "Update" : "Add"}</button>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div> */}
+                                        </div>
                                     </div>
                                 </div>
                             ) : null}
@@ -695,16 +769,13 @@ function NewForm() {
                                     if (!blankField?.edit) {
                                         blankField.id = Math.random().toString(36).substr(2, 9)
                                         if (blankField.type === 'select' || blankField.type === 'radio' || blankField.type === 'checkbox') {
-                                            let options = blankField.options.split(',')
-                                            blankField.options = options.map((option, index) => {
-                                                return { id: index, value: option, name: option }
-                                            })
+                                            let options = blankField.options
                                         }
                                         let sections = newFormData.sections
                                         let section = newFormData.sections.find(section => section.id === blankField.section_id)
                                         let section_index = newFormData.sections.findIndex(section => section.id === blankField.section_id)
                                         // sample fields
-                                        if(section.meta?.isResultSection === true){
+                                        if (section.meta?.isResultSection === true) {
                                             blankField.meta = {
                                                 ...blankField.meta,
                                                 isResultField: true
@@ -734,7 +805,7 @@ function NewForm() {
                                         // remove edit flag
                                         delete blankField.edit
                                         // sample fields
-                                        if(section.meta?.isResultSection === true){
+                                        if (section.meta?.isResultSection === true) {
                                             blankField.meta = {
                                                 ...blankField.meta,
                                                 isResultField: true
