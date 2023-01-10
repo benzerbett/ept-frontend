@@ -53,7 +53,7 @@ function ViewForm() {
     return (
         <>
             <Head>
-                <title>EPT | Form Details</title>
+                <title>EPT | Form Preview</title>
                 <meta name="description" content="EPT" />
                 <link rel="icon" href="/favicon.ico" />
                 <meta charSet="utf-8" />
@@ -62,7 +62,7 @@ function ViewForm() {
                 <div className="d-flex flex-column flex-lg-row justify-content-between align-items-center">
                     <div className="d-flex flex-column flex-lg-row justify-content-between align-items-center gap-4">
                         <button className="btn btn-link" onClick={() => router.back()}>&larr; Back</button>
-                        <h2 className="font-bold my-4">Form details</h2>
+                        <h2 className="font-bold my-4">Form preview</h2>
                     </div>
                     <Link href="/admin/programs/[prog]/forms/[form]/edit" as={`/admin/programs/${prog}/forms/${form}/edit`}>
                         <a className="btn btn-primary btn-sm">
@@ -71,32 +71,143 @@ function ViewForm() {
                         </a>
                     </Link>
                 </div>
-                <hr/>
-                <div className="row">
-                    <div className="col-lg-8">
-                        <div className="d-flex w-100">
-                            {formData && <table className='table table-borderless'>
-                                <tbody>
-                                {Object.keys(formData).filter(m => m !== 'uuid').map((key, index) => {
-                                        return (
-                                            <tr key={index}>
-                                                <td className="font-bold text-capitalize">{key.split('_').join(' ')}</td>
-                                                <td>
-                                                    {typeof formData[key] == 'object' ?
-                                                        <pre className='p-2 br-1 pt-0' style={{whiteSpace: 'pre-wrap', backgformColor: '#fcfcfc'}}>{JSON.stringify(formData[key], null, 2).split('"').join('').split('{').join('').split('}').join('')}</pre> :
-                                                        key.includes('_at') ? (new Date(formData[key]).toLocaleString('en-GB', {
-                                                            year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true
-                                                        })) :
-                                                            formData[key]}
-                                                </td>
-                                            </tr>
-                                        )
-                                    })}
-                                </tbody>
-                            </table>}
-                        </div>
+                <hr />
+                {/* /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ */}
+                <div className="row bg-light p-3 formed">
+                    <div className='col-lg-12 my-3'>
+                        {
+                            true// status !== 'error' 
+                            && <form onSubmit={ev => {
+                                ev.preventDefault()
+                                saveForm()
+                            }}>
+                                <div className="form-group row my-1 my-lg-3 py-2" style={{ borderBottom: '1px solid #ececec' }}>
+                                    <div className='col-lg-2 py-1 d-flex flex-column'>
+                                        <label className='form-label' htmlFor="form_name">Name
+                                            <span className='text-danger'>*</span>
+                                        </label>
+                                        <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
+                                    </div>
+                                    <div className='col-lg-8'>
+                                        <input type="text" className="form-control" id="form_name" value={formData.name} placeholder="Enter form name" disabled />
+                                    </div>
+                                </div>
+                                <div className="form-group row my-1 my-lg-3 py-2" style={{ borderBottom: '1px solid #ececec' }}>
+                                    <div className='col-lg-2 py-1 d-flex flex-column'>
+                                        <label className='form-label' htmlFor="form_desc">Description</label>
+                                        <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
+                                    </div>
+                                    <div className='col-lg-8'>
+                                        <textarea className="form-control" id="form_desc" value={formData.description} placeholder="Describe the form" disabled></textarea>
+                                    </div>
+                                </div>
+                                <div className="form-group row my-1 my-lg-3 py-2" style={{ borderBottom: '1px solid #ececec' }}>
+                                    <div className='col-lg-2 py-1 d-flex flex-column'>
+                                        <label className='form-label' htmlFor="target_type">Type
+                                            <span className='text-danger'>*</span>
+                                        </label>
+                                        <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
+                                    </div>
+                                    <div className='col-lg-8' id="form_type_container">
+                                        <input type="text" className="form-control" id="target_type" value={formData.target_type} placeholder="Enter form name" disabled />
+                                    </div>
+                                </div>
+
+                                {/* --------------- form components ---------------- */}
+                                <div className="row my-1 my-lg-3 py-2" style={{ borderBottom: '1px solid #ececec' }}>
+                                    <div className='col-lg-12 py-1 d-flex flex-row justify-content-between mb-2'>
+                                        <h5>Form sections</h5>
+                                    </div>
+                                    <div className='col-lg-12 py-1'>
+                                        {formData.sections && formData.sections.filter(s => {
+                                            // filter out the deleted sections
+                                            return !s.delete
+                                        }).map((section, index) => (
+                                            <div className='card w-100 mb-3' key={index}>
+                                                <div className="card-header">
+                                                    <div className="row">
+                                                        <div className='col-md-8'>
+                                                            <h5 className="card-title mb-0" >{section?.name}</h5>
+                                                            <p className='mb-0 fst-italic'>{section?.description.split(' ').slice(0, 14).join(' ')}{section.description.split(' ').length > 13 && "..."}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className='card-body'>
+                                                    <div className='row'>
+                                                        <div className='col-lg-12'>
+                                                            <h5 className='mb-2'>Fields</h5>
+                                                            <div className='row d-flex flex-column align-items-center'>
+                                                                {section?.fields && section?.fields.filter(f => {
+                                                                    // filter out deleted fields
+                                                                    return !f.delete
+                                                                }).map((field, index) => (
+                                                                    <div className='col-md-11 rounded border shadow-sm border-default py-2 my-3 position-relative' key={index}>
+                                                                        <div className='text-muted text-capitalize position-absolute rounded bg-white px-2' style={{ top: '-14px' }}>
+                                                                            <small>{field.type}</small>
+                                                                        </div>
+                                                                        <div className='row p-2'>
+                                                                            <div className='col-xl-4 d-flex flex-column'>
+                                                                                <label htmlFor={'field_' + field.id} className='form-label mb-0'>{field.type != "paragraph" ? field.name : "Information"} {field.meta?.required && <span className='text-danger'>*</span>}</label>
+                                                                                {field.meta?.required && <small className='fst-italic text-muted'>Required</small>}
+                                                                            </div>
+                                                                            <div className='col-xl-6'>
+                                                                                {field.type == 'paragraph' ? (
+                                                                                    <>
+                                                                                        <p className='form-text fs-6 px-2'>{field.description}</p>
+                                                                                    </>
+                                                                                ) : (field.type == 'textarea' ? (
+                                                                                    <textarea className='form-control' id={'field_' + field.id} placeholder={field.meta?.placeholder} disabled />
+                                                                                ) : field.type == 'select' ? (
+                                                                                    <select className='form-select' id={'field_' + field.id} multiple={field.meta?.multiple || false} disabled>
+                                                                                        <option value=''>Select</option>
+                                                                                        {field.options.map((option, index) => (
+                                                                                            <option key={index} value={option?.value || option || ""}>{option.name}</option>
+                                                                                        ))}
+                                                                                    </select>
+                                                                                ) : (field.type == "radio" ? <div className='d-flex gap-3 flex-wrap'>
+                                                                                    {field.options && field.options.map(opt => (
+                                                                                        <div className='form-check' key={opt.id}>
+                                                                                            <input type={field.type} className="form-check-input" id={'field_' + field.id} placeholder={field.meta?.placeholder || field.name} disabled />
+                                                                                            <label className='form-check-label' htmlFor={'field_' + field.id}>{opt.name}</label>
+                                                                                        </div>
+                                                                                    ))}
+                                                                                </div> : (
+                                                                                    field.type == "checkbox" ? <div className='form-check'><input type={field.type} className='form-check-input' id={'field_' + field.id} disabled/>
+                                                                                        {/* <label className='form-check-label' htmlFor={'field_' + field.id}>{field.name}</label> */}
+                                                                                    </div>
+                                                                                        : <input type={field.type} className='form-control' id={'field_' + field.id} placeholder={field.meta?.placeholder || field.name} disabled />
+                                                                                ))
+                                                                                )
+                                                                                }
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    {/* ---------------- form components --------------- */}
+
+                                    <div className="form-group row my-1 my-lg-3 py-2" style={{ borderBottom: '1px solid #ececec' }}>
+                                        <div className='col-lg-2 py-1 d-flex flex-column'>
+                                            <label className='form-label' htmlFor="form_meta">Metadata</label>
+                                            <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
+                                        </div>
+                                        <div className='col-lg-8'>
+                                            <textarea className="form-control" id="form_meta" placeholder="Additional attributes" value={
+                                                typeof formData.meta == 'object' ? JSON.stringify(formData.meta).replace(/,/g, ', ').split('{').join('\n ').split('}').join('\n').split('[').join('\n ').split(']').join('\n').split('"').join('')
+                                                : formData.meta} disabled></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>}
                     </div>
                 </div>
+                {/* /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ */}
             </div>
         </>
     )

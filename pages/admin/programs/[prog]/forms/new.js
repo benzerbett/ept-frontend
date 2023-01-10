@@ -370,26 +370,11 @@ function NewForm() {
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div className='row'>
-
-                                                    </div>
                                                 </div>
                                             </div>
                                         ))}
                                     </div>
                                     {/* ---------------- form components --------------- */}
-
-                                    {/* <div className="form-group row my-1 my-lg-3 py-2" style={{ borderBottom: '1px solid #ececec' }}>
-                                    <div className='col-lg-2 py-1 d-flex flex-column'>
-                                        <label className='form-label' htmlFor="form_meta">Metadata</label>
-                                        <small className='d-block text-muted lh-sm my-0'>&nbsp;</small>
-                                    </div>
-                                    <div className='col-lg-8'>
-                                        <textarea className="form-control" id="form_meta" placeholder="Additional attributes" value={typeof newFormData.meta == 'object' ? JSON.stringify(newFormData.meta) : newFormData.meta} onChange={ev => {
-                                            setNewFormData({ ...newFormData, meta: ev.target.value })
-                                        }}></textarea>
-                                    </div>
-                                </div> */}
 
                                     <div className="w-100 d-flex align-items-center justify-content-center">
                                         <button type="submit" className="btn btn-primary" onClick={e => {
@@ -397,10 +382,10 @@ function NewForm() {
                                             saveForm()
                                         }}>Save form</button>
 
-                                        {window && window?.location?.hostname == "localhost" && <button className="btn btn-link text-muted mx-3 btn-sm" onClick={e => {
+                                        {/* {window && window?.location?.hostname == "localhost" && <button className="btn btn-link text-muted mx-3 btn-sm" onClick={e => {
                                             e.preventDefault();
                                             alert(JSON.stringify(newFormData, null, 4))
-                                        }}>Preview</button>}
+                                        }}>Preview</button>} */}
                                     </div>
                                 </div>
                             </form>}
