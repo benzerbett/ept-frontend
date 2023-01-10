@@ -102,8 +102,6 @@ function NewForm() {
             setLoading(false)
             if (prog) {
                 setNewFormData({ ...newFormData, program: prog })
-                fetchSchemas(prog)
-                fetchForms(prog)
             }
         }
         return () => mounted = false
@@ -330,15 +328,18 @@ function NewForm() {
                                                                                             <option key={index} value={option?.value || option || ""}>{option.name}</option>
                                                                                         ))}
                                                                                     </select>
-                                                                                ) : (["checkbox", "radio"].includes(field.type) ? <div className='d-flex gap-3 flex-wrap'>
+                                                                                ) : (field.type == "radio" ? <div className='d-flex gap-3 flex-wrap'>
                                                                                     {field.options && field.options.map(opt => (
                                                                                         <div className='form-check' key={opt.id}>
-                                                                                            <input type={field.type} className={(["checkbox", "radio"].includes(field.type) ? "form-check-input" : 'form-control') + ' '} id={'field_' + field.id} placeholder={field.meta?.placeholder || field.name} />
+                                                                                            <input type={field.type} className="form-check-input" id={'field_' + field.id} placeholder={field.meta?.placeholder || field.name} />
                                                                                             <label className='form-check-label' htmlFor={'field_' + field.id}>{opt.name}</label>
                                                                                         </div>
                                                                                     ))}
                                                                                 </div> : (
-                                                                                    <input type={field.type} className='form-control' id={'field_' + field.id} placeholder={field.meta?.placeholder || field.name} />
+                                                                                    field.type == "checkbox" ? <div className='form-check'><input type={field.type} className='form-check-input' id={'field_' + field.id} />
+                                                                                        {/* <label className='form-check-label' htmlFor={'field_' + field.id}>{field.name}</label> */}
+                                                                                    </div>
+                                                                                        : <input type={field.type} className='form-control' id={'field_' + field.id} placeholder={field.meta?.placeholder || field.name} />
                                                                                 ))
                                                                                 )
                                                                                 }
@@ -516,14 +517,14 @@ function NewForm() {
                                     }}>
                                         <option value="" disabled> Select type </option>
                                         <option value="text">Text</option>
-                                        <option value="radio">Radio</option>
-                                        {/* <option value="checkbox">Checkbox</option> */} {/*TODO: show one input here, despite the options. Values are always true/false */}
                                         <option value="select">Select/Dropdown</option>
+                                        <option value="radio">Radio</option>
+                                        <option value="checkbox">Checkbox</option>
                                         <option value="date">Date</option>
                                         <option value="number">Number</option>
                                         <option value="email">Email</option>
                                         <option value="phone">Phone</option>
-                                        <option value="textarea">Textarea</option>
+                                        <option value="textarea">Long text</option>
                                     </select>
                                 </div>
                             </div>
@@ -545,7 +546,7 @@ function NewForm() {
                                 </div>
                             </div>
 
-                            {blankField.type && blankField.type === 'radio' || blankField.type === 'checkbox' || blankField.type === 'select' ? (
+                            {blankField.type && blankField.type === 'radio' || blankField.type === 'select' ? (
                                 <div className="form-group row my-1 py-1">
                                     <div className='col-lg-3 py-1 d-flex flex-column'>
                                         <label className='form-label' htmlFor="field_name">Options
@@ -726,7 +727,9 @@ function NewForm() {
                                     }}></textarea>
                                 </div>
                             </div>
-                            <div className="form-group row my-1 py-1">
+                            {(
+                                blankField?.type && blankField.type !== 'select' && blankField.type !== 'checkbox' && blankField.type !== 'radio'
+                            ) && <div className="form-group row my-1 py-1">
                                 <div className='col-lg-3 py-1 d-flex flex-column'>
                                     <label className='form-label' htmlFor="field_placeholder">Placeholder</label>
                                 </div>
@@ -740,7 +743,7 @@ function NewForm() {
                                         })
                                     }}></textarea>
                                 </div>
-                            </div>
+                            </div>}
 
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-light" data-bs-dismiss="modal" onClick={e => {

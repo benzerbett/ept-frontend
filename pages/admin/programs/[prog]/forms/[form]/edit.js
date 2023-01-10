@@ -102,9 +102,12 @@ function EditForm() {
                 delete new_data?.created_at
                 delete new_data?.updated_at
                 new_data?.sections?.map((section, index) => {
+                    section.id = section?.uuid
                     delete section?.created_at
                     delete section?.updated_at
                     section?.fields?.map((field, index) => {
+                        field.id = field?.uuid
+                        field.section_id = field?.form_section
                         delete field?.created_at
                         delete field?.updated_at
                         if (field?.options?.length > 0) {
@@ -382,15 +385,18 @@ function EditForm() {
                                                                                             <option key={index} value={option?.value || option || ""}>{option.name}</option>
                                                                                         ))}
                                                                                     </select>
-                                                                                ) : (["checkbox", "radio"].includes(field.type) ? <div className='d-flex gap-3 flex-wrap'>
+                                                                                ) : (field.type == "radio" ? <div className='d-flex gap-3 flex-wrap'>
                                                                                     {field.options && field.options.map(opt => (
                                                                                         <div className='form-check' key={opt.id}>
-                                                                                            <input type={field.type} className={(["checkbox", "radio"].includes(field.type) ? "form-check-input" : 'form-control') + ' '} id={'field_' + field.id} placeholder={field.meta?.placeholder || field.name} />
+                                                                                            <input type={field.type} className="form-check-input" id={'field_' + field.id} placeholder={field.meta?.placeholder || field.name} />
                                                                                             <label className='form-check-label' htmlFor={'field_' + field.id}>{opt.name}</label>
                                                                                         </div>
                                                                                     ))}
                                                                                 </div> : (
-                                                                                    <input type={field.type} className='form-control' id={'field_' + field.id} placeholder={field.meta?.placeholder || field.name} />
+                                                                                    field.type == "checkbox" ? <div className='form-check'><input type={field.type} className='form-check-input' id={'field_' + field.id} />
+                                                                                        {/* <label className='form-check-label' htmlFor={'field_' + field.id}>{field.name}</label> */}
+                                                                                    </div>
+                                                                                        : <input type={field.type} className='form-control' id={'field_' + field.id} placeholder={field.meta?.placeholder || field.name} />
                                                                                 ))
                                                                                 )
                                                                                 }
@@ -516,6 +522,8 @@ function EditForm() {
                                         setNewFormData({ ...newFormData, sections: [...newFormData.sections, blankSection] })
                                         setBlankSection({ name: '', description: '', meta: {} })
                                     } else {
+                                        // set edited flag
+                                        blankSection.edited = true;
                                         // update section
                                         let sections = newFormData.sections;
                                         sections[sections.findIndex(sec => sec.id === blankSection.id)] = blankSection;
@@ -573,14 +581,14 @@ function EditForm() {
                                     }}>
                                         <option value="" disabled> Select type </option>
                                         <option value="text">Text</option>
-                                        <option value="radio">Radio</option>
-                                        {/* <option value="checkbox">Checkbox</option> */} {/*TODO: show one input here, despite the options. Values are always true/false */}
                                         <option value="select">Select/Dropdown</option>
+                                        <option value="radio">Radio</option>
+                                        <option value="checkbox">Checkbox</option>
                                         <option value="date">Date</option>
                                         <option value="number">Number</option>
                                         <option value="email">Email</option>
                                         <option value="phone">Phone</option>
-                                        <option value="textarea">Textarea</option>
+                                        <option value="textarea">Long text</option>
                                     </select>
                                 </div>
                             </div>
@@ -602,7 +610,7 @@ function EditForm() {
                                 </div>
                             </div>
 
-                            {blankField.type && blankField.type === 'radio' || blankField.type === 'checkbox' || blankField.type === 'select' ? (
+                            {blankField.type && blankField.type === 'radio' || blankField.type === 'select' ? (
                                 <div className="form-group row my-1 py-1">
                                     <div className='col-lg-3 py-1 d-flex flex-column'>
                                         <label className='form-label' htmlFor="field_name">Options
@@ -783,21 +791,23 @@ function EditForm() {
                                     }}></textarea>
                                 </div>
                             </div>
-                            <div className="form-group row my-1 py-1">
-                                <div className='col-lg-3 py-1 d-flex flex-column'>
-                                    <label className='form-label' htmlFor="field_placeholder">Placeholder</label>
-                                </div>
-                                <div className='col-lg-9'>
-                                    <textarea className="form-control" id="field_placeholder" value={blankField.meta?.placeholder} placeholder="Placeholder" onChange={ev => {
-                                        setBlankField({
-                                            ...blankField, meta: {
-                                                ...blankField.meta,
-                                                placeholder: ev.target.value
-                                            }
-                                        })
-                                    }}></textarea>
-                                </div>
-                            </div>
+                            {(
+                                blankField?.type && blankField.type !== 'select' && blankField.type !== 'checkbox' && blankField.type !== 'radio'
+                            ) && <div className="form-group row my-1 py-1">
+                                    <div className='col-lg-3 py-1 d-flex flex-column'>
+                                        <label className='form-label' htmlFor="field_placeholder">Placeholder</label>
+                                    </div>
+                                    <div className='col-lg-9'>
+                                        <textarea className="form-control" id="field_placeholder" value={blankField.meta?.placeholder} placeholder="Placeholder" onChange={ev => {
+                                            setBlankField({
+                                                ...blankField, meta: {
+                                                    ...blankField.meta,
+                                                    placeholder: ev.target.value
+                                                }
+                                            })
+                                        }}></textarea>
+                                    </div>
+                                </div>}
 
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-light" data-bs-dismiss="modal" onClick={e => {
@@ -819,9 +829,7 @@ function EditForm() {
                                     ev.preventDefault()
                                     if (!blankField?.edit) {
                                         blankField.id = Math.random().toString(36).substr(2, 9)
-                                        if (blankField.type === 'select' || blankField.type === 'radio' || blankField.type === 'checkbox') {
-                                            let options = blankField.options
-                                        }
+                                        
                                         let sections = newFormData.sections
                                         let section = newFormData.sections.find(section => section.id === blankField.section_id)
                                         let section_index = newFormData.sections.findIndex(section => section.id === blankField.section_id)
@@ -855,6 +863,8 @@ function EditForm() {
                                         let old_field_index = section.fields.findIndex(field => field.id === blankField.id)
                                         // remove edit flag
                                         delete blankField.edit
+                                        // set edited flag
+                                        blankField.edited = true
                                         // sample fields
                                         if (section.meta?.isResultSection === true) {
                                             blankField.meta = {
