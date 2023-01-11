@@ -47,11 +47,13 @@ function NewPanel() {
                 setMessage(data.message)
             }
             setLoading(false)
+            window.scrollTo(0, 0)
         }).catch((err) => {
             console.log(err)
             setStatus('error')
             setMessage('Error saving panel: ' + err.message || err)
             setLoading(false)
+            window.scrollTo(0, 0)
         })
     }
 
@@ -175,21 +177,24 @@ function NewPanel() {
                                                                             &nbsp;{sample.name}&nbsp;
                                                                         </button>
                                                                     </td>
-                                                                    <td>{sample.meta?.type || "-"} {(sample.meta?.type && sample.meta?.type.toLocaleLowerCase()=="other" && sample.meta?.other_type) && <span>({sample.meta?.other_type})</span>}</td>
+                                                                    <td>{sample.meta?.type || "-"} {(sample.meta?.type && sample.meta?.type.toLocaleLowerCase() == "other" && sample.meta?.other_type) && <span>({sample.meta?.other_type})</span>}</td>
                                                                     <td>{sample.expected_outcome || "-"}</td>
                                                                     <td>{sample.expected_interpretation || "-"}</td>
                                                                     <td>
 
-                                                                        <button type="button" title="Remove sample" className="btn btn-link text-danger text-decoration-none fs-6 py-0 px-2" onClick={() => {
-                                                                            if (sample?.uuid) {
-                                                                                let samples = [...newPanelData.samples];
-                                                                                let sample_index = newPanelData.samples.findIndex(s => s.uuid === sample.uuid);
-                                                                                samples[sample_index].deleted = true;
-                                                                                setNewPanelData({ ...newPanelData, samples: samples });
-                                                                            } else {
-                                                                                if (sample?.id) {
-                                                                                    let samples = newPanelData.samples.filter(s => s.id !== sample.id);
+                                                                        <button type="button" title="Remove sample" className="btn btn-link text-danger text-decoration-none fs-6 py-0 px-2" onClick={(e) => {
+                                                                            e.preventDefault();
+                                                                            if (window.confirm('Are you sure you want to delete this sample?')) {
+                                                                                if (sample?.uuid) {
+                                                                                    let samples = [...newPanelData.samples];
+                                                                                    let sample_index = newPanelData.samples.findIndex(s => s.uuid === sample.uuid);
+                                                                                    samples[sample_index].deleted = true;
                                                                                     setNewPanelData({ ...newPanelData, samples: samples });
+                                                                                } else {
+                                                                                    if (sample?.id) {
+                                                                                        let samples = newPanelData.samples.filter(s => s.id !== sample.id);
+                                                                                        setNewPanelData({ ...newPanelData, samples: samples });
+                                                                                    }
                                                                                 }
                                                                             }
 
