@@ -13,6 +13,7 @@ body {
     --color-violet: #4e40aa;
     --color-violet-light: #6458b5;
     --color-violet-lighter: #a3a3f0;
+    --color-violet-lightest: #ccccf6;
     --color-violet-dark: #392d81;
     --color-violet-darker: #3a3255;
     --color-violet-darkest: #2f2c3a;
@@ -67,6 +68,9 @@ body {
 
 .bg-violet-lighter {
     background-color: var(--color-violet-lighter);
+}
+.bg-violet-lightest {
+    background-color: var(--color-violet-lightest);
 }
 
 .bg-violet-dark {

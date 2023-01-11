@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { getResource } from '../../../../../utilities'
 
 function NewForm() {
@@ -10,6 +11,7 @@ function NewForm() {
     const [status, setStatus] = useState('')
     const [message, setMessage] = useState('')
     const [loading, setLoading] = useState(true);
+    const [isBrowser, setIsBrowser] = useState(false);
     const [formTypes, setFormTypes] = useState([
         "survey",
         "checklist",
@@ -103,9 +105,31 @@ function NewForm() {
             if (prog) {
                 setNewFormData({ ...newFormData, program: prog })
             }
+            if (typeof window !== "undefined") {
+                setIsBrowser(true);
+            }
         }
         return () => mounted = false
     }, [])
+
+    const onDragEnd = (result) => {
+        // console.log("onDragEnd", result)
+        if (!result.destination) return;
+        // let item = newFormData.sections.find((item, index) => item.index === result.source.index)
+        // if (item) {
+        //     item.index = result.destination.index
+        //     // setNewFormData({ ...newFormData, sections: newFormData.sections })
+        // }
+        // const items = Array.from(newFormData.sections);
+        // const [reorderedItem] = items.splice(result.source.index, 1);
+        // reorderedItem.index = result.destination.index
+        // items.splice(result.destination.index, 0, reorderedItem);
+        // setNewFormData({ ...newFormData, sections: items });
+
+        // TODO: store the order in the form.meta object as an array of section ids
+        const items = Array.from(newFormData.sections, (item, index) => item.id);
+        
+    }
 
     if (loading) return <main style={{ width: '100%', height: '85vh', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <h5 className='mb-0'>Loading...</h5>
@@ -241,139 +265,159 @@ function NewForm() {
                                             Add new section
                                         </button>
                                     </div>
-                                    <div className='col-lg-12 py-1'>
-                                        {newFormData.sections && newFormData.sections.filter(s => {
-                                            // filter out the deleted sections
-                                            return !s.deleted
-                                        }).map((section, index) => (
-                                            <div className='card w-100 mb-3' key={index}>
-                                                <div className="card-header">
-                                                    <div className="row">
-                                                        <div className='col-md-8'>
-                                                            <h5 className="card-title mb-0" >{section?.name}</h5>
-                                                            <p className='mb-0 fst-italic'>{section?.description.split(' ').slice(0, 14).join(' ')}{section.description.split(' ').length > 13 && "..."}</p>
-                                                        </div>
-                                                        <div className='col-md-4'>
-                                                            <div className='d-flex gap-3 align-items-center h-100 justify-content-end'>
-                                                                <button type="button" className="hidden" style={{ display: 'none' }} data-bs-toggle="modal" data-bs-target="#addFieldModal" id="addFieldModalTrigger"></button>
-                                                                <button type="button" className="btn btn-dark btn-sm" onClick={e => {
-                                                                    e.preventDefault()
-                                                                    setBlankField({
-                                                                        "name": "",
-                                                                        "description": "",
-                                                                        "type": "",
-                                                                        "options": [],
-                                                                        "validations": [],
-                                                                        "meta": {
-                                                                            "required": false,
-                                                                            "placeholder": "",
-                                                                            "multiple": false,
-                                                                        },
-                                                                        "section_id": section.id,
-                                                                    })
-                                                                    document.getElementById('addFieldModalTrigger').click()
-                                                                }}> Add Field </button>
-                                                                <button type="button" className="btn btn-outline-dark btn-sm"
-                                                                    onClick={e => {
-                                                                        setBlankSection({
-                                                                            ...section,
-                                                                            edit: true,
-                                                                        })
-                                                                        document.getElementById('sectionModalTrigger').click()
-                                                                    }}
-                                                                > <i className='fa fa-pencil-alt'></i> Edit section </button>
-                                                                <button type="button" className="btn btn-outline-danger btn-sm" onClick={e => {
-                                                                    e.preventDefault();
-                                                                    if (window.confirm('Are you sure you want to delete this section?')) {
-                                                                        setNewFormData({
-                                                                            ...newFormData,
-                                                                            sections: newFormData.sections.filter((sc, i) => sc.id !== section.id)
-                                                                        })
-                                                                    }
-                                                                }}> <i className='fa fa-trash-alt'></i> Delete </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className='card-body'>
-                                                    <div className='row'>
-                                                        <div className='col-lg-12'>
-                                                            <h5 className='mb-2'>Fields</h5>
-                                                            <div className='row d-flex flex-column align-items-center'>
-                                                                {section?.fields && section?.fields.filter(f => {
-                                                                    // filter out deleted fields
-                                                                    return !f.delete
-                                                                }).map((field, index) => (
-                                                                    <div className='col-md-11 rounded border shadow-sm border-default py-2 my-3 position-relative' key={index}>
-                                                                        <div className='text-muted text-capitalize position-absolute rounded bg-white px-2' style={{ top: '-14px' }}>
-                                                                            <small>{field.type}</small>
-                                                                        </div>
-                                                                        <div className='row p-2'>
-                                                                            <div className='col-xl-4 d-flex flex-column'>
-                                                                                <label htmlFor={'field_' + field.id} className='form-label mb-0'>{field.type != "paragraph" ? field.name : "Information"} {field.meta?.required && <span className='text-danger'>*</span>}</label>
-                                                                                {field.meta?.required && <small className='fst-italic text-muted'>Required</small>}
-                                                                            </div>
-                                                                            <div className='col-xl-6'>
-                                                                                {field.type == 'paragraph' ? (
-                                                                                    <>
-                                                                                        <p className='form-text fs-6 px-2'>{field.description}</p>
-                                                                                    </>
-                                                                                ) : (field.type == 'textarea' ? (
-                                                                                    <textarea className='form-control' id={'field_' + field.id} placeholder={field.meta?.placeholder || field.name} />
-                                                                                ) : field.type == 'select' ? (
-                                                                                    // TODO: support multiple select properly (e.g. react-select)
-                                                                                    <select className='form-select' id={'field_' + field.id} multiple={field.meta?.multiple || false}>
-                                                                                        <option value=''>Select</option>
-                                                                                        {field.options.map((option, index) => (
-                                                                                            <option key={index} value={option?.value || option || ""}>{option.name}</option>
-                                                                                        ))}
-                                                                                    </select>
-                                                                                ) : (field.type == "radio" ? <div className='d-flex gap-3 flex-wrap'>
-                                                                                    {field.options && field.options.map(opt => (
-                                                                                        <div className='form-check' key={opt.id}>
-                                                                                            <input type={field.type} className="form-check-input" id={'field_' + field.id} placeholder={field.meta?.placeholder || field.name} />
-                                                                                            <label className='form-check-label' htmlFor={'field_' + field.id}>{opt.name}</label>
-                                                                                        </div>
-                                                                                    ))}
-                                                                                </div> : (
-                                                                                    field.type == "checkbox" ? <div className='form-check'><input type={field.type} className='form-check-input' id={'field_' + field.id} />
-                                                                                        {/* <label className='form-check-label' htmlFor={'field_' + field.id}>{field.name}</label> */}
+                                    <DragDropContext onDragEnd={onDragEnd}>
+                                        {isBrowser && <Droppable droppableId="sectionsDroppable">
+                                            {(provided, snapshot) => (
+                                                <div {...provided.droppableProps} ref={provided.innerRef} className='col-lg-12 py-2 rounded' style={{ backgroundColor: (snapshot.isDraggingOver && provided.droppableProps['data-rbd-droppable-id'] == 'sectionsDroppable' && snapshot.draggingOverWith.includes("section_")) ? '#eaeaf8' : 'inherit' }}>
+                                                    {newFormData.sections && newFormData.sections
+                                                        // filter out the deleted sections
+                                                        .filter(s => {
+                                                            return !s.deleted
+                                                        })
+                                                        // sort the sections by their index
+                                                        .sort((a, b) => {
+                                                            return a.index - b.index
+                                                        })
+                                                        .map((section, index) => (
+                                                            <Draggable key={section.id} draggableId={"section_" + section.id} index={section?.index || index} /*disableInteractiveElementBlocking={true}*/>
+                                                                {(provided) => {
+                                                                    return (
+                                                                        <div className='card w-100 mb-3' ref={provided.innerRef} {...provided.draggableProps}>
+                                                                            <div className="card-header">
+                                                                                <div className="row">
+                                                                                    <div className='col-md-8' {...provided.dragHandleProps}>
+                                                                                        <h5 className="card-title mb-0" >{section?.index} {section?.name}</h5>
+                                                                                        <p className='mb-0 fst-italic'>{section?.description.split(' ').slice(0, 14).join(' ')}{section.description.split(' ').length > 13 && "..."}</p>
                                                                                     </div>
-                                                                                        : <input type={field.type} className='form-control' id={'field_' + field.id} placeholder={field.meta?.placeholder || field.name} />
-                                                                                ))
-                                                                                )
-                                                                                }
+                                                                                    <div className='col-md-4'>
+                                                                                        <div className='d-flex gap-3 align-items-center h-100 justify-content-end'>
+                                                                                            <button type="button" className="hidden" style={{ display: 'none' }} data-bs-toggle="modal" data-bs-target="#addFieldModal" id="addFieldModalTrigger"></button>
+                                                                                            <button type="button" className="btn btn-dark btn-sm" onClick={e => {
+                                                                                                e.preventDefault()
+                                                                                                setBlankField({
+                                                                                                    "name": "",
+                                                                                                    "description": "",
+                                                                                                    "type": "",
+                                                                                                    "options": [],
+                                                                                                    "validations": [],
+                                                                                                    "meta": {
+                                                                                                        "required": false,
+                                                                                                        "placeholder": "",
+                                                                                                        "multiple": false,
+                                                                                                    },
+                                                                                                    "section_id": section.id,
+                                                                                                })
+                                                                                                document.getElementById('addFieldModalTrigger').click()
+                                                                                            }}> Add Field </button>
+                                                                                            <button type="button" className="btn btn-outline-dark btn-sm"
+                                                                                                onClick={e => {
+                                                                                                    setBlankSection({
+                                                                                                        ...section,
+                                                                                                        edit: true,
+                                                                                                    })
+                                                                                                    document.getElementById('sectionModalTrigger').click()
+                                                                                                }}
+                                                                                            > <i className='fa fa-pencil-alt'></i> Edit section </button>
+                                                                                            <button type="button" className="btn btn-outline-danger btn-sm" onClick={e => {
+                                                                                                e.preventDefault();
+                                                                                                if (window.confirm('Are you sure you want to delete this section?')) {
+                                                                                                    setNewFormData({
+                                                                                                        ...newFormData,
+                                                                                                        sections: newFormData.sections.filter((sc, i) => sc.id !== section.id)
+                                                                                                    })
+                                                                                                }
+                                                                                            }}> <i className='fa fa-trash-alt'></i> Delete </button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
-                                                                            <div className='col-xl-2 d-flex flex-wrap gap-1 align-items-center justify-content-center mt-2 justify-content-xl-end'>
-                                                                                <button className='btn btn-outline-dark btn-sm' onClick={e => {
-                                                                                    e.preventDefault();
-                                                                                    setBlankField({ ...field, edit: true })
-                                                                                    document.getElementById('addFieldModalTrigger').click()
-                                                                                }}> <i className='fa fa-pencil-alt'></i> Edit</button>
-                                                                                <button className='btn btn-outline-danger btn-sm' onClick={e => {
-                                                                                    e.preventDefault();
-                                                                                    if (window.confirm('Are you sure you want to delete this field?')) {
-                                                                                        const updatedFormData = { ...newFormData };
-                                                                                        const currentSection = section
-                                                                                        const currentSectionIndex = updatedFormData.sections.findIndex((section) => section.id === currentSection.id);
-                                                                                        const currentSectionFields = currentSection.fields
-                                                                                        const newSectionFields = currentSectionFields.filter((currentField) => currentField.id !== field.id)
-                                                                                        currentSection.fields = newSectionFields;
-                                                                                        updatedFormData.sections[currentSectionIndex] = currentSection;
-                                                                                        setNewFormData(updatedFormData);
-                                                                                    }
-                                                                                }}><i className='fa fa-trash-alt'></i> Delete</button>
+                                                                            <div className='card-body'>
+                                                                                <div className='row'>
+                                                                                    <div className='col-lg-12'>
+                                                                                        <h5 className='mb-2'>Fields</h5>
+                                                                                        <div className='row d-flex flex-column align-items-center'>
+                                                                                            {section?.fields && section?.fields.filter(f => {
+                                                                                                // filter out deleted fields
+                                                                                                return !f.delete
+                                                                                            }).map((field, index) => (
+                                                                                                <div className='col-md-11 rounded border shadow-sm border-default py-2 my-3 position-relative' key={index}>
+                                                                                                    <div className='text-muted text-capitalize position-absolute rounded bg-white px-2' style={{ top: '-14px' }}>
+                                                                                                        <small>{field.type}</small>
+                                                                                                    </div>
+                                                                                                    <div className='row p-2'>
+                                                                                                        <div className='col-xl-4 d-flex flex-column'>
+                                                                                                            <label htmlFor={'field_' + field.id} className='form-label mb-0'>{field.type != "paragraph" ? field.name : "Information"} {field.meta?.required && <span className='text-danger'>*</span>}</label>
+                                                                                                            {field.meta?.required && <small className='fst-italic text-muted'>Required</small>}
+                                                                                                        </div>
+                                                                                                        <div className='col-xl-6'>
+                                                                                                            {field.type == 'paragraph' ? (
+                                                                                                                <>
+                                                                                                                    <p className='form-text fs-6 px-2'>{field.description}</p>
+                                                                                                                </>
+                                                                                                            ) : (field.type == 'textarea' ? (
+                                                                                                                <textarea className='form-control' id={'field_' + field.id} placeholder={field.meta?.placeholder || field.name} />
+                                                                                                            ) : field.type == 'select' ? (
+                                                                                                                // TODO: support multiple select properly (e.g. react-select)
+                                                                                                                <select className='form-select' id={'field_' + field.id} multiple={field.meta?.multiple || false}>
+                                                                                                                    <option value=''>Select</option>
+                                                                                                                    {field.options.map((option, index) => (
+                                                                                                                        <option key={index} value={option?.value || option || ""}>{option.name}</option>
+                                                                                                                    ))}
+                                                                                                                </select>
+                                                                                                            ) : (field.type == "radio" ? <div className='d-flex gap-3 flex-wrap'>
+                                                                                                                {field.options && field.options.map(opt => (
+                                                                                                                    <div className='form-check' key={opt.id}>
+                                                                                                                        <input type={field.type} className="form-check-input" id={'field_' + field.id} placeholder={field.meta?.placeholder || field.name} />
+                                                                                                                        <label className='form-check-label' htmlFor={'field_' + field.id}>{opt.name}</label>
+                                                                                                                    </div>
+                                                                                                                ))}
+                                                                                                            </div> : (
+                                                                                                                field.type == "checkbox" ? <div className='form-check'><input type={field.type} className='form-check-input' id={'field_' + field.id} />
+                                                                                                                    {/* <label className='form-check-label' htmlFor={'field_' + field.id}>{field.name}</label> */}
+                                                                                                                </div>
+                                                                                                                    : <input type={field.type} className='form-control' id={'field_' + field.id} placeholder={field.meta?.placeholder || field.name} />
+                                                                                                            ))
+                                                                                                            )
+                                                                                                            }
+                                                                                                        </div>
+                                                                                                        <div className='col-xl-2 d-flex flex-wrap gap-1 align-items-center justify-content-center mt-2 justify-content-xl-end'>
+                                                                                                            <button className='btn btn-outline-dark btn-sm' onClick={e => {
+                                                                                                                e.preventDefault();
+                                                                                                                setBlankField({ ...field, edit: true })
+                                                                                                                document.getElementById('addFieldModalTrigger').click()
+                                                                                                            }}> <i className='fa fa-pencil-alt'></i> Edit</button>
+                                                                                                            <button className='btn btn-outline-danger btn-sm' onClick={e => {
+                                                                                                                e.preventDefault();
+                                                                                                                if (window.confirm('Are you sure you want to delete this field?')) {
+                                                                                                                    const updatedFormData = { ...newFormData };
+                                                                                                                    const currentSection = section
+                                                                                                                    const currentSectionIndex = updatedFormData.sections.findIndex((section) => section.id === currentSection.id);
+                                                                                                                    const currentSectionFields = currentSection.fields
+                                                                                                                    const newSectionFields = currentSectionFields.filter((currentField) => currentField.id !== field.id)
+                                                                                                                    currentSection.fields = newSectionFields;
+                                                                                                                    updatedFormData.sections[currentSectionIndex] = currentSection;
+                                                                                                                    setNewFormData(updatedFormData);
+                                                                                                                }
+                                                                                                            }}><i className='fa fa-trash-alt'></i> Delete</button>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            ))}
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                ))}
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                                    )
+                                                                }}
+                                                            </Draggable>
+                                                        ))}
+                                                    {provided.placeholder}
                                                 </div>
-                                            </div>
-                                        ))}
-                                    </div>
+                                            )
+                                            }
+                                        </Droppable>}
+                                    </DragDropContext>
                                     {/* ---------------- form components --------------- */}
 
                                     <div className="w-100 d-flex align-items-center justify-content-center">
@@ -442,12 +486,15 @@ function NewForm() {
                                 <button type="button" className="btn btn-primary" onClick={ev => {
                                     if (!blankSection?.edit) {
                                         blankSection.id = Math.random().toString(36).substr(2, 9);
+                                        blankSection.index = newFormData.sections.length;
                                         setNewFormData({ ...newFormData, sections: [...newFormData.sections, blankSection] })
                                         setBlankSection({ name: '', description: '', meta: {} })
                                     } else {
                                         // update section
                                         let sections = newFormData.sections;
-                                        sections[sections.findIndex(sec => sec.id === blankSection.id)] = blankSection;
+                                        let section_index = sections.findIndex(sec => sec.id === blankSection.id);
+                                        blankSection.index = section_index || 0;
+                                        sections[section_index] = blankSection;
                                         setNewFormData({ ...newFormData, sections: sections })
                                         setBlankSection({ name: '', description: '', meta: {} })
                                     }
@@ -715,20 +762,20 @@ function NewForm() {
                             {(
                                 blankField?.type && blankField.type !== 'select' && blankField.type !== 'checkbox' && blankField.type !== 'radio'
                             ) && <div className="form-group row my-1 py-1">
-                                <div className='col-lg-3 py-1 d-flex flex-column'>
-                                    <label className='form-label' htmlFor="field_placeholder">Placeholder</label>
-                                </div>
-                                <div className='col-lg-9'>
-                                    <textarea className="form-control" id="field_placeholder" value={blankField.meta?.placeholder} placeholder="Placeholder" onChange={ev => {
-                                        setBlankField({
-                                            ...blankField, meta: {
-                                                ...blankField.meta,
-                                                placeholder: ev.target.value
-                                            }
-                                        })
-                                    }}></textarea>
-                                </div>
-                            </div>}
+                                    <div className='col-lg-3 py-1 d-flex flex-column'>
+                                        <label className='form-label' htmlFor="field_placeholder">Placeholder</label>
+                                    </div>
+                                    <div className='col-lg-9'>
+                                        <textarea className="form-control" id="field_placeholder" value={blankField.meta?.placeholder} placeholder="Placeholder" onChange={ev => {
+                                            setBlankField({
+                                                ...blankField, meta: {
+                                                    ...blankField.meta,
+                                                    placeholder: ev.target.value
+                                                }
+                                            })
+                                        }}></textarea>
+                                    </div>
+                                </div>}
 
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-light" data-bs-dismiss="modal" onClick={e => {
