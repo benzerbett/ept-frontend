@@ -189,9 +189,9 @@ body {
 
 .alert-warning,
 .alert.bg-warning {
-    background-color: #f9e8a3 !important;
-    color: #7b640f !important;
-    border-color: #dfc970 !important;
+    background-color: #f3e7b9 !important;
+    color: #725b07 !important;
+    border-color: #e6d386 !important;
 }
 
 .alert-danger,
@@ -199,4 +199,12 @@ body {
     background-color: #fbd5d5 !important;
     color: #a30000 !important;
     border-color: #ffafaf !important;
+}
+
+.table thead tr th {
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1px;
+    font-size: 0.9rem;
+    color: #5f5f61;
 }

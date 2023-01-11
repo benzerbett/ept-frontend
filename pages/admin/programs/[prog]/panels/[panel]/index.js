@@ -71,30 +71,82 @@ function ViewPanel() {
                         </a>
                     </Link>
                 </div>
-                <hr/>
+                <hr />
+                <div className='row'>
+                    <div className='col-12'>
+                        {status && status !== '' && <div className={`alert d-flex align-items-center gap-3 alert-${status === 'error' ? 'danger' : 'success'}`} role="alert">
+                            <i className={'fa fa-2x fa-' + (status === 'error' ? 'warning' : 'info-circle')}></i> {message}
+                        </div>}
+                    </div>
+                </div>
                 <div className="row">
-                    <div className="col-lg-8">
-                        <div className="d-flex w-100">
-                            {panelData && <table className='table table-borderless'>
-                                <tbody>
-                                {Object.keys(panelData).filter(m => m !== 'uuid').map((key, index) => {
-                                        return (
-                                            <tr key={index}>
-                                                <td className="font-bold text-capitalize">{key.split('_').join(' ')}</td>
-                                                <td>
-                                                    {typeof panelData[key] == 'object' ?
-                                                        <pre className='p-2 br-1 pt-0' style={{whiteSpace: 'pre-wrap', backgpanelColor: '#fcfcfc'}}>{JSON.stringify(panelData[key], null, 2).split('"').join('').split('{').join('').split('}').join('')}</pre> :
-                                                        key.includes('_at') ? (new Date(panelData[key]).toLocaleString('en-GB', {
-                                                            year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true
-                                                        })) :
-                                                            panelData[key]}
-                                                </td>
-                                            </tr>
-                                        )
-                                    })}
-                                </tbody>
-                            </table>}
-                        </div>
+                    <div className="col-lg-12">
+                        {panelData && <div className="col-md-12 bg-light rounded p-md-4">
+                            <div className="form-group row mb-2 mb-lg-3">
+                                <div className='col-lg-2 py-1 d-flex'>
+                                    <label className='form-label text-muted' htmlFor="panel_name">Name</label>
+                                </div>
+                                <div className='col-lg-8'>
+                                    <p>{panelData.name}</p>
+                                </div>
+                            </div>
+                            <div className="form-group row mb-2 mb-lg-3">
+                                <div className='col-lg-2 py-1 d-flex'>
+                                    <label className='form-label text-muted' htmlFor="panel_desc">Description</label>
+                                </div>
+                                <div className='col-lg-8'>
+                                    <p>{panelData.description}</p>
+                                </div>
+                            </div>
+                            <div className="form-group row mb-2 mb-lg-3">
+                                <div className='col-lg-2 py-1 d-flex'>
+                                    <label className='form-label text-muted' htmlFor="panel_program">Samples</label>
+                                </div>
+                                <div className='col-lg-8'>
+                                    <div className='row'>
+                                        <div className='col-lg-12'>
+                                            <table className='table table-sm'>
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Sample</th>
+                                                        <th>Description</th>
+                                                        <th>Sample Type</th>
+                                                        <th>Expected result</th>
+                                                        <th>Expected outcome</th>
+                                                        <th>&nbsp;</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {(panelData.samples && panelData.samples.length > 0) ? panelData.samples
+                                                        //sort samples by name
+                                                        .sort((a, b) => {
+                                                            if (a.name < b.name) return -1;
+                                                            if (a.name > b.name) return 1;
+                                                            return 0;
+                                                        })
+                                                        .map((sample, index) => {
+                                                            return (
+                                                                <tr key={index}>
+                                                                    <td className='text-muted'>{index+1}.</td>
+                                                                    <td>{sample.name}</td>
+                                                                    <td>{sample?.description || ""}</td>
+                                                                    <td>{sample.meta?.type || ""}</td>
+                                                                    <td>{sample.expected_interpretation || ""}</td>
+                                                                    <td>{sample.expected_outcome || ""}</td>
+                                                                </tr>
+                                                                // view all link
+                                                            )
+                                                        }) : <tr><td colSpan='4' className='text-center text-muted'>
+                                                            No samples added
+                                                        </td></tr>}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>}
                     </div>
                 </div>
             </div>

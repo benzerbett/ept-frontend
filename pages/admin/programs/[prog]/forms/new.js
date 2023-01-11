@@ -128,7 +128,7 @@ function NewForm() {
 
         // TODO: store the order in the form.meta object as an array of section ids
         const items = Array.from(newFormData.sections, (item, index) => item.id);
-        
+
     }
 
     if (loading) return <main style={{ width: '100%', height: '85vh', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -268,7 +268,9 @@ function NewForm() {
                                     <DragDropContext onDragEnd={onDragEnd}>
                                         {isBrowser && <Droppable droppableId="sectionsDroppable">
                                             {(provided, snapshot) => (
-                                                <div {...provided.droppableProps} ref={provided.innerRef} className='col-lg-12 py-2 rounded' style={{ backgroundColor: (snapshot.isDraggingOver && provided.droppableProps['data-rbd-droppable-id'] == 'sectionsDroppable' && snapshot.draggingOverWith.includes("section_")) ? '#eaeaf8' : 'inherit' }}>
+                                                <div {...provided.droppableProps} ref={provided.innerRef} className='col-lg-12 py-2 rounded' 
+                                                // style={{ backgroundColor: (snapshot.isDraggingOver && provided.droppableProps['data-rbd-droppable-id'] == 'sectionsDroppable' && snapshot.draggingOverWith.includes("section_")) ? '#eaeaf8' : 'inherit' }}
+                                                >
                                                     {newFormData.sections && newFormData.sections
                                                         // filter out the deleted sections
                                                         .filter(s => {
@@ -286,7 +288,7 @@ function NewForm() {
                                                                             <div className="card-header">
                                                                                 <div className="row">
                                                                                     <div className='col-md-8' {...provided.dragHandleProps}>
-                                                                                        <h5 className="card-title mb-0" >{section?.index} {section?.name}</h5>
+                                                                                        <h5 className="card-title mb-0" >{section?.name}</h5>
                                                                                         <p className='mb-0 fst-italic'>{section?.description.split(' ').slice(0, 14).join(' ')}{section.description.split(' ').length > 13 && "..."}</p>
                                                                                     </div>
                                                                                     <div className='col-md-4'>
@@ -593,6 +595,7 @@ function NewForm() {
                                                     .map((opt, index) => (
                                                         <span key={index} className='badge bg-success me-2 mb-2'>
                                                             <span onClick={ev => {
+                                                                ev.preventDefault();
                                                                 if (opt && opt?.id) {
                                                                     setBlankOption(opt)
                                                                     document.getElementById('addOptModalTrigger').click()
@@ -663,8 +666,8 @@ function NewForm() {
                                                             <div className="modal-body">
                                                                 <div className="row">
                                                                     <div className="col-md-12 form-group">
-                                                                        <label htmlFor="field_name">Option Name <span className='text-danger'>*</span></label>
-                                                                        <input type="text" className="form-control" id="field_name" placeholder="Option name" value={blankOption?.name} onChange={ev => {
+                                                                        <label htmlFor="option_name">Option Name <span className='text-danger'>*</span></label>
+                                                                        <input type="text" className="form-control" id="option_name" placeholder="Option name" value={blankOption?.name} onChange={ev => {
                                                                             let newOpt = {
                                                                                 ...blankOption
                                                                             }
@@ -676,8 +679,8 @@ function NewForm() {
                                                                         }} />
                                                                     </div>
                                                                     <div className="col-md-12 form-group">
-                                                                        <label htmlFor="field_name">Option Value</label>
-                                                                        <input type="text" className="form-control" id="field_name" placeholder="Option value" value={blankOption?.value} onChange={ev => {
+                                                                        <label htmlFor="option_value">Option Value</label>
+                                                                        <input type="text" className="form-control" id="option_value" placeholder="Option value" value={blankOption?.value} onChange={ev => {
                                                                             setBlankOption({ ...blankOption, value: ev.target.value })
                                                                         }} />
                                                                     </div>
@@ -732,11 +735,11 @@ function NewForm() {
                             {blankField.type && blankField.type === 'select' ? (
                                 <div className="form-group row my-1 py-1">
                                     <div className='col-lg-3 py-1 d-flex flex-column'>
-                                        <label className='form-label' htmlFor="field_name">Allow multiple selection?</label>
+                                        <label className='form-label' htmlFor="field_multiple">Allow multiple selection?</label>
                                     </div>
                                     <div className='col-lg-9'>
                                         <div className="form-check form-switch">
-                                            <input className="form-check-input" type="checkbox" id="blankFieldMultipleBool" checked={blankField.multiple} onChange={ev => {
+                                            <input className="form-check-input" name="field_multiple" type="checkbox" id="blankFieldMultipleBool" checked={blankField.multiple} onChange={ev => {
                                                 setBlankField({
                                                     ...blankField, meta: {
                                                         ...blankField.meta,
