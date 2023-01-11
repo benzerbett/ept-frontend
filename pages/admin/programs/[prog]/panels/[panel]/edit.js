@@ -69,7 +69,7 @@ function EditPanel() {
                     setNewPanelData({
                         "name": data.data.name || "",
                         "description": data.data.description || "",
-                        "samples": Array.from(data.data.samples, s=>{
+                        "samples": Array.from(data.data.samples, s => {
                             return {
                                 ...s,
                                 id: s.uuid
@@ -200,20 +200,22 @@ function EditPanel() {
                                                                             &nbsp;{sample.name}&nbsp;
                                                                         </button>
                                                                     </td>
-                                                                    <td>{sample.meta?.type || "-"} {(sample.meta?.type && sample.meta?.type.toLocaleLowerCase()=="other" && sample.meta?.other_type) && <span>({sample.meta?.other_type})</span>}</td>
+                                                                    <td>{sample.meta?.type || "-"} {(sample.meta?.type && sample.meta?.type.toLocaleLowerCase() == "other" && sample.meta?.other_type) && <span>({sample.meta?.other_type})</span>}</td>
                                                                     <td>{sample.expected_outcome || "-"}</td>
                                                                     <td>{sample.expected_interpretation || "-"}</td>
                                                                     <td>
 
                                                                         <button type="button" title="Remove sample" className="btn btn-link text-danger text-decoration-none fs-6 py-0 px-2" onClick={() => {
                                                                             if (sample?.uuid) {
-                                                                                let samples = newPanelData.samples.filter(s => s.uuid !== sample.uuid);
+                                                                                let samples = [...newPanelData.samples];
                                                                                 let sample_index = newPanelData.samples.findIndex(s => s.uuid === sample.uuid);
                                                                                 samples[sample_index].deleted = true;
                                                                                 setNewPanelData({ ...newPanelData, samples: samples });
                                                                             } else {
-                                                                                let samples = newPanelData.samples.filter(s => s.id !== sample.id);
-                                                                                setNewPanelData({ ...newPanelData, samples: samples });
+                                                                                if (sample?.id) {
+                                                                                    let samples = newPanelData.samples.filter(s => s.id !== sample.id);
+                                                                                    setNewPanelData({ ...newPanelData, samples: samples });
+                                                                                }
                                                                             }
 
                                                                         }}>Remove</button>
@@ -325,7 +327,7 @@ function EditPanel() {
                                 let newSpl = {
                                     ...blankSample
                                 }
-                                if(newSpl?.uuid){
+                                if (newSpl?.uuid) {
                                     newSpl.edited = true
                                 }
                                 let curr_samples = newPanelData.samples || []

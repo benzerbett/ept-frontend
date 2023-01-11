@@ -177,7 +177,7 @@ function Reports() {
                                                     }}>Delete</a>
                                                 </td>
                                             </tr>
-                                        )) : <tr><td colSpan={7} className="text-center">No reports feport</td></tr>}
+                                        )) : <tr><td colSpan={7} className="text-center">No reports found</td></tr>}
                                     </tbody>
                                 </table>
                             </div>
