@@ -250,7 +250,7 @@ function NewForm() {
                                 {/* --------------- form components ---------------- */}
                                 <div className="row my-1 my-lg-3 py-2" style={{ borderBottom: '1px solid #ececec' }}>
                                     <div className='col-lg-12 py-1 d-flex flex-row justify-content-between mb-2'>
-                                        <h5>Form sections</h5>
+                                        <h5><b>Form sections</b></h5>
                                         <button type="button" className="hidden" style={{ display: 'none' }} data-bs-toggle="modal" data-bs-target="#sectionModal" id="sectionModalTrigger"></button>
                                         <button type="button" className="btn btn-dark btn-sm" onClick={e => {
                                             e.preventDefault();
@@ -265,10 +265,13 @@ function NewForm() {
                                             Add new section
                                         </button>
                                     </div>
+                                    {(!newFormData.sections || newFormData.sections.filter(s => { return !s.delete }).length < 1) && <div className='col-lg-12 py-4 d-flex flex-row justify-content-center'>
+                                        <h6 className='text-muted'>No sections added yet</h6>
+                                    </div>}
                                     <DragDropContext onDragEnd={onDragEnd}>
                                         {isBrowser && <Droppable droppableId="sectionsDroppable">
                                             {(provided, snapshot) => (
-                                                <div {...provided.droppableProps} ref={provided.innerRef} className='col-lg-12 py-2 rounded' 
+                                                <div {...provided.droppableProps} ref={provided.innerRef} className='col-lg-12 py-2 rounded'
                                                 // style={{ backgroundColor: (snapshot.isDraggingOver && provided.droppableProps['data-rbd-droppable-id'] == 'sectionsDroppable' && snapshot.draggingOverWith.includes("section_")) ? '#eaeaf8' : 'inherit' }}
                                                 >
                                                     {newFormData.sections && newFormData.sections
@@ -336,8 +339,11 @@ function NewForm() {
                                                                             <div className='card-body'>
                                                                                 <div className='row'>
                                                                                     <div className='col-lg-12'>
-                                                                                        <h5 className='mb-2'>Fields</h5>
                                                                                         <div className='row d-flex flex-column align-items-center'>
+                                                                                            {!section?.fields || section?.fields.filter(f => { return !f.delete }).length === 0 && (<div className='col-lg-12 py-3 d-flex flex-row justify-content-center'>
+                                                                                                <h6 className='text-muted'>No fields added yet</h6>
+                                                                                            </div>
+                                                                                            )}
                                                                                             {section?.fields && section?.fields.filter(f => {
                                                                                                 // filter out deleted fields
                                                                                                 return !f.delete

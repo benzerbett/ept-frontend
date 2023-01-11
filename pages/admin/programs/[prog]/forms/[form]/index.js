@@ -60,7 +60,7 @@ function ViewForm() {
             </Head>
             <div className="container">
                 <div className="d-flex flex-column flex-lg-row justify-content-between align-items-center">
-                    <div className="d-flex flex-column flex-lg-row justify-content-between align-items-center gap-4">
+                    <div className="d-flex flex-column flex-lg-row flex-grow justify-content-between align-items-center gap-4">
                         <button className="btn btn-link" onClick={() => router.back()}>&larr; Back</button>
                         <h2 className="font-bold my-4">Form preview</h2>
                     </div>
@@ -116,7 +116,7 @@ function ViewForm() {
                                 {/* --------------- form components ---------------- */}
                                 <div className="row my-1 my-lg-3 py-2" style={{ borderBottom: '1px solid #ececec' }}>
                                     <div className='col-lg-12 py-1 d-flex flex-row justify-content-between mb-2'>
-                                        <h5>Form sections</h5>
+                                        <h5><b>Form sections</b></h5>
                                     </div>
                                     <div className='col-lg-12 py-1'>
                                         {formData.sections && formData.sections.filter(s => {
@@ -135,7 +135,6 @@ function ViewForm() {
                                                 <div className='card-body'>
                                                     <div className='row'>
                                                         <div className='col-lg-12'>
-                                                            <h5 className='mb-2'>Fields</h5>
                                                             <div className='row d-flex flex-column align-items-center'>
                                                                 {section?.fields && section?.fields.filter(f => {
                                                                     // filter out deleted fields
@@ -172,7 +171,7 @@ function ViewForm() {
                                                                                         </div>
                                                                                     ))}
                                                                                 </div> : (
-                                                                                    field.type == "checkbox" ? <div className='form-check'><input type={field.type} className='form-check-input' id={'field_' + field.id} disabled/>
+                                                                                    field.type == "checkbox" ? <div className='form-check'><input type={field.type} className='form-check-input' id={'field_' + field.id} disabled />
                                                                                         {/* <label className='form-check-label' htmlFor={'field_' + field.id}>{field.name}</label> */}
                                                                                     </div>
                                                                                         : <input type={field.type} className='form-control' id={'field_' + field.id} placeholder={field.meta?.placeholder || field.name} disabled />
@@ -200,7 +199,7 @@ function ViewForm() {
                                         <div className='col-lg-8'>
                                             <textarea className="form-control" id="form_meta" placeholder="Additional attributes" value={
                                                 typeof formData.meta == 'object' ? JSON.stringify(formData.meta).replace(/,/g, ', ').split('{').join('\n ').split('}').join('\n').split('[').join('\n ').split(']').join('\n').split('"').join('')
-                                                : formData.meta} disabled></textarea>
+                                                    : formData.meta} disabled></textarea>
                                         </div>
                                     </div>
                                 </div>

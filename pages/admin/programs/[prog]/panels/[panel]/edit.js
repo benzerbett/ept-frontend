@@ -213,7 +213,7 @@ function EditPanel() {
                                                                                 if (sample?.uuid) {
                                                                                     let samples = [...newPanelData.samples];
                                                                                     let sample_index = newPanelData.samples.findIndex(s => s.uuid === sample.uuid);
-                                                                                    samples[sample_index].deleted = true;
+                                                                                    samples[sample_index].delete = true;
                                                                                     setNewPanelData({ ...newPanelData, samples: samples });
                                                                                 } else {
                                                                                     if (sample?.id) {
