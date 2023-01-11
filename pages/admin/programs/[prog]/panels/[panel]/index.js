@@ -112,8 +112,8 @@ function ViewPanel() {
                                                         <th>Sample</th>
                                                         <th>Description</th>
                                                         <th>Sample Type</th>
-                                                        <th>Expected result</th>
                                                         <th>Expected outcome</th>
+                                                        <th>Expected interpretation</th>
                                                         <th>&nbsp;</th>
                                                     </tr>
                                                 </thead>
@@ -131,9 +131,9 @@ function ViewPanel() {
                                                                     <td className='text-muted'>{index+1}.</td>
                                                                     <td>{sample.name}</td>
                                                                     <td>{sample?.description || ""}</td>
-                                                                    <td>{sample.meta?.type || ""}</td>
-                                                                    <td>{sample.expected_interpretation || ""}</td>
+                                                                    <td>{sample.meta?.type || "-"} {(sample.meta?.type && sample.meta?.type.toLocaleLowerCase()=="other" && sample.meta?.other_type) && <span>({sample.meta?.other_type})</span>}</td>
                                                                     <td>{sample.expected_outcome || ""}</td>
+                                                                    <td>{sample.expected_interpretation || ""}</td>
                                                                 </tr>
                                                                 // view all link
                                                             )

@@ -26,6 +26,8 @@ function EditPanel() {
         "Serum",
         "Plasma",
         "Urine",
+        "Tissue",
+        "Stool",
         "Image",
         "Other"
     ])
@@ -170,8 +172,8 @@ function EditPanel() {
                                                     <tr>
                                                         <th>Sample</th>
                                                         <th>Sample Type</th>
-                                                        <th>Expected result</th>
                                                         <th>Expected outcome</th>
+                                                        <th>Expected interpretation</th>
                                                         <th>&nbsp;</th>
                                                     </tr>
                                                 </thead>
@@ -198,9 +200,9 @@ function EditPanel() {
                                                                             &nbsp;{sample.name}&nbsp;
                                                                         </button>
                                                                     </td>
-                                                                    <td>{sample.meta?.type || "-"}</td>
-                                                                    <td>{sample.expected_interpretation || "-"}</td>
+                                                                    <td>{sample.meta?.type || "-"} {(sample.meta?.type && sample.meta?.type.toLocaleLowerCase()=="other" && sample.meta?.other_type) && <span>({sample.meta?.other_type})</span>}</td>
                                                                     <td>{sample.expected_outcome || "-"}</td>
+                                                                    <td>{sample.expected_interpretation || "-"}</td>
                                                                     <td>
 
                                                                         <button type="button" title="Remove sample" className="btn btn-link text-danger text-decoration-none fs-6 py-0 px-2" onClick={() => {
@@ -290,8 +292,8 @@ function EditPanel() {
                                 </div>
                                 {blankSample.meta?.type && blankSample.meta?.type.toLocaleLowerCase() === 'other' && (
                                     <div className="col-md-12 form-group mb-2">
-                                        <label className='form-label mb-0' htmlFor="sample_type">Other Sample Type</label>
-                                        <input type="text" className="form-control" id="sample_type" value={blankSample.meta?.other_type} placeholder="Other Sample Type" onChange={ev => {
+                                        <label className='form-label mb-0' htmlFor="sample_other_type">Other Sample Type</label>
+                                        <input type="text" className="form-control" id="sample_other_type" value={blankSample.meta?.other_type} placeholder="Other Sample Type" onChange={ev => {
                                             let newSpl = {
                                                 ...blankSample
                                             }
