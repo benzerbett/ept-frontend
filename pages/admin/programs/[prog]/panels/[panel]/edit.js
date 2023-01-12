@@ -68,18 +68,26 @@ function EditPanel() {
             setLoading(false)
             getResource(`panel/${panel}`).then((data) => {
                 if (data.status === true) {
-                    setNewPanelData({
+                    let new_panel_data = {
                         "name": data.data.name || "",
                         "description": data.data.description || "",
                         "samples": Array.from(data.data.samples, s => {
-                            return {
+                            let sample = {
                                 ...s,
                                 id: s.uuid
                             }
+                            delete sample.created_at
+                            delete sample.updated_at
+                            return sample
                         }),
                         "meta": data.data.meta || "",
                         "id": data.data.uuid
-                    })
+                    }
+                    delete new_panel_data.created_at
+                    delete new_panel_data.updated_at
+                    
+                    setNewPanelData(new_panel_data)
+                        
                 } else {
                     setStatus('error')
                     setMessage(data.message)
@@ -181,7 +189,7 @@ function EditPanel() {
                                                 </thead>
                                                 <tbody>
                                                     {(newPanelData.samples && newPanelData.samples.length > 0) ? newPanelData.samples
-                                                        .filter((sample, index) => !sample.deleted)
+                                                        .filter((sample, index) => !sample.delete)
                                                         //sort samples by name
                                                         .sort((a, b) => {
                                                             if (a.name < b.name) return -1;

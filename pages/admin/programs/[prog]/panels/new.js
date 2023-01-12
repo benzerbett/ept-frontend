@@ -156,7 +156,7 @@ function NewPanel() {
                                                 </thead>
                                                 <tbody>
                                                     {(newPanelData.samples && newPanelData.samples.length > 0) ? newPanelData.samples
-                                                        .filter((sample, index) => !sample.deleted)
+                                                        .filter((sample, index) => !sample.delete)
                                                         //sort samples by name
                                                         .sort((a, b) => {
                                                             if (a.name < b.name) return -1;
@@ -185,16 +185,9 @@ function NewPanel() {
                                                                         <button type="button" title="Remove sample" className="btn btn-link text-danger text-decoration-none fs-6 py-0 px-2" onClick={(e) => {
                                                                             e.preventDefault();
                                                                             if (window.confirm('Are you sure you want to delete this sample?')) {
-                                                                                if (sample?.uuid) {
-                                                                                    let samples = [...newPanelData.samples];
-                                                                                    let sample_index = newPanelData.samples.findIndex(s => s.uuid === sample.uuid);
-                                                                                    samples[sample_index].delete = true;
+                                                                                if (sample?.id) {
+                                                                                    let samples = newPanelData.samples.filter(s => s.id !== sample.id);
                                                                                     setNewPanelData({ ...newPanelData, samples: samples });
-                                                                                } else {
-                                                                                    if (sample?.id) {
-                                                                                        let samples = newPanelData.samples.filter(s => s.id !== sample.id);
-                                                                                        setNewPanelData({ ...newPanelData, samples: samples });
-                                                                                    }
                                                                                 }
                                                                             }
 

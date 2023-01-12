@@ -277,7 +277,7 @@ function NewForm() {
                                                     {newFormData.sections && newFormData.sections
                                                         // filter out the deleted sections
                                                         .filter(s => {
-                                                            return !s.deleted
+                                                            return !s.delete
                                                         })
                                                         // sort the sections by their index
                                                         .sort((a, b) => {
